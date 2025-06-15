@@ -15,7 +15,8 @@
     </div>
   {% endif %}
   
-  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">      {% if section.settings.title_svg != blank %}
+  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">
+      {% if section.settings.title_svg != blank %}
         <div class="title-svg-container">
           {{ section.settings.title_svg | image_url: width: 800 | image_tag: class: 'title-svg' }}
         </div>
@@ -23,8 +24,8 @@
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
       {% endif %}
     </div>
-      <div class="cards-container">
-      {% comment %} Recolher imagens selecionadas {% endcomment %}
+    
+    <div class="cards-container">
       {% assign card_images = '' | split: '' %}
       {% if section.settings.card_image_1 != blank %}{% assign card_images = card_images | push: section.settings.card_image_1 %}{% endif %}
       {% if section.settings.card_image_2 != blank %}{% assign card_images = card_images | push: section.settings.card_image_2 %}{% endif %}
@@ -33,38 +34,48 @@
       {% if section.settings.card_image_5 != blank %}{% assign card_images = card_images | push: section.settings.card_image_5 %}{% endif %}
       {% if section.settings.card_image_6 != blank %}{% assign card_images = card_images | push: section.settings.card_image_6 %}{% endif %}
       {% if section.settings.card_image_7 != blank %}{% assign card_images = card_images | push: section.settings.card_image_7 %}{% endif %}
-      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}      {% comment %} Verificar se existem imagens nos cards {% endcomment %}
-      {% assign has_images = false %}
-      {% if card_images.size > 0 %}
-        {% assign has_images = true %}
-      {% endif %}
-      {% if has_images %}        {% comment %} Cards com imagens {% endcomment %}
-        {% for image in card_images %}
-          <div class="card card-with-image">
-            <div class="card-image-wrapper" style="background-image: url('{{ image | image_url: width: 800 }}');"></div>
+      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}
+        {% if card_images.size > 0 %}        {% for image in card_images %}
+          <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+            <img 
+              src="{{ image | img_url: '500x' }}" 
+              alt="{{ image.alt | escape }}" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+            />
           </div>
         {% endfor %}
-          {% comment %} Duplicar cards se necessário {% endcomment %}
-        {% if section.settings.duplicate_cards %}
+        
+        {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
+        {% if section.settings.duplicate_cards and card_images.size < 8 %}
           {% for image in card_images %}
-            <div class="card card-with-image">
-              <div class="card-image-wrapper" style="background-image: url('{{ image | image_url: width: 800 }}');"></div>
+            <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+              <img 
+                src="{{ image | img_url: '500x' }}" 
+                alt="{{ image.alt | escape }}" 
+                class="card-image"
+                width="350"
+                height="450"
+                loading="lazy"
+              />
             </div>
           {% endfor %}
         {% endif %}
       {% else %}
-        {% comment %} Cards padrão com gradientes {% endcomment %}
-        <div class="card card-gradient gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "Card 1" }}</div></div>
-        <div class="card card-gradient gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "Card 2" }}</div></div>
-        <div class="card card-gradient gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "Card 3" }}</div></div>
-        <div class="card card-gradient gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "Card 4" }}</div></div>
-        <div class="card card-gradient gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "Card 5" }}</div></div>
+        {% comment %} Cards padrão com fundos gradientes {% endcomment %}
+        <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
+        <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
+        <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
+        <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
+        <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
         {% if section.settings.duplicate_cards %}
-          <div class="card card-gradient gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "Card 1" }}</div></div>
-          <div class="card card-gradient gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "Card 2" }}</div></div>
-          <div class="card card-gradient gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "Card 3" }}</div></div>
-          <div class="card card-gradient gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "Card 4" }}</div></div>
-          <div class="card card-gradient gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "Card 5" }}</div></div>
+          <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
+          <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
+          <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
+          <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
+          <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
         {% endif %}
       {% endif %}
     </div>
@@ -186,16 +197,16 @@
     height: auto;
     display: inline-block;
   }
-    #cards-scroll-{{ section.id }} .cards-container {
-    display: flex !important;
+  
+  #cards-scroll-{{ section.id }} .cards-container {
+    display: flex;
     gap: {{ section.settings.cards_gap }}px;
     padding: 0 {{ section.settings.cards_padding }}px;
     flex-wrap: nowrap;
     position: relative;
     z-index: 2;
-    opacity: 1 !important;
-    visibility: visible !important;
-    margin-left: 5%;
+    opacity: 0;
+    visibility: hidden;
   }
     #cards-scroll-{{ section.id }} .card {
     width: {{ section.settings.card_width }}px;
@@ -321,60 +332,11 @@
     opacity: 1 !important;
     visibility: visible !important;
   }
-  
-  /* Estilos específicos para os cards com imagens */
-  #cards-scroll-{{ section.id }} .card-with-image {
-    overflow: hidden;
-    background-color: transparent !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-  
-  #cards-scroll-{{ section.id }} .card-image-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-  }
-  
-  /* Estilos para cards com gradientes (sem imagens) */
-  #cards-scroll-{{ section.id }} .card-gradient {
-    color: white;
-  }
 </style>
 
-<script>
-  // Script inline para garantir que as imagens dos cards apareçam
-  document.addEventListener("DOMContentLoaded", function() {
-    // Forçar visibilidade dos cards
-    var cardsContainer = document.querySelector(".cards-container");
-    if (cardsContainer) {
-      cardsContainer.style.opacity = "1";
-      cardsContainer.style.visibility = "visible";
-      console.log("Cards container visibilidade forçada");
-    }
-    
-    // Verificar se os cards com imagens estão visíveis
-    var imageCards = document.querySelectorAll(".card-with-image");
-    if (imageCards.length > 0) {
-      console.log("Encontrados " + imageCards.length + " cards com imagens");
-      imageCards.forEach(function(card) {
-        card.style.backgroundColor = "transparent";
-        
-        // Garantir que a imagem de fundo esteja visível
-        var imageWrapper = card.querySelector(".card-image-wrapper");
-        if (imageWrapper) {
-          imageWrapper.style.opacity = "1";
-          console.log("Imagem forçada a ficar visível");
-        }
-      });
-    }
-  });
-</script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="{{ 'cards-scroll.js' | asset_url }}" defer></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
