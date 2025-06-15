@@ -909,7 +909,7 @@
         "card_text_3": "Serviço 3",
         "card_text_4": "Serviço 4",
         "card_text_5": "Serviço 5",
-        "include_css": true
+        "include_css": false
       }
     }
   },
