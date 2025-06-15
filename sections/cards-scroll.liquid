@@ -15,8 +15,7 @@
     </div>
   {% endif %}
   
-  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">
-      {% if section.settings.title_svg != blank %}
+  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">      {% if section.settings.title_svg != blank %}
         <div class="title-svg-container">
           {{ section.settings.title_svg | image_url: width: 800 | image_tag: class: 'title-svg' }}
         </div>
@@ -38,19 +37,17 @@
       
       {% comment %} Verificar se existem imagens nos cards {% endcomment %}
       {% assign has_images = card_images.size > 0 %}
-      
-      {% if has_images %}        {% comment %} Cards com imagens {% endcomment %}
+        {% if has_images %}        {% comment %} Cards com imagens {% endcomment %}
         {% for image in card_images %}
           <div class="card card-with-image">
-            <div class="card-image-wrapper" style="background-image: url('{{ image | img_url: '800x' }}');"></div>
+            <div class="card-image-wrapper" style="background-image: url('{{ image | image_url: width: 800 }}');"></div>
           </div>
         {% endfor %}
-        
-        {% comment %} Duplicar cards se necessário {% endcomment %}
+          {% comment %} Duplicar cards se necessário {% endcomment %}
         {% if section.settings.duplicate_cards %}
           {% for image in card_images %}
             <div class="card card-with-image">
-              <div class="card-image-wrapper" style="background-image: url('{{ image | img_url: '800x' }}');"></div>
+              <div class="card-image-wrapper" style="background-image: url('{{ image | image_url: width: 800 }}');"></div>
             </div>
           {% endfor %}
         {% endif %}
