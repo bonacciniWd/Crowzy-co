@@ -195,34 +195,33 @@
     height: auto;
     display: inline-block;
   }
-  
-  #cards-scroll-{{ section.id }} .cards-container {
+    #cards-scroll-{{ section.id }} .cards-container {
     display: flex;
     gap: {{ section.settings.cards_gap }}px;
     padding: 0 {{ section.settings.cards_padding }}px;
     flex-wrap: nowrap;
     position: relative;
     z-index: 2;
-    opacity: 0;
-    visibility: hidden;
-  }
-    #cards-scroll-{{ section.id }} .card {
+    opacity: 1; /* Iniciar visível e deixar GSAP controlar */
+    visibility: visible;
+    will-change: transform; /* Melhora a performance da animação */
+  }    #cards-scroll-{{ section.id }} .card {
     width: {{ section.settings.card_width }}px;
     height: {{ section.settings.card_height }}px;
     border-radius: {{ section.settings.card_radius }}px;
     flex-shrink: 0;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     overflow: hidden;
-    display: block; /* Alterado para block */
-    position: relative;
+    position: relative; /* Removido display: block para comportamento correto em flex */
     transition: transform 0.3s ease;
     background-color: #f0f0f0; /* Cor de fundo de fallback */
+    transform-origin: center center; /* Melhora a performance da animação */
   }
   
   #cards-scroll-{{ section.id }} .card:hover {
     transform: translateY(-10px);
   }
-    #cards-scroll-{{ section.id }} .card img,
+  #cards-scroll-{{ section.id }} .card img,
   #cards-scroll-{{ section.id }} .card-image {
     width: 100%;
     height: 100%;
@@ -231,7 +230,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 5; /* Aumentado para garantir que a imagem fique acima de todos os elementos do card */
+    z-index: 10; /* Alto z-index para garantir que a imagem fique acima de todos os elementos */
+    opacity: 1;
+    visibility: visible;
   }
   
   #cards-scroll-{{ section.id }} .card-content {
@@ -320,41 +321,47 @@
       padding: 1rem;
     }
   }
-    /* Estilos adicionais para garantir que os cards e imagens apareçam corretamente */
-  #cards-scroll-{{ section.id }} .cards-container {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
+  /* Removido código duplicado para .cards-container - não é mais necessário !important */
   
   #cards-scroll-{{ section.id }} .card {
     background-size: cover;
     background-position: center;
   }
-  
-  #cards-scroll-{{ section.id }} .card-with-image {
+    #cards-scroll-{{ section.id }} .card-with-image {
     background: none !important;
     background-color: transparent !important;
     overflow: hidden;
+    position: relative;
   }
   
   #cards-scroll-{{ section.id }} .card-with-image::before {
     display: none !important;
   }
-    #cards-scroll-{{ section.id }} .card .card-image {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
+  
+  #cards-scroll-{{ section.id }} .card-with-image .card-content {
+    display: none; /* Esconde textos em cards com imagem */
+  }    /* Movido para as regras principais de card-image acima com z-index: 10 */
 </style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+<script>
+  // Verificar se GSAP carregou corretamente
+  if (typeof gsap === "undefined") {
+    console.error("GSAP não foi carregado corretamente. Tentando carregamento alternativo...");
+    // Carregamento alternativo de GSAP se o CDN falhar
+    var gsapScript = document.createElement('script');
+    gsapScript.src = "https://unpkg.com/gsap@3.12.2/dist/gsap.min.js";
+    document.head.appendChild(gsapScript);
+    
+    // Carregamento alternativo de ScrollTrigger
+    var stScript = document.createElement('script');
+    stScript.src = "https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js";
+    document.head.appendChild(stScript);
+  } else {
+    console.log("GSAP carregado com sucesso:", gsap.version);
+  }
+</script>
 <script src="{{ 'cards-scroll.js' | asset_url }}" defer></script>
 
 <script>
@@ -480,42 +487,132 @@
 </script>
 
 <script>
-  // Script para garantir que as imagens dos cards apareçam corretamente
+  // Script para garantir que as imagens dos cards apareçam corretamente  // Script melhorado para garantir visibilidade dos cards
+  // Observação: Esse script roda apenas para garantir a visibilidade antes do GSAP inicializar
+  // O script principal está em cards-scroll.js
   document.addEventListener('DOMContentLoaded', function() {
-    // Forçar visibilidade dos cards
+    // Debug logging
+    console.group("Debug cards-scroll.liquid");
+    console.log("Script de fallback inicializado");
+    
+    // Forçar visibilidade dos cards (como fallback antes do GSAP inicializar)
     const cardsContainer = document.querySelector(".cards-container");
     if (cardsContainer) {
-      cardsContainer.style.opacity = "1";
-      cardsContainer.style.visibility = "visible";
-      console.log("Cards container visibilidade forçada");
+      if (getComputedStyle(cardsContainer).opacity === "0") {
+        console.log("Aplicando visibilidade ao container de cards");
+        cardsContainer.style.opacity = "1";
+        cardsContainer.style.visibility = "visible";
+      }
     }
     
-    // Verificar se os cards com imagens estão visíveis
+    // Garantir que cards com imagem estejam visíveis e sem gradientes
     const imageCards = document.querySelectorAll(".card-with-image");
-    if (imageCards.length > 0) {
-      console.log("Encontrados " + imageCards.length + " cards com imagens");
-      imageCards.forEach(function(card) {
-        // Garantir que o card seja transparente
-        card.style.backgroundColor = "transparent";
-        
-        // Remover qualquer classe de gradiente se existir
-        card.classList.remove("gradient-0", "gradient-1", "gradient-2", "gradient-3", "gradient-4");
-        
-        // Garantir que a imagem esteja visível com z-index adequado
-        const cardImage = card.querySelector(".card-image");
-        if (cardImage) {
-          cardImage.style.opacity = "1";
-          cardImage.style.zIndex = "10";
-          console.log("Z-index aumentado na imagem do card");
-        }
-        
-        // Remover qualquer conteúdo de texto que possa estar sendo exibido
-        const cardContent = card.querySelector(".card-content");
-        if (cardContent) {
-          cardContent.style.display = "none";
+    console.log("Cards com imagem encontrados:", imageCards.length);
+    
+    // Sem precisar de iteração se não houver cards com imagem
+    if (imageCards.length === 0) {
+      console.log("Sem cards com imagem para processar");
+      console.groupEnd();
+      return;
+    }
+    
+    imageCards.forEach(function(card, index) {
+      // Aplicar estilos essenciais
+      Object.assign(card.style, {
+        backgroundColor: "transparent",
+        backgroundImage: "none"
+      });
+      
+      // Remover classes de gradiente em todos os cards com imagem
+      ["gradient-0", "gradient-1", "gradient-2", "gradient-3", "gradient-4"].forEach(cls => {
+        if (card.classList.contains(cls)) {
+          console.log(`Removendo classe ${cls} do card ${index}`);
+          card.classList.remove(cls);
         }
       });
-    }
+      
+      // Garantir que a imagem esteja visível
+      const cardImage = card.querySelector(".card-image");
+      if (cardImage && getComputedStyle(cardImage).opacity !== "1") {
+        Object.assign(cardImage.style, {
+          opacity: "1",
+          visibility: "visible",
+          zIndex: "10",
+          display: "block"
+        });
+      }
+      
+      // Ocultar conteúdo de texto
+      const cardContent = card.querySelector(".card-content");
+      if (cardContent) {
+        cardContent.style.display = "none";
+      }
+    });
+    
+    console.log("Processamento de cards concluído");
+    console.groupEnd();
+  });
+</script>
+
+<script>
+  // Script para monitorar o carregamento completo da página e verificar se tudo está visível
+  window.addEventListener('load', function() {
+    // Pequeno atraso para garantir que GSAP já tenha atuado
+    setTimeout(function() {
+      console.log("Verificação final de visibilidade dos cards");
+      
+      // Verificar se ScrollTrigger inicializou corretamente
+      if (typeof ScrollTrigger !== "undefined") {
+        // Forçar um refresh do ScrollTrigger
+        ScrollTrigger.refresh(true);
+        console.log("ScrollTrigger refresh forçado");
+      }
+      
+      // Verificar estado visual dos cards
+      const cards = document.querySelectorAll(".card");
+      const visibleCards = Array.from(cards).filter(card => {
+        const rect = card.getBoundingClientRect();
+        const isVisible = rect.width > 0 && rect.height > 0;
+        const hasVisibleContent = window.getComputedStyle(card).opacity !== "0";
+        return isVisible && hasVisibleContent;
+      });
+      
+      console.log(`${visibleCards.length} de ${cards.length} cards visíveis`);
+      
+      // Se menos da metade dos cards estão visíveis, aplicar correção
+      if (visibleCards.length < cards.length / 2 && cards.length > 0) {
+        console.warn("Detectado problema de visibilidade dos cards, aplicando correção");
+        
+        // Forçar visibilidade do container e dos cards
+        const cardsContainer = document.querySelector(".cards-container");
+        if (cardsContainer) {
+          Object.assign(cardsContainer.style, {
+            opacity: "1",
+            visibility: "visible",
+            transform: "none" // Resetar qualquer transformação que possa estar ocultando os cards
+          });
+        }
+        
+        // Forçar visibilidade em cada card
+        cards.forEach(card => {
+          Object.assign(card.style, {
+            opacity: "1",
+            visibility: "visible",
+            display: "block"
+          });
+          
+          // Verificar por imagens dentro do card
+          const img = card.querySelector(".card-image");
+          if (img) {
+            Object.assign(img.style, {
+              opacity: "1",
+              visibility: "visible",
+              zIndex: "10"
+            });
+          }
+        });
+      }
+    }, 1000);
   });
 </script>
 
