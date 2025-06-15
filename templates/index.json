@@ -12,34 +12,14 @@
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
-        "logo_4AeNBU": {
-          "type": "logo",
-          "name": "t:names.logo",
-          "settings": {
-            "inverse": false,
-            "font": "accent",
-            "unit": "percent",
-            "percent_width": 50,
-            "pixel_height": 120,
-            "custom_mobile_size": true,
-            "unit_mobile": "pixel",
-            "percent_width_mobile": 100,
-            "pixel_height_mobile": 40,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "text_iXYWz6": {
           "type": "text",
           "name": "t:names.text",
           "settings": {
             "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
-            "width": "100%",
+            "width": "fit-content",
             "max_width": "narrow",
-            "alignment": "right",
+            "alignment": "left",
             "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -50,7 +30,7 @@
             "color": "var(--color-foreground-heading)",
             "background": true,
             "background_color": "#00000026",
-            "corner_radius": 0,
+            "corner_radius": 9,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -60,7 +40,6 @@
         }
       },
       "block_order": [
-        "logo_4AeNBU",
         "text_iXYWz6"
       ],
       "name": "t:names.hero",
