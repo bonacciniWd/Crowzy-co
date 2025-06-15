@@ -9,6 +9,40 @@
  */
 {
   "sections": {
+    "cards_scroll_eq8kHJ": {
+      "type": "cards-scroll",
+      "name": "Cards Scroll",
+      "settings": {
+        "heading": "SERVICES",
+        "section_height": 100,
+        "show_top_section": true,
+        "show_video_controls": false,
+        "show_bottom_section": true,
+        "scrambler_text": "Underground Streetwear",
+        "scrambler_text_size": 80,
+        "scrambler_text_color": "#ffffff",
+        "top_section_color": "green",
+        "main_section_color": "blue",
+        "bottom_section_color": "purple",
+        "title_size": 150,
+        "title_color": "#ffffff",
+        "title_alignment": "center",
+        "title_transform": "uppercase",
+        "title_shadow": true,
+        "card_width": 350,
+        "card_height": 450,
+        "card_radius": 16,
+        "cards_gap": 50,
+        "cards_padding": 50,
+        "duplicate_cards": true,
+        "card_text_1": "Serviço 1",
+        "card_text_2": "Serviço 2",
+        "card_text_3": "Serviço 3",
+        "card_text_4": "Serviço 4",
+        "card_text_5": "Serviço 5",
+        "include_css": true
+      }
+    },
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
@@ -874,49 +908,15 @@
         "padding-block-start": 44,
         "padding-block-end": 48
       }
-    },
-    "cards_scroll_eq8kHJ": {
-      "type": "cards-scroll",
-      "name": "Cards Scroll",
-      "settings": {
-        "heading": "SERVICES",
-        "section_height": 100,
-        "show_top_section": true,
-        "show_video_controls": false,
-        "show_bottom_section": true,
-        "scrambler_text": "Underground Streetwear",
-        "scrambler_text_size": 80,
-        "scrambler_text_color": "#ffffff",
-        "top_section_color": "green",
-        "main_section_color": "blue",
-        "bottom_section_color": "purple",
-        "title_size": 150,
-        "title_color": "#ffffff",
-        "title_alignment": "center",
-        "title_transform": "uppercase",
-        "title_shadow": true,
-        "card_width": 350,
-        "card_height": 450,
-        "card_radius": 16,
-        "cards_gap": 50,
-        "cards_padding": 50,
-        "duplicate_cards": true,
-        "card_text_1": "Serviço 1",
-        "card_text_2": "Serviço 2",
-        "card_text_3": "Serviço 3",
-        "card_text_4": "Serviço 4",
-        "card_text_5": "Serviço 5",
-        "include_css": true
-      }
     }
   },
   "order": [
+    "cards_scroll_eq8kHJ",
     "hero_jVaWmY",
     "marquee_nBmFwG",
     "product_list_qU3bEB",
     "section_rhpn4z",
     "hero_tmrLqC",
-    "collection_list_ptq9J3",
-    "cards_scroll_eq8kHJ"
+    "collection_list_ptq9J3"
   ]
 }

@@ -57,7 +57,6 @@
           "blocks": {}
         }
       },
-      "disabled": true,
       "settings": {
         "logo_position": "center",
         "menu_position": "left",
@@ -65,13 +64,13 @@
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
-        "show_country": false,
-        "country_selector_style": false,
-        "show_language": false,
+        "show_country": true,
+        "country_selector_style": true,
+        "show_language": true,
         "localization_position": "right",
         "localization_row": "top",
         "section_width": "page-width",
-        "section_height": "standard",
+        "section_height": "compact",
         "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
@@ -81,7 +80,7 @@
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": true,
         "home_color_scheme": "inverse",
-        "enable_transparent_header_product": false,
+        "enable_transparent_header_product": true,
         "product_color_scheme": "default",
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
