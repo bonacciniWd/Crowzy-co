@@ -43,8 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const header = document.querySelector("header") || document.getElementById("header-component") || document.querySelector(".header-section");
     const headerHeight = header ? header.offsetHeight : 0;
     
-    // Configuração inicial
-    gsap.set(title, { xPercent: 100 }); // Título fora da tela (à direita)
+    // Configuração inicial    gsap.set(title, { xPercent: 100 }); // Título fora da tela (à direita)
     gsap.set(cardsContainer, { 
       autoAlpha: 1 // Tornar visível
     });

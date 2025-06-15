@@ -9,18 +9,9 @@
 
 <div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}
     <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">
-      {% if section.settings.top_section_video != blank %}
-        <div class="video-container">
-          {{ section.settings.top_section_video | video_tag: 
-            autoplay: true, 
-            loop: true, 
-            muted: true, 
-            playsinline: true, 
-            controls: section.settings.show_video_controls, 
-            class: 'top-section-video'
-          }}
-        </div>
-      {% endif %}
+      <div class="text-scramble-container">
+        <h2 class="text-scramble" id="scramble-text-top-{{ section.id }}">{{ section.settings.scrambler_text | default: "Underground Streetwear" }}</h2>
+      </div>
     </div>
   {% endif %}
   
@@ -44,18 +35,31 @@
       {% if section.settings.card_image_6 != blank %}{% assign card_images = card_images | push: section.settings.card_image_6 %}{% endif %}
       {% if section.settings.card_image_7 != blank %}{% assign card_images = card_images | push: section.settings.card_image_7 %}{% endif %}
       {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}
-        {% if card_images.size > 0 %}
-        {% for image in card_images %}
-          <div class="card">
-            {{ image | image_url: width: 350 | image_tag: width: 350, height: 450, loading: 'lazy', class: 'card-image' }}
+        {% if card_images.size > 0 %}        {% for image in card_images %}
+          <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+            <img 
+              src="{{ image | img_url: '500x' }}" 
+              alt="{{ image.alt | escape }}" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+            />
           </div>
         {% endfor %}
         
         {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
         {% if section.settings.duplicate_cards and card_images.size < 8 %}
           {% for image in card_images %}
-            <div class="card">
-              {{ image | image_url: width: 350 | image_tag: width: 350, height: 450, loading: 'lazy', class: 'card-image' }}
+            <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+              <img 
+                src="{{ image | img_url: '500x' }}" 
+                alt="{{ image.alt | escape }}" 
+                class="card-image"
+                width="350"
+                height="450"
+                loading="lazy"
+              />
             </div>
           {% endfor %}
         {% endif %}
@@ -76,11 +80,21 @@
       {% endif %}
     </div>
   </div>
-    {% if section.settings.show_bottom_section %}
+  {% if section.settings.show_bottom_section %}
     <div class="section gradient-{{ section.settings.bottom_section_color | default: 'purple' }} bottom-section">
-      <div class="text-scramble-container">
-        <h2 class="text-scramble" id="scramble-text-{{ section.id }}">{{ section.settings.scrambler_text | default: "Underground Streetwear" }}</h2>
-      </div>
+      {% if section.settings.bottom_section_video != blank %}
+        <div class="video-container">
+          <video
+            src="{{ section.settings.bottom_section_video | file_url }}"
+            id="section-video-{{ section.id }}"
+            loop
+            muted
+            playsinline
+            class="bottom-section-video"
+            {% if section.settings.show_video_controls %}controls{% endif %}
+          ></video>
+        </div>
+      {% endif %}
     </div>
   {% endif %}
 </div>
@@ -194,25 +208,24 @@
     opacity: 0;
     visibility: hidden;
   }
-  
-  #cards-scroll-{{ section.id }} .card {
+    #cards-scroll-{{ section.id }} .card {
     width: {{ section.settings.card_width }}px;
     height: {{ section.settings.card_height }}px;
     border-radius: {{ section.settings.card_radius }}px;
     flex-shrink: 0;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block; /* Alterado para block */
     position: relative;
     transition: transform 0.3s ease;
+    background-color: #f0f0f0; /* Cor de fundo de fallback */
   }
   
   #cards-scroll-{{ section.id }} .card:hover {
     transform: translateY(-10px);
   }
-    #cards-scroll-{{ section.id }} .card img,
+  
+  #cards-scroll-{{ section.id }} .card img,
   #cards-scroll-{{ section.id }} .card-image {
     width: 100%;
     height: 100%;
@@ -221,6 +234,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1; /* Garantir que a imagem fique acima do fundo */
   }
   
   #cards-scroll-{{ section.id }} .card-content {
@@ -230,11 +244,14 @@
     font-weight: bold;
     font-size: 24px;
   }
-  
-  /* Estilos para o vídeo da seção superior */
-  #cards-scroll-{{ section.id }} .top-section {
+    /* Estilos para as seções superior e inferior */
+  #cards-scroll-{{ section.id }} .top-section,
+  #cards-scroll-{{ section.id }} .bottom-section {
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   #cards-scroll-{{ section.id }} .video-container {
@@ -246,7 +263,7 @@
     overflow: hidden;
   }
   
-  #cards-scroll-{{ section.id }} .top-section-video {
+  #cards-scroll-{{ section.id }} .bottom-section-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -256,20 +273,16 @@
     transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
+    opacity: 0; /* Inicialmente invisível */
   }
-  
-  /* Estilos para a seção inferior com text scrambler */
-  #cards-scroll-{{ section.id }} .bottom-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+    /* Estilos para o text scrambler */
   #cards-scroll-{{ section.id }} .text-scramble-container {
     text-align: center;
     padding: 2rem;
     width: 100%;
+    z-index: 2;
+    transform: translateY(50px);
+    opacity: 0;
   }
   
   #cards-scroll-{{ section.id }} .text-scramble {
@@ -301,6 +314,23 @@
       gap: calc({{ section.settings.cards_gap }}px * 0.5);
       padding: 0 calc({{ section.settings.cards_padding }}px * 0.5);
     }
+  }
+  
+  /* Estilos adicionais para garantir que os cards e imagens apareçam corretamente */
+  #cards-scroll-{{ section.id }} .cards-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  #cards-scroll-{{ section.id }} .card {
+    background-size: cover;
+    background-position: center;
+  }
+  
+  #cards-scroll-{{ section.id }} .card .card-image {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 </style>
 
@@ -373,8 +403,7 @@
         return this.chars[Math.floor(Math.random() * this.chars.length)];
       }
     }
-    
-    // Inicializar text scrambler quando a seção inferior estiver visível
+      // Inicializar text scrambler quando a seção estiver visível
     const scramblers = document.querySelectorAll('[id^="scramble-text-"]');
     if (scramblers.length > 0) {
       scramblers.forEach(el => {
@@ -382,36 +411,52 @@
         const originalText = el.innerText;
         
         // Configurar o ScrollTrigger para o text scrambler
-        gsap.registerPlugin(ScrollTrigger);
         ScrollTrigger.create({
-          trigger: el.parentElement,
+          trigger: el.closest('.section'),
           start: 'top 80%',
-          onEnter: () => fx.setText(originalText),
+          onEnter: () => {
+            setTimeout(() => fx.setText(originalText), 500); // Pequeno atraso para coordenar com a animação de entrada
+          },
           onLeaveBack: () => fx.setText(''),
           onEnterBack: () => fx.setText(originalText)
         });
       });
     }
-    
-    // Fix para vídeo em autoplay no iOS
-    function enableAutoplay() {
-      const videos = document.querySelectorAll('.top-section-video');
-      videos.forEach(video => {
-        if (video.paused) {
-          video.play().catch(error => console.log("Erro ao iniciar vídeo: ", error));
+      // Configurar animação do vídeo na seção inferior
+    const bottomVideo = document.querySelector('.bottom-section-video');
+    if (bottomVideo) {
+      // Configurar ScrollTrigger para o vídeo
+      ScrollTrigger.create({
+        trigger: bottomVideo.closest('.section'),
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.to(bottomVideo, {
+            opacity: 1,
+            duration: 1,
+            ease: 'power2.inOut',
+            onStart: () => {
+              bottomVideo.play().catch(e => console.log('Erro ao iniciar vídeo:', e));
+            }
+          });
         }
-      });
-      
-      // Remover listeners após sucesso
-      ['touchstart', 'scroll', 'click'].forEach(event => {
-        window.removeEventListener(event, enableAutoplay);
       });
     }
     
-    // Adicionar listeners para permitir autoplay em iOS
-    ['touchstart', 'scroll', 'click'].forEach(event => {
-      window.addEventListener(event, enableAutoplay, { once: false });
-    });
+    // Animação para o text scrambler na seção superior (subindo)
+    const scrambleContainer = document.querySelector('.text-scramble-container');
+    if (scrambleContainer) {
+      gsap.to(scrambleContainer, {
+        scrollTrigger: {
+          trigger: scrambleContainer.closest('.section'),
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power2.out'
+      });
+    }
   });
 </script>
 
@@ -450,16 +495,15 @@
       "id": "show_top_section",
       "label": "Mostrar seção superior",
       "default": true
-    },
-    {
+    },    {
       "type": "header",
-      "content": "Vídeo na Seção Superior"
+      "content": "Vídeo na Seção Inferior"
     },
     {
       "type": "video",
-      "id": "top_section_video",
-      "label": "Vídeo para Seção Superior",
-      "info": "Vídeo em autoplay e mudo"
+      "id": "bottom_section_video",
+      "label": "Vídeo para Seção Inferior",
+      "info": "Vídeo em autoplay ao scrollar e mudo"
     },
     {
       "type": "checkbox",
@@ -471,10 +515,9 @@
       "id": "show_bottom_section",
       "label": "Mostrar seção inferior",
       "default": true
-    },
-    {
+    },    {
       "type": "header",
-      "content": "Text Scrambler na Seção Inferior"
+      "content": "Text Scrambler na Seção Superior"
     },
     {
       "type": "text",
