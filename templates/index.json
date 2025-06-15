@@ -872,24 +872,24 @@
         "padding-block-end": 48
       }
     },
-    "cards_scroll_JGHFJz": {
+    "cards_scroll_HifRnG": {
       "type": "cards-scroll",
       "name": "Cards Scroll",
       "settings": {
         "heading": "SERVICES",
         "title_svg": "shopify://shop_images/CROWZY.png",
-        "section_height": 90,
+        "section_height": 100,
         "show_top_section": true,
         "show_video_controls": false,
         "show_bottom_section": true,
         "scrambler_text": "Underground Streetwear",
-        "scrambler_text_size": 55,
-        "scrambler_text_color": "#000000",
-        "top_section_color": "white",
-        "main_section_color": "black",
-        "bottom_section_color": "white",
+        "scrambler_text_size": 80,
+        "scrambler_text_color": "#FFFFFF",
+        "top_section_color": "green",
+        "main_section_color": "blue",
+        "bottom_section_color": "purple",
         "title_size": 150,
-        "title_color": "#000000",
+        "title_color": "#ffffff",
         "title_alignment": "center",
         "title_transform": "uppercase",
         "title_shadow": true,
@@ -897,19 +897,14 @@
         "card_height": 450,
         "card_radius": 16,
         "cards_gap": 50,
-        "cards_padding": 100,
-        "duplicate_cards": false,
-        "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
-        "card_image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
-        "card_image_3": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
-        "card_image_4": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
-        "card_image_5": "shopify://shop_images/Captura_de_tela_15-6-2025_165113_www.instagram.com.jpg",
-        "card_text_1": "",
-        "card_text_2": "",
-        "card_text_3": "",
-        "card_text_4": "",
-        "card_text_5": "",
-        "include_css": false
+        "cards_padding": 50,
+        "duplicate_cards": true,
+        "card_text_1": "Serviço 1",
+        "card_text_2": "Serviço 2",
+        "card_text_3": "Serviço 3",
+        "card_text_4": "Serviço 4",
+        "card_text_5": "Serviço 5",
+        "include_css": true
       }
     }
   },
@@ -920,6 +915,6 @@
     "section_rhpn4z",
     "hero_tmrLqC",
     "collection_list_ptq9J3",
-    "cards_scroll_JGHFJz"
+    "cards_scroll_HifRnG"
   ]
 }
