@@ -872,7 +872,7 @@
         "padding-block-end": 48
       }
     },
-    "cards_scroll_tkx9Cq": {
+    "cards_scroll_JGHFJz": {
       "type": "cards-scroll",
       "name": "Cards Scroll",
       "settings": {
@@ -894,17 +894,12 @@
         "cards_gap": 50,
         "cards_padding": 50,
         "duplicate_cards": true,
-        "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
-        "card_image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
-        "card_image_3": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
-        "card_image_4": "shopify://shop_images/Captura_de_tela_15-6-2025_165113_www.instagram.com.jpg",
-        "card_image_5": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
         "card_text_1": "Serviço 1",
         "card_text_2": "Serviço 2",
         "card_text_3": "Serviço 3",
         "card_text_4": "Serviço 4",
         "card_text_5": "Serviço 5",
-        "include_css": false
+        "include_css": true
       }
     }
   },
@@ -915,6 +910,6 @@
     "section_rhpn4z",
     "hero_tmrLqC",
     "collection_list_ptq9J3",
-    "cards_scroll_tkx9Cq"
+    "cards_scroll_JGHFJz"
   ]
 }
