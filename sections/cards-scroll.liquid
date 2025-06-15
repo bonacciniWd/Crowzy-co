@@ -33,11 +33,12 @@
       {% if section.settings.card_image_5 != blank %}{% assign card_images = card_images | push: section.settings.card_image_5 %}{% endif %}
       {% if section.settings.card_image_6 != blank %}{% assign card_images = card_images | push: section.settings.card_image_6 %}{% endif %}
       {% if section.settings.card_image_7 != blank %}{% assign card_images = card_images | push: section.settings.card_image_7 %}{% endif %}
-      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}
-      
-      {% comment %} Verificar se existem imagens nos cards {% endcomment %}
-      {% assign has_images = card_images.size > 0 %}
-        {% if has_images %}        {% comment %} Cards com imagens {% endcomment %}
+      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}      {% comment %} Verificar se existem imagens nos cards {% endcomment %}
+      {% assign has_images = false %}
+      {% if card_images.size > 0 %}
+        {% assign has_images = true %}
+      {% endif %}
+      {% if has_images %}        {% comment %} Cards com imagens {% endcomment %}
         {% for image in card_images %}
           <div class="card card-with-image">
             <div class="card-image-wrapper" style="background-image: url('{{ image | image_url: width: 800 }}');"></div>

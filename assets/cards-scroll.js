@@ -6,13 +6,6 @@
 
 // Esperar por GSAP e ScrollTrigger
 window.addEventListener("DOMContentLoaded", () => {
-  // Garantir que os cards e imagens estejam visíveis imediatamente
-  const cardsContainer = document.querySelector(".cards-container");
-  if (cardsContainer) {
-    cardsContainer.style.opacity = "1";
-    cardsContainer.style.visibility = "visible";
-  }
-  
   // Função para inicializar quando GSAP estiver carregado
   function initAnimation() {
     if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
