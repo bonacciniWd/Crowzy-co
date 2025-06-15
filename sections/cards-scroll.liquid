@@ -34,9 +34,8 @@
       {% if section.settings.card_image_5 != blank %}{% assign card_images = card_images | push: section.settings.card_image_5 %}{% endif %}
       {% if section.settings.card_image_6 != blank %}{% assign card_images = card_images | push: section.settings.card_image_6 %}{% endif %}
       {% if section.settings.card_image_7 != blank %}{% assign card_images = card_images | push: section.settings.card_image_7 %}{% endif %}
-      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}
-        {% if card_images.size > 0 %}        {% for image in card_images %}
-          <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}        {% if card_images.size > 0 %}        {% for image in card_images %}
+          <div class="card card-with-image">
             <img 
               src="{{ image | img_url: '500x' }}" 
               alt="{{ image.alt | escape }}" 
@@ -47,11 +46,10 @@
             />
           </div>
         {% endfor %}
-        
-        {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
+          {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
         {% if section.settings.duplicate_cards and card_images.size < 8 %}
           {% for image in card_images %}
-            <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+            <div class="card card-with-image">
               <img 
                 src="{{ image | img_url: '500x' }}" 
                 alt="{{ image.alt | escape }}" 
@@ -224,8 +222,7 @@
   #cards-scroll-{{ section.id }} .card:hover {
     transform: translateY(-10px);
   }
-  
-  #cards-scroll-{{ section.id }} .card img,
+    #cards-scroll-{{ section.id }} .card img,
   #cards-scroll-{{ section.id }} .card-image {
     width: 100%;
     height: 100%;
@@ -234,7 +231,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; /* Garantir que a imagem fique acima do fundo */
+    z-index: 5; /* Aumentado para garantir que a imagem fique acima de todos os elementos do card */
   }
   
   #cards-scroll-{{ section.id }} .card-content {
@@ -299,8 +296,7 @@
     opacity: 0.7;
   }
   
-  /* Responsividade */
-  @media (max-width: 768px) {
+  /* Responsividade */  @media (max-width: 768px) {
     #cards-scroll-{{ section.id }} .title-container h1 {
       font-size: clamp(32px, 8vw, 80px);
     }
@@ -314,9 +310,17 @@
       gap: calc({{ section.settings.cards_gap }}px * 0.5);
       padding: 0 calc({{ section.settings.cards_padding }}px * 0.5);
     }
+    
+    #cards-scroll-{{ section.id }} .text-scramble {
+      font-size: clamp(24px, 6vw, {{ section.settings.scrambler_text_size | divided_by: 2 }}px);
+      padding: 0 15px;
+    }
+    
+    #cards-scroll-{{ section.id }} .text-scramble-container {
+      padding: 1rem;
+    }
   }
-  
-  /* Estilos adicionais para garantir que os cards e imagens apareçam corretamente */
+    /* Estilos adicionais para garantir que os cards e imagens apareçam corretamente */
   #cards-scroll-{{ section.id }} .cards-container {
     opacity: 1 !important;
     visibility: visible !important;
@@ -327,10 +331,25 @@
     background-position: center;
   }
   
-  #cards-scroll-{{ section.id }} .card .card-image {
+  #cards-scroll-{{ section.id }} .card-with-image {
+    background: none !important;
+    background-color: transparent !important;
+    overflow: hidden;
+  }
+  
+  #cards-scroll-{{ section.id }} .card-with-image::before {
+    display: none !important;
+  }
+    #cards-scroll-{{ section.id }} .card .card-image {
     display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
 </style>
 
@@ -455,6 +474,46 @@
         y: 0,
         duration: 1.2,
         ease: 'power2.out'
+      });
+    }
+  });
+</script>
+
+<script>
+  // Script para garantir que as imagens dos cards apareçam corretamente
+  document.addEventListener('DOMContentLoaded', function() {
+    // Forçar visibilidade dos cards
+    const cardsContainer = document.querySelector(".cards-container");
+    if (cardsContainer) {
+      cardsContainer.style.opacity = "1";
+      cardsContainer.style.visibility = "visible";
+      console.log("Cards container visibilidade forçada");
+    }
+    
+    // Verificar se os cards com imagens estão visíveis
+    const imageCards = document.querySelectorAll(".card-with-image");
+    if (imageCards.length > 0) {
+      console.log("Encontrados " + imageCards.length + " cards com imagens");
+      imageCards.forEach(function(card) {
+        // Garantir que o card seja transparente
+        card.style.backgroundColor = "transparent";
+        
+        // Remover qualquer classe de gradiente se existir
+        card.classList.remove("gradient-0", "gradient-1", "gradient-2", "gradient-3", "gradient-4");
+        
+        // Garantir que a imagem esteja visível com z-index adequado
+        const cardImage = card.querySelector(".card-image");
+        if (cardImage) {
+          cardImage.style.opacity = "1";
+          cardImage.style.zIndex = "10";
+          console.log("Z-index aumentado na imagem do card");
+        }
+        
+        // Remover qualquer conteúdo de texto que possa estar sendo exibido
+        const cardContent = card.querySelector(".card-content");
+        if (cardContent) {
+          cardContent.style.display = "none";
+        }
       });
     }
   });
