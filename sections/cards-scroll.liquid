@@ -63,7 +63,20 @@
             </div>
           {% endfor %}
         {% endif %}
-     
+      {% else %}
+        {% comment %} Cards padrão com fundos gradientes {% endcomment %}
+        <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
+        <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
+        <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
+        <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
+        <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
+        {% if section.settings.duplicate_cards %}
+          <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
+          <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
+          <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
+          <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
+          <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
+        {% endif %}
       {% endif %}
     </div>
   </div>
