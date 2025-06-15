@@ -701,7 +701,7 @@
         "section_height_custom": 0,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
-        "overlay_color": "#645e5e00",
+        "overlay_color": "rgba(0,0,0,0)",
         "overlay_style": "gradient",
         "gradient_direction": "to top",
         "blurred_reflection": true,
@@ -874,7 +874,7 @@
         "padding-block-end": 48
       }
     },
-    "cards_scroll_ckNct9": {
+    "cards_scroll_eq8kHJ": {
       "type": "cards-scroll",
       "name": "Cards Scroll",
       "settings": {
@@ -884,11 +884,11 @@
         "show_video_controls": false,
         "show_bottom_section": true,
         "scrambler_text": "Underground Streetwear",
-        "scrambler_text_size": 55,
-        "scrambler_text_color": "#000000cf",
-        "top_section_color": "white",
-        "main_section_color": "black",
-        "bottom_section_color": "white",
+        "scrambler_text_size": 80,
+        "scrambler_text_color": "#FFFFFF",
+        "top_section_color": "green",
+        "main_section_color": "blue",
+        "bottom_section_color": "purple",
         "title_size": 150,
         "title_color": "#ffffff",
         "title_alignment": "center",
@@ -900,7 +900,6 @@
         "cards_gap": 50,
         "cards_padding": 50,
         "duplicate_cards": true,
-        "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
         "card_text_1": "Serviço 1",
         "card_text_2": "Serviço 2",
         "card_text_3": "Serviço 3",
@@ -917,6 +916,6 @@
     "section_rhpn4z",
     "hero_tmrLqC",
     "collection_list_ptq9J3",
-    "cards_scroll_ckNct9"
+    "cards_scroll_eq8kHJ"
   ]
 }
