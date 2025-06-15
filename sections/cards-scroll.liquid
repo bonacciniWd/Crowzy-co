@@ -1,0 +1,511 @@
+{% comment %}
+  Seção Cards Scroll - Baseada no exemplo do Codepen: https://codepen.io/GreenSock/pen/yyBKVxP
+  Adaptada para trabalhar com o layout completo do site, incluindo header
+{% endcomment %}
+
+{% if section.settings.include_css %}
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+<div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">
+  {% if section.settings.show_top_section %}
+    <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }}"></div>
+  {% endif %}
+  
+  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">
+    <div class="title-container">
+      <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
+    </div>
+    
+    <div class="cards-container">
+      {% assign card_images = '' | split: '' %}
+      {% if section.settings.card_image_1 != blank %}{% assign card_images = card_images | push: section.settings.card_image_1 %}{% endif %}
+      {% if section.settings.card_image_2 != blank %}{% assign card_images = card_images | push: section.settings.card_image_2 %}{% endif %}
+      {% if section.settings.card_image_3 != blank %}{% assign card_images = card_images | push: section.settings.card_image_3 %}{% endif %}
+      {% if section.settings.card_image_4 != blank %}{% assign card_images = card_images | push: section.settings.card_image_4 %}{% endif %}
+      {% if section.settings.card_image_5 != blank %}{% assign card_images = card_images | push: section.settings.card_image_5 %}{% endif %}
+      {% if section.settings.card_image_6 != blank %}{% assign card_images = card_images | push: section.settings.card_image_6 %}{% endif %}
+      {% if section.settings.card_image_7 != blank %}{% assign card_images = card_images | push: section.settings.card_image_7 %}{% endif %}
+      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}
+      
+      {% if card_images.size > 0 %}
+        {% for image in card_images %}
+          <div class="card gradient-{{ forloop.index | modulo: 5 }}">
+            {{ image | image_url: width: 350 | image_tag: width: 350, height: 450, loading: 'lazy' }}
+          </div>
+        {% endfor %}
+        
+        {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
+        {% if section.settings.duplicate_cards and card_images.size < 8 %}
+          {% for image in card_images %}
+            <div class="card gradient-{{ forloop.index | modulo: 5 }}">
+              {{ image | image_url: width: 350 | image_tag: width: 350, height: 450, loading: 'lazy' }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% else %}
+        {% comment %} Cards padrão com fundos gradientes {% endcomment %}
+        <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
+        <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
+        <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
+        <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
+        <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
+        {% if section.settings.duplicate_cards %}
+          <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
+          <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
+          <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
+          <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
+          <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  
+  {% if section.settings.show_bottom_section %}
+    <div class="section gradient-{{ section.settings.bottom_section_color | default: 'purple' }}"></div>
+  {% endif %}
+</div>
+
+<style>
+  .cards-scroll-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    position: relative;
+  }
+  
+  #cards-scroll-{{ section.id }} .section {
+    width: 100%;
+    height: {{ section.settings.section_height }}vh;
+    position: relative;
+  }
+  
+  /* Gradientes para fundos de seção */
+  #cards-scroll-{{ section.id }} .gradient-green {
+    background: linear-gradient(135deg, #3ca55c, #b5ac49);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-blue {
+    background: linear-gradient(135deg, #36D1DC, #5B86E5);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-blue-dark {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-purple {
+    background: linear-gradient(135deg, #DA22FF, #9733EE);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-red {
+    background: linear-gradient(135deg, #EB3349, #F45C43);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-orange {
+    background: linear-gradient(135deg, #FF8008, #FFC837);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-black {
+    background: linear-gradient(135deg, #333333, #111111);
+  }
+  
+  #cards-scroll-{{ section.id }} .gradient-white {
+    background: linear-gradient(135deg, #ffffff, #f5f5f5);
+  }
+  
+  /* Gradientes para cards */
+  #cards-scroll-{{ section.id }} .gradient-0 { background: linear-gradient(135deg, #FF8008, #FFC837); }
+  #cards-scroll-{{ section.id }} .gradient-1 { background: linear-gradient(135deg, #36D1DC, #5B86E5); }
+  #cards-scroll-{{ section.id }} .gradient-2 { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+  #cards-scroll-{{ section.id }} .gradient-3 { background: linear-gradient(135deg, #DA22FF, #9733EE); }
+  #cards-scroll-{{ section.id }} .gradient-4 { background: linear-gradient(135deg, #EB3349, #F45C43); }
+  
+  /* Configuração da seção de cards */
+  #cards-scroll-{{ section.id }} .cards-section {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  #cards-scroll-{{ section.id }} .title-container {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    text-align: {{ section.settings.title_alignment }};
+    {% if section.settings.title_alignment == 'left' %}
+      padding-left: 5%;
+    {% elsif section.settings.title_alignment == 'right' %}
+      padding-right: 5%;
+    {% endif %}
+  }
+  
+  #cards-scroll-{{ section.id }} .title-container h1 {
+    font-size: clamp(50px, 10vw, {{ section.settings.title_size }}px);
+    color: {{ section.settings.title_color }};
+    font-weight: 900;
+    line-height: 1;
+    text-transform: {{ section.settings.title_transform }};
+    margin: 0;
+    {% if section.settings.title_shadow %}
+      text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    {% endif %}
+  }
+  
+  #cards-scroll-{{ section.id }} .cards-container {
+    display: flex;
+    gap: {{ section.settings.cards_gap }}px;
+    padding: 0 {{ section.settings.cards_padding }}px;
+    flex-wrap: nowrap;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  #cards-scroll-{{ section.id }} .card {
+    width: {{ section.settings.card_width }}px;
+    height: {{ section.settings.card_height }}px;
+    border-radius: {{ section.settings.card_radius }}px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  
+  #cards-scroll-{{ section.id }} .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  #cards-scroll-{{ section.id }} .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  #cards-scroll-{{ section.id }} .card-content {
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    #cards-scroll-{{ section.id }} .title-container h1 {
+      font-size: clamp(32px, 8vw, 80px);
+    }
+    
+    #cards-scroll-{{ section.id }} .card {
+      width: calc({{ section.settings.card_width }}px * 0.7);
+      height: calc({{ section.settings.card_height }}px * 0.7);
+    }
+    
+    #cards-scroll-{{ section.id }} .cards-container {
+      gap: calc({{ section.settings.cards_gap }}px * 0.5);
+      padding: 0 calc({{ section.settings.cards_padding }}px * 0.5);
+    }
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="{{ 'cards-scroll.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Cards Scroll Animation",
+  "tag": "section",
+  "class": "cards-scroll-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Configurações Gerais"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "SERVICES"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Altura da Seção",
+      "min": 60,
+      "max": 150,
+      "step": 5,
+      "default": 100,
+      "info": "Altura em vh (porcentagem da altura da janela)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_top_section",
+      "label": "Mostrar seção superior",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_section",
+      "label": "Mostrar seção inferior",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Personalização de Cores"
+    },
+    {
+      "type": "select",
+      "id": "top_section_color",
+      "label": "Cor da Seção Superior",
+      "options": [
+        { "value": "green", "label": "Verde" },
+        { "value": "blue", "label": "Azul" },
+        { "value": "blue-dark", "label": "Azul Escuro" },
+        { "value": "purple", "label": "Roxo" },
+        { "value": "red", "label": "Vermelho" },
+        { "value": "orange", "label": "Laranja" },
+        { "value": "black", "label": "Preto" },
+        { "value": "white", "label": "Branco" }
+      ],
+      "default": "green"
+    },
+    {
+      "type": "select",
+      "id": "main_section_color",
+      "label": "Cor da Seção Principal",
+      "options": [
+        { "value": "green", "label": "Verde" },
+        { "value": "blue", "label": "Azul" },
+        { "value": "blue-dark", "label": "Azul Escuro" },
+        { "value": "purple", "label": "Roxo" },
+        { "value": "red", "label": "Vermelho" },
+        { "value": "orange", "label": "Laranja" },
+        { "value": "black", "label": "Preto" },
+        { "value": "white", "label": "Branco" }
+      ],
+      "default": "blue"
+    },
+    {
+      "type": "select",
+      "id": "bottom_section_color",
+      "label": "Cor da Seção Inferior",
+      "options": [
+        { "value": "green", "label": "Verde" },
+        { "value": "blue", "label": "Azul" },
+        { "value": "blue-dark", "label": "Azul Escuro" },
+        { "value": "purple", "label": "Roxo" },
+        { "value": "red", "label": "Vermelho" },
+        { "value": "orange", "label": "Laranja" },
+        { "value": "black", "label": "Preto" },
+        { "value": "white", "label": "Branco" }
+      ],
+      "default": "purple"
+    },
+    {
+      "type": "header",
+      "content": "Configuração do Título"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho do Título",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do Título",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Alinhamento do Título",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Transformação de Texto",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "uppercase", "label": "MAIÚSCULAS" },
+        { "value": "lowercase", "label": "minúsculas" },
+        { "value": "capitalize", "label": "Primeira Maiúscula" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_shadow",
+      "label": "Sombra no Título",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Configuração dos Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Largura do Card",
+      "min": 200,
+      "max": 500,
+      "step": 10,
+      "default": 350
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Altura do Card",
+      "min": 250,
+      "max": 600,
+      "step": 10,
+      "default": 450
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Raio de Borda",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "cards_gap",
+      "label": "Espaço entre Cards",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "cards_padding",
+      "label": "Padding Lateral",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "duplicate_cards",
+      "label": "Duplicar Cards",
+      "default": true,
+      "info": "Duplicar cards para criar mais conteúdo para rolagem"
+    },
+    {
+      "type": "header",
+      "content": "Cards com Imagens"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_1",
+      "label": "Imagem 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_2",
+      "label": "Imagem 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_3",
+      "label": "Imagem 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_4",
+      "label": "Imagem 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_5",
+      "label": "Imagem 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_6",
+      "label": "Imagem 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_7",
+      "label": "Imagem 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image_8",
+      "label": "Imagem 8"
+    },
+    {
+      "type": "header",
+      "content": "Cards com Texto (quando não há imagens)"
+    },
+    {
+      "type": "text",
+      "id": "card_text_1",
+      "label": "Texto Card 1",
+      "default": "Serviço 1"
+    },
+    {
+      "type": "text",
+      "id": "card_text_2",
+      "label": "Texto Card 2",
+      "default": "Serviço 2"
+    },
+    {
+      "type": "text",
+      "id": "card_text_3",
+      "label": "Texto Card 3",
+      "default": "Serviço 3"
+    },
+    {
+      "type": "text",
+      "id": "card_text_4",
+      "label": "Texto Card 4",
+      "default": "Serviço 4"
+    },
+    {
+      "type": "text",
+      "id": "card_text_5",
+      "label": "Texto Card 5",
+      "default": "Serviço 5"
+    },
+    {
+      "type": "header",
+      "content": "Recursos Avançados"
+    },
+    {
+      "type": "checkbox",
+      "id": "include_css",
+      "label": "Incluir CSS base",
+      "default": true,
+      "info": "Desative se o CSS base já estiver incluído em outro lugar"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cards Scroll",
+      "category": "Interactive"
+    }
+  ]
+}
+{% endschema %}

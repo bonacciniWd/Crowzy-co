@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign media_count = 0
   if section.settings.image_1 != blank and section.settings.image_2 != blank
@@ -173,6 +171,8 @@
     {% else %}
       --hero-min-height: var(--section-height-{{ section.settings.section_height }});
     {% endif %}
+    margin-top: 0;
+    padding-top: 0;
   "
   {% if request.visual_preview_mode %}
     data-shopify-visual-preview
@@ -194,6 +194,8 @@
     hero__content-wrapper applies section_width.
   {% endcomment %}
 
+
+  
   <div
     class="hero__container spacing-style section section--full-width"
     style="      {% render 'spacing-style', settings: section.settings %}"
@@ -220,6 +222,9 @@
       %}
       {{ media }}
     </div>
+
+
+    
     <div
       class="
         hero__content-wrapper
@@ -237,6 +242,10 @@
   </div>
 </div>
 
+
+
+
+
 {% stylesheet %}
   .hero-wrapper {
     --hero-height-offset: 0px;
@@ -252,6 +261,9 @@
   .hero {
     position: relative;
     min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
+    z-index: 1;
+    margin-top: 0;
+    padding-top: 0;
   }
 
   .hero[data-shopify-visual-preview] {
