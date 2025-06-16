@@ -24,59 +24,115 @@
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
       {% endif %}
     </div>
-    
-    <div class="cards-container">
-      {% assign card_images = '' | split: '' %}
-      {% if section.settings.card_image_1 != blank %}{% assign card_images = card_images | push: section.settings.card_image_1 %}{% endif %}
-      {% if section.settings.card_image_2 != blank %}{% assign card_images = card_images | push: section.settings.card_image_2 %}{% endif %}
-      {% if section.settings.card_image_3 != blank %}{% assign card_images = card_images | push: section.settings.card_image_3 %}{% endif %}
-      {% if section.settings.card_image_4 != blank %}{% assign card_images = card_images | push: section.settings.card_image_4 %}{% endif %}
-      {% if section.settings.card_image_5 != blank %}{% assign card_images = card_images | push: section.settings.card_image_5 %}{% endif %}
-      {% if section.settings.card_image_6 != blank %}{% assign card_images = card_images | push: section.settings.card_image_6 %}{% endif %}
-      {% if section.settings.card_image_7 != blank %}{% assign card_images = card_images | push: section.settings.card_image_7 %}{% endif %}
-      {% if section.settings.card_image_8 != blank %}{% assign card_images = card_images | push: section.settings.card_image_8 %}{% endif %}
-        {% if card_images.size > 0 %}        {% for image in card_images %}
-          <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
+      <div class="cards-container">
+      {% comment %} Usando referências diretas aos assets para as imagens dos cards {% endcomment %}
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'cross.jpg' | asset_url }}" 
+            alt="Cross" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'web.jpg' | asset_url }}" 
+            alt="Web" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'start.jpg' | asset_url }}" 
+            alt="Start" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'cleric.jpg' | asset_url }}" 
+            alt="Cleric" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'shadow.jpg' | asset_url }}" 
+            alt="Shadow" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      
+      {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
+      {% if section.settings.duplicate_cards %}
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
             <img 
-              src="{{ image | img_url: '500x' }}" 
-              alt="{{ image.alt | escape }}" 
+              src="{{ 'cross.jpg' | asset_url }}" 
+              alt="Cross" 
               class="card-image"
               width="350"
               height="450"
               loading="lazy"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
             />
           </div>
-        {% endfor %}
-        
-        {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
-        {% if section.settings.duplicate_cards and card_images.size < 8 %}
-          {% for image in card_images %}
-            <div class="card" style="background-image: url('{{ image | img_url: '500x' }}');">
-              <img 
-                src="{{ image | img_url: '500x' }}" 
-                alt="{{ image.alt | escape }}" 
-                class="card-image"
-                width="350"
-                height="450"
-                loading="lazy"
-              />
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% else %}
-        {% comment %} Cards padrão com fundos gradientes {% endcomment %}
-        <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
-        <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
-        <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
-        <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
-        <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
-        {% if section.settings.duplicate_cards %}
-          <div class="card gradient-0"><div class="card-content">{{ section.settings.card_text_1 | default: "" }}</div></div>
-          <div class="card gradient-1"><div class="card-content">{{ section.settings.card_text_2 | default: "" }}</div></div>
-          <div class="card gradient-2"><div class="card-content">{{ section.settings.card_text_3 | default: "" }}</div></div>
-          <div class="card gradient-3"><div class="card-content">{{ section.settings.card_text_4 | default: "" }}</div></div>
-          <div class="card gradient-4"><div class="card-content">{{ section.settings.card_text_5 | default: "" }}</div></div>
-        {% endif %}
+        </div>
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+            <img 
+              src="{{ 'web.jpg' | asset_url }}" 
+              alt="Web" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+            />
+          </div>
+        </div>
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+            <img 
+              src="{{ 'start.jpg' | asset_url }}" 
+              alt="Start" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+            />
+          </div>
+        </div>
       {% endif %}
     </div>
   </div>
@@ -197,35 +253,33 @@
     height: auto;
     display: inline-block;
   }
-  
-  #cards-scroll-{{ section.id }} .cards-container {
+    #cards-scroll-{{ section.id }} .cards-container {
     display: flex;
     gap: {{ section.settings.cards_gap }}px;
     padding: 0 {{ section.settings.cards_padding }}px;
     flex-wrap: nowrap;
     position: relative;
     z-index: 2;
-    opacity: 0;
-    visibility: hidden;
-  }
-    #cards-scroll-{{ section.id }} .card {
+    opacity: 1; /* Iniciar visível e deixar GSAP controlar */
+    visibility: visible;
+    will-change: transform; /* Melhora a performance da animação */
+  }    #cards-scroll-{{ section.id }} .card {
     width: {{ section.settings.card_width }}px;
     height: {{ section.settings.card_height }}px;
     border-radius: {{ section.settings.card_radius }}px;
     flex-shrink: 0;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     overflow: hidden;
-    display: block; /* Alterado para block */
-    position: relative;
+    position: relative; /* Removido display: block para comportamento correto em flex */
     transition: transform 0.3s ease;
     background-color: #f0f0f0; /* Cor de fundo de fallback */
+    transform-origin: center center; /* Melhora a performance da animação */
   }
   
   #cards-scroll-{{ section.id }} .card:hover {
     transform: translateY(-10px);
   }
-  
-  #cards-scroll-{{ section.id }} .card img,
+    #cards-scroll-{{ section.id }} .card img,
   #cards-scroll-{{ section.id }} .card-image {
     width: 100%;
     height: 100%;
@@ -234,7 +288,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; /* Garantir que a imagem fique acima do fundo */
+    z-index: 5; /* Aumentado para garantir que a imagem fique acima de todos os elementos do card */
   }
   
   #cards-scroll-{{ section.id }} .card-content {
@@ -299,8 +353,7 @@
     opacity: 0.7;
   }
   
-  /* Responsividade */
-  @media (max-width: 768px) {
+  /* Responsividade */  @media (max-width: 768px) {
     #cards-scroll-{{ section.id }} .title-container h1 {
       font-size: clamp(32px, 8vw, 80px);
     }
@@ -314,24 +367,74 @@
       gap: calc({{ section.settings.cards_gap }}px * 0.5);
       padding: 0 calc({{ section.settings.cards_padding }}px * 0.5);
     }
+    
+    #cards-scroll-{{ section.id }} .text-scramble {
+      font-size: clamp(24px, 6vw, {{ section.settings.scrambler_text_size | divided_by: 2 }}px);
+      padding: 0 15px;
+    }
+    
+    #cards-scroll-{{ section.id }} .text-scramble-container {
+      padding: 1rem;
+    }
   }
-  
-  /* Estilos adicionais para garantir que os cards e imagens apareçam corretamente */
-  #cards-scroll-{{ section.id }} .cards-container {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
+  /* Removido código duplicado para .cards-container - não é mais necessário !important */
   
   #cards-scroll-{{ section.id }} .card {
     background-size: cover;
     background-position: center;
   }
-  
-  #cards-scroll-{{ section.id }} .card .card-image {
+    #cards-scroll-{{ section.id }} .card-with-image {
+    background: none !important;
+    background-color: transparent !important;
+    overflow: hidden;
+    position: relative !important;
     display: block !important;
+    z-index: 5 !important;
+  }
+  
+  #cards-scroll-{{ section.id }} .card-with-image::before {
+    display: none !important; /* Remover gradientes e overlays */
+    content: none !important;
+  }
+  
+  #cards-scroll-{{ section.id }} .card-with-image::after {
+    display: none !important; /* Remover gradientes e overlays */
+    content: none !important;
+  }
+  
+  #cards-scroll-{{ section.id }} .card-with-image * {
     opacity: 1 !important;
     visibility: visible !important;
   }
+  
+  #cards-scroll-{{ section.id }} .card-image-container {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 10 !important;
+  }
+  
+  #cards-scroll-{{ section.id }} .card-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 15 !important;
+  }
+  
+  /* Garantir que não existam gradientes ou sobreposições nas imagens */
+  #cards-scroll-{{ section.id }} .card-with-image .card-content {
+    display: none !important;
+  }
+
+  /* Estilos críticos de imagem aplicados direto no elemento via style inline */
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -457,6 +560,149 @@
         ease: 'power2.out'
       });
     }
+  });
+</script>
+
+<script>  // Script otimizado para garantir que as imagens dos cards apareçam corretamente
+  document.addEventListener('DOMContentLoaded', function() {
+    // Forçar visibilidade dos cards
+    const cardsContainer = document.querySelector(".cards-container");
+    if (cardsContainer) {
+      cardsContainer.style.opacity = "1";
+      cardsContainer.style.visibility = "visible";
+      console.log("Cards container visibilidade forçada");
+    }
+    
+    // Verificar se os cards com imagens estão visíveis
+    const imageCards = document.querySelectorAll(".card-with-image");
+    if (imageCards.length > 0) {
+      console.log("Encontrados " + imageCards.length + " cards com imagens diretas dos assets");
+      
+      imageCards.forEach(function(card, index) {
+        // Força o estilo diretamente no elemento card
+        card.setAttribute("style", 
+          "background: none !important;" + 
+          "background-color: transparent !important;" +
+          "display: block !important;" +
+          "opacity: 1 !important;" +
+          "visibility: visible !important;" +
+          "overflow: hidden !important;" +
+          "position: relative !important;" +
+          "z-index: 5 !important;"
+        );
+        
+        // Remover todas as classes de gradiente
+        for (let i = 0; i < 10; i++) {
+          card.classList.remove("gradient-" + i);
+        }
+        
+        // Garantir que a imagem esteja visível
+        const cardImage = card.querySelector(".card-image");
+        if (cardImage) {
+          cardImage.setAttribute("style",
+            "width: 100% !important;" +
+            "height: 100% !important;" +
+            "object-fit: cover !important;" +
+            "display: block !important;" +
+            "position: absolute !important;" +
+            "top: 0 !important;" +
+            "left: 0 !important;" +
+            "opacity: 1 !important;" +
+            "visibility: visible !important;" +
+            "z-index: 10 !important;"
+          );
+          
+          // Pré-carregar a imagem para garantir que esteja disponível
+          const preloadImg = new Image();
+          preloadImg.src = cardImage.src;
+          
+          console.log("Aplicado estilo direto na imagem do card " + index + ": " + cardImage.src);
+        } else {
+          console.warn("Card " + index + " não tem imagem");
+        }
+        
+        // Verificar e corrigir o contêiner da imagem
+        const imageContainer = card.querySelector(".card-image-container");
+        if (imageContainer) {
+          imageContainer.setAttribute("style",
+            "position: absolute !important;" +
+            "top: 0 !important;" +
+            "left: 0 !important;" +
+            "width: 100% !important;" +
+            "height: 100% !important;" +
+            "z-index: 10 !important;" +
+            "opacity: 1 !important;" +
+            "visibility: visible !important;"
+          );
+        }
+        
+        // Remover qualquer conteúdo de texto
+        const cardContent = card.querySelector(".card-content");
+        if (cardContent) {
+          cardContent.style.display = "none";
+        }
+      });
+      
+      console.log("Aplicada correção completa a todos os " + imageCards.length + " cards");
+    }
+  });
+</script>
+
+<script>
+  // Verificação final após carregamento completo
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      console.log("Verificação final de imagens após carregamento completo");
+      
+      // Verificar se todas as imagens carregaram
+      const imageCards = document.querySelectorAll(".card-with-image");
+      let allLoaded = true;
+      
+      imageCards.forEach((card, index) => {
+        const img = card.querySelector(".card-image");
+        if (img) {
+          if (!img.complete) {
+            allLoaded = false;
+            console.warn(`Imagem do card ${index} ainda não carregou completamente`);
+          }
+        } else {
+          allLoaded = false;
+        }
+      });
+      
+      // Aplicar solução de fallback se necessário
+      if (!allLoaded) {
+        console.warn("Algumas imagens não carregaram corretamente, aplicando solução alternativa");
+        
+        // Usar a abordagem de background-image como fallback
+        imageCards.forEach((card, index) => {
+          const img = card.querySelector(".card-image");
+          if (img && img.src) {
+            // Usar a URL da imagem como background-image do card
+            card.style.backgroundImage = `url('${img.src}')`;
+            card.style.backgroundSize = "cover";
+            card.style.backgroundPosition = "center";
+            console.log(`Aplicado background-image fallback no card ${index}: ${img.src}`);
+          } else {
+            // Como último recurso, usar fallback para imagens específicas com base no índice
+            const fallbackImages = [
+              "{{ 'cross.jpg' | asset_url }}",
+              "{{ 'web.jpg' | asset_url }}",
+              "{{ 'start.jpg' | asset_url }}",
+              "{{ 'cleric.jpg' | asset_url }}",
+              "{{ 'shadow.jpg' | asset_url }}"
+            ];
+            
+            if (fallbackImages[index % fallbackImages.length]) {
+              card.style.backgroundImage = `url('${fallbackImages[index % fallbackImages.length]}')`;
+              card.style.backgroundSize = "cover";
+              card.style.backgroundPosition = "center";
+              console.log(`Aplicado background-image fallback direto para o card ${index}`);
+            }
+          }
+        });
+      }
+    }, 1000);
   });
 </script>
 
