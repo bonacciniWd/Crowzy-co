@@ -51,69 +51,6 @@
         "include_css": true
       }
     },
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_iXYWz6": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": true,
-            "background_color": "#00000026",
-            "corner_radius": 9,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_iXYWz6"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "link": "",
-        "open_in_new_tab": false,
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/Whisk_4c047374a8_875edc42-9564-4008-a7b2-3d4f9439b774.jpg",
-        "media_type_2": "image",
-        "image_2": "shopify://shop_images/Whisk_4c047374a8.jpg",
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "center",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 66,
-        "section_width": "full-width",
-        "section_height": "large",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#00000014",
-        "overlay_style": "gradient",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": true,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 100
-      }
-    },
     "marquee_nBmFwG": {
       "type": "marquee",
       "blocks": {
@@ -676,7 +613,7 @@
             "text_AcET7g": {
               "type": "text",
               "settings": {
-                "text": "<p>Acompanhe nos nas redes sociais, fique por dentro de tudo que rola.</p>",
+                "text": "<h2>Join us on social networks to stay in the loop on everything that's going on.</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -914,15 +851,78 @@
         "padding-block-start": 44,
         "padding-block-end": 48
       }
+    },
+    "hero_jVaWmY": {
+      "type": "hero",
+      "blocks": {
+        "text_iXYWz6": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": true,
+            "background_color": "#00000026",
+            "corner_radius": 9,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_iXYWz6"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "link": "",
+        "open_in_new_tab": false,
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
+        "media_type_2": "image",
+        "image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-6",
+        "toggle_overlay": true,
+        "overlay_color": "#00000014",
+        "overlay_style": "gradient",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": true,
+        "reflection_opacity": 64,
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
     }
   },
   "order": [
     "cards_scroll_4wJ9QF",
-    "hero_jVaWmY",
     "marquee_nBmFwG",
     "product_list_qU3bEB",
     "section_rhpn4z",
     "hero_tmrLqC",
-    "collection_list_ptq9J3"
+    "collection_list_ptq9J3",
+    "hero_jVaWmY"
   ]
 }
