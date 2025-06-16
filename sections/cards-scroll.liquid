@@ -209,24 +209,25 @@
   #cards-scroll-{{ section.id }} .gradient-3 { background: linear-gradient(135deg, #DA22FF, #9733EE); }
   #cards-scroll-{{ section.id }} .gradient-4 { background: linear-gradient(135deg, #EB3349, #F45C43); }
   
-  /* Configuração da seção de cards */
-  #cards-scroll-{{ section.id }} .cards-section {
+  /* Configuração da seção de cards */  #cards-scroll-{{ section.id }} .cards-section {
     display: flex;
     align-items: center;
     overflow: hidden;
     position: relative;
+    padding-bottom: 3rem; /* Adicionar espaço extra na parte inferior */
   }
-  
-  #cards-scroll-{{ section.id }} .title-container {
+    #cards-scroll-{{ section.id }} .title-container {
     width: 100%;
     position: absolute;
-    z-index: 1;
+    z-index: 20; /* Aumentado para garantir que fique acima dos cards */
     text-align: {{ section.settings.title_alignment }};
     {% if section.settings.title_alignment == 'left' %}
       padding-left: 5%;
     {% elsif section.settings.title_alignment == 'right' %}
       padding-right: 5%;
     {% endif %}
+    /* Sombra para melhorar visibilidade sobre qualquer fundo */
+    filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5));
   }
   
   #cards-scroll-{{ section.id }} .title-container h1 {
@@ -253,7 +254,7 @@
     height: auto;
     display: inline-block;
   }
-    #cards-scroll-{{ section.id }} .cards-container {
+  #cards-scroll-{{ section.id }} .cards-container {
     display: flex;
     gap: {{ section.settings.cards_gap }}px;
     padding: 0 {{ section.settings.cards_padding }}px;
@@ -263,7 +264,8 @@
     opacity: 1; /* Iniciar visível e deixar GSAP controlar */
     visibility: visible;
     will-change: transform; /* Melhora a performance da animação */
-  }    #cards-scroll-{{ section.id }} .card {
+    padding-right: 100vw; /* Adicionar espaço extra à direita igual a uma largura de tela */
+  }#cards-scroll-{{ section.id }} .card {
     width: {{ section.settings.card_width }}px;
     height: {{ section.settings.card_height }}px;
     border-radius: {{ section.settings.card_radius }}px;
