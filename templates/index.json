@@ -40,7 +40,7 @@
         "card_radius": 16,
         "cards_gap": 50,
         "cards_padding": 55,
-        "duplicate_cards": false,
+        "duplicate_cards": true,
         "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
         "card_image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
         "card_image_3": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
