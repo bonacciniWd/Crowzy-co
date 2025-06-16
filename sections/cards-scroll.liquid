@@ -29,7 +29,7 @@
       <div class="card card-with-image" style="background-color: transparent !important;">
         <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
           <img 
-            src="{{ 'cross.jpeg' | asset_url }}" 
+            src="{{ 'cross.jpg' | asset_url }}" 
             alt="Cross" 
             class="card-image"
             width="350"
@@ -42,7 +42,7 @@
       <div class="card card-with-image" style="background-color: transparent !important;">
         <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
           <img 
-            src="{{ 'web.jpeg' | asset_url }}" 
+            src="{{ 'web.jpg' | asset_url }}" 
             alt="Web" 
             class="card-image"
             width="350"
@@ -55,7 +55,7 @@
       <div class="card card-with-image" style="background-color: transparent !important;">
         <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
           <img 
-            src="{{ 'start.jpeg' | asset_url }}" 
+            src="{{ 'start.jpg' | asset_url }}" 
             alt="Start" 
             class="card-image"
             width="350"
@@ -68,7 +68,7 @@
       <div class="card card-with-image" style="background-color: transparent !important;">
         <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
           <img 
-            src="{{ 'cleric.jpeg' | asset_url }}" 
+            src="{{ 'cleric.jpg' | asset_url }}" 
             alt="Cleric" 
             class="card-image"
             width="350"
@@ -81,7 +81,7 @@
       <div class="card card-with-image" style="background-color: transparent !important;">
         <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
           <img 
-            src="{{ 'shadow.jpeg' | asset_url }}" 
+            src="{{ 'shadow.jpg' | asset_url }}" 
             alt="Shadow" 
             class="card-image"
             width="350"
@@ -97,7 +97,7 @@
         <div class="card card-with-image" style="background-color: transparent !important;">
           <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
             <img 
-              src="{{ 'cross.jpeg' | asset_url }}" 
+              src="{{ 'cross.jpg' | asset_url }}" 
               alt="Cross" 
               class="card-image"
               width="350"
@@ -110,7 +110,7 @@
         <div class="card card-with-image" style="background-color: transparent !important;">
           <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
             <img 
-              src="{{ 'web.jpeg' | asset_url }}" 
+              src="{{ 'web.jpg' | asset_url }}" 
               alt="Web" 
               class="card-image"
               width="350"
@@ -123,7 +123,7 @@
         <div class="card card-with-image" style="background-color: transparent !important;">
           <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
             <img 
-              src="{{ 'start.jpeg' | asset_url }}" 
+              src="{{ 'start.jpg' | asset_url }}" 
               alt="Start" 
               class="card-image"
               width="350"
@@ -215,18 +215,15 @@
     align-items: center;
     overflow: hidden;
     position: relative;
-  }
-  
-  #cards-scroll-{{ section.id }} .title-container {
+  }  #cards-scroll-{{ section.id }} .title-container {
     width: 100%;
     position: absolute;
-    z-index: 1;
-    text-align: {{ section.settings.title_alignment }};
-    {% if section.settings.title_alignment == 'left' %}
-      padding-left: 5%;
-    {% elsif section.settings.title_alignment == 'right' %}
-      padding-right: 5%;
-    {% endif %}
+    z-index: 15; /* Aumentado para garantir que fique sobre outros elementos */
+    text-align: center; /* Forçar centralização independente da configuração */
+    /* Posicionamento inicial */
+    right: -100%; /* Inicialmente fora da tela à direita */
+    top: 50%; /* Centralizar verticalmente */
+    transform: translateY(-50%); /* Centralizar verticalmente */
   }
   
   #cards-scroll-{{ section.id }} .title-container h1 {
@@ -246,12 +243,39 @@
     margin: 0 auto;
     text-align: {{ section.settings.title_alignment }};
   }
-  
   #cards-scroll-{{ section.id }} .title-svg {
     max-width: 100%;
     width: min(800px, 90vw);
     height: auto;
     display: inline-block;
+    filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.5)); /* Adicionar um leve efeito de brilho */
+    transition: filter 0.3s ease;
+  }
+  
+  /* Garantir que o título seja clicável após a animação */
+  #cards-scroll-{{ section.id }} .title-container.end-animation {
+    pointer-events: all;
+    cursor: pointer;
+    z-index: 50 !important; /* Garantir que fique acima de tudo */
+  }
+  
+  /* Realçar o título no final da animação */
+  #cards-scroll-{{ section.id }} .title-container.end-animation .title-svg,
+  #cards-scroll-{{ section.id }} .title-container.end-animation h1 {
+    filter: drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.8));
+    transform: scale(1.05);
+    transition: all 0.5s ease;
+  }
+  
+  /* Marcador visual para indicar o final da seção */
+  #cards-scroll-{{ section.id }} .scroller-end {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    color: red;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    pointer-events: none;
   }
     #cards-scroll-{{ section.id }} .cards-container {
     display: flex;
