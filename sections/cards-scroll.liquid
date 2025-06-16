@@ -22,117 +22,71 @@
       {% else %}
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
       {% endif %}
-    </div>
-      <div class="cards-container">
-      {% comment %} Usando referências diretas aos assets para as imagens dos cards {% endcomment %}
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'cross.jpeg' | asset_url }}" 
-            alt="Cross" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
+    </div>      <div class="cards-container">
+      {% comment %} Cards com sistema híbrido: image picker + fallback para imagens fixas {% endcomment %}
+      
+      {% assign fallback_images = 'cross.jpeg,web.jpeg,start.jpeg,cleric.jpeg,shadow.jpeg' | split: ',' %}
+      {% assign fallback_alts = 'Cross,Web,Start,Cleric,Shadow' | split: ',' %}
+      
+      {% for i in (1..5) %}
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+            {% assign image_setting = 'card_image_' | append: i %}
+            {% assign selected_image = section.settings[image_setting] %}
+            {% if selected_image != blank %}
+              {{ selected_image | image_url: width: 350 | image_tag: 
+                class: 'card-image',
+                width: '350',
+                height: '450',
+                loading: 'lazy',
+                style: 'width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;'
+              }}
+            {% else %}
+              {% assign fallback_index = forloop.index0 %}
+              <img 
+                src="{{ fallback_images[fallback_index] | asset_url }}" 
+                alt="{{ fallback_alts[fallback_index] }}" 
+                class="card-image"
+                width="350"
+                height="450"
+                loading="lazy"
+                style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+              />
+            {% endif %}
+          </div>
         </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'web.jpeg' | asset_url }}" 
-            alt="Web" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'start.jpeg' | asset_url }}" 
-            alt="Start" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'cleric.jpeg' | asset_url }}" 
-            alt="Cleric" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'shadow.jpeg' | asset_url }}" 
-            alt="Shadow" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
+      {% endfor %}
       
       {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
       {% if section.settings.duplicate_cards %}
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'cross.jpeg' | asset_url }}" 
-              alt="Cross" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
+        {% for i in (1..3) %}
+          <div class="card card-with-image" style="background-color: transparent !important;">
+            <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+              {% assign image_setting = 'card_image_' | append: i %}
+              {% assign selected_image = section.settings[image_setting] %}
+              {% if selected_image != blank %}
+                {{ selected_image | image_url: width: 350 | image_tag: 
+                  class: 'card-image',
+                  width: '350',
+                  height: '450',
+                  loading: 'lazy',
+                  style: 'width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;'
+                }}
+              {% else %}
+                {% assign fallback_index = forloop.index0 %}
+                <img 
+                  src="{{ fallback_images[fallback_index] | asset_url }}" 
+                  alt="{{ fallback_alts[fallback_index] }}" 
+                  class="card-image"
+                  width="350"
+                  height="450"
+                  loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+                />
+              {% endif %}
+            </div>
           </div>
-        </div>
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'web.jpeg' | asset_url }}" 
-              alt="Web" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'start.jpeg' | asset_url }}" 
-              alt="Start" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
-      {% endif %}
+        {% endfor %}      {% endif %}
     </div>
   </div>
   {% if section.settings.show_bottom_section %}
