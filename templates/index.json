@@ -9,17 +9,22 @@
  */
 {
   "sections": {
-    "cards_scroll_KMfQrh": {
+    "cards_scroll_4wJ9QF": {
       "type": "cards-scroll",
+      "custom_css": [
+        ".title-svg-container {max-width: 350px; max-height: 120px;}"
+      ],
       "name": "Cards Scroll",
       "settings": {
         "heading": "SERVICES",
-        "title_svg": "shopify://shop_images/CROWZY.png",
-        "section_height": 100,
+        "title_svg": "shopify://shop_images/crow.svg",
+        "section_height": 95,
         "show_top_section": true,
         "show_video_controls": false,
         "show_bottom_section": true,
-        "scrambler_text": "Underground Streetwear",
+        "scramble_text_1": "Underground Streetwear",
+        "scramble_text_2": "Survival of the fittest",
+        "scramble_text_3": "it's Crowzy Company",
         "scrambler_text_size": 80,
         "scrambler_text_color": "#000000cf",
         "top_section_color": "white",
@@ -34,77 +39,16 @@
         "card_height": 450,
         "card_radius": 16,
         "cards_gap": 50,
-        "cards_padding": 50,
-        "duplicate_cards": true,
+        "cards_padding": 55,
+        "duplicate_cards": false,
+        "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
+        "card_image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
         "card_text_1": "Serviço 1",
         "card_text_2": "Serviço 2",
         "card_text_3": "Serviço 3",
         "card_text_4": "Serviço 4",
         "card_text_5": "Serviço 5",
         "include_css": true
-      }
-    },
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_iXYWz6": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": true,
-            "background_color": "#00000026",
-            "corner_radius": 9,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_iXYWz6"
-      ],
-      "disabled": true,
-      "name": "t:names.hero",
-      "settings": {
-        "link": "",
-        "open_in_new_tab": false,
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/Whisk_4c047374a8_875edc42-9564-4008-a7b2-3d4f9439b774.jpg",
-        "media_type_2": "image",
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "space-between",
-        "gap": 20,
-        "section_width": "page-width",
-        "section_height": "small",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#00000014",
-        "overlay_style": "gradient",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": true,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 48
       }
     },
     "marquee_nBmFwG": {
@@ -669,17 +613,17 @@
             "text_AcET7g": {
               "type": "text",
               "settings": {
-                "text": "<p>Explore our latest products.</p>",
+                "text": "<h2>Join us on social networks to stay in the loop on everything that's going on.</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h1",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "type_preset": "custom",
+                "font": "var(--font-accent--family)",
+                "font_size": "3.5rem",
                 "line_height": "normal",
-                "letter_spacing": "normal",
+                "letter_spacing": "loose",
                 "case": "none",
-                "wrap": "pretty",
+                "wrap": "balance",
                 "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
@@ -690,31 +634,29 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "icon_kRNMWa": {
+              "type": "icon",
+              "name": "t:names.icon",
+              "settings": {
+                "icon": "price_tag",
+                "image_upload": "shopify://shop_images/2.svg",
+                "width": 86,
+                "link": "",
+                "open_in_new_tab": false
+              },
+              "blocks": {}
             }
           },
           "block_order": [
-            "text_AcET7g"
+            "text_AcET7g",
+            "icon_kRNMWa"
           ]
-        },
-        "button_LGkP36": {
-          "type": "button",
-          "settings": {
-            "label": "Shop Now",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "spacer_8pnkj3",
-        "marquee_hfc7r3",
-        "button_LGkP36"
+        "marquee_hfc7r3"
       ],
       "name": "t:names.hero_marquee",
       "settings": {
@@ -723,27 +665,27 @@
         "media_type_1": "image",
         "image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
         "media_type_2": "image",
-        "image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
+        "image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
         "content_direction": "column",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-end",
-        "vertical_alignment_flex_direction_column": "flex-end",
+        "vertical_alignment_flex_direction_column": "center",
         "gap": 100,
         "section_width": "page-width",
         "section_height": "auto",
         "section_height_custom": 0,
         "color_scheme": "scheme-5",
         "toggle_overlay": true,
-        "overlay_color": "rgba(0,0,0,0)",
+        "overlay_color": "#120c0ce3",
         "overlay_style": "gradient",
         "gradient_direction": "to top",
         "blurred_reflection": true,
-        "reflection_opacity": 75,
-        "padding-block-start": 0,
-        "padding-block-end": 40
+        "reflection_opacity": 81,
+        "padding-block-start": 100,
+        "padding-block-end": 86
       }
     },
     "collection_list_ptq9J3": {
@@ -909,15 +851,78 @@
         "padding-block-start": 44,
         "padding-block-end": 48
       }
+    },
+    "hero_jVaWmY": {
+      "type": "hero",
+      "blocks": {
+        "text_iXYWz6": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": true,
+            "background_color": "#00000026",
+            "corner_radius": 9,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_iXYWz6"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "link": "",
+        "open_in_new_tab": false,
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
+        "media_type_2": "image",
+        "image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": true,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "auto",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-6",
+        "toggle_overlay": true,
+        "overlay_color": "#00000014",
+        "overlay_style": "gradient",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": true,
+        "reflection_opacity": 64,
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
     }
   },
   "order": [
-    "cards_scroll_KMfQrh",
-    "hero_jVaWmY",
+    "cards_scroll_4wJ9QF",
     "marquee_nBmFwG",
     "product_list_qU3bEB",
     "section_rhpn4z",
     "hero_tmrLqC",
-    "collection_list_ptq9J3"
+    "collection_list_ptq9J3",
+    "hero_jVaWmY"
   ]
 }
