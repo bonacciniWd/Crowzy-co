@@ -9,13 +9,13 @@
  */
 {
   "sections": {
-    "cards_scroll_RXPKVQ": {
+    "cards_scroll_KMfQrh": {
       "type": "cards-scroll",
       "name": "Cards Scroll",
       "settings": {
         "heading": "SERVICES",
         "title_svg": "shopify://shop_images/CROWZY.png",
-        "section_height": 95,
+        "section_height": 100,
         "show_top_section": true,
         "show_video_controls": false,
         "show_bottom_section": true,
@@ -23,9 +23,9 @@
         "scrambler_text_size": 80,
         "scrambler_text_color": "#000000cf",
         "top_section_color": "white",
-        "main_section_color": "black",
+        "main_section_color": "white",
         "bottom_section_color": "white",
-        "title_size": 150,
+        "title_size": 110,
         "title_color": "#ffffff",
         "title_alignment": "center",
         "title_transform": "uppercase",
@@ -36,11 +36,6 @@
         "cards_gap": 50,
         "cards_padding": 50,
         "duplicate_cards": true,
-        "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
-        "card_image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
-        "card_image_3": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
-        "card_image_4": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
-        "card_image_5": "shopify://shop_images/Captura_de_tela_15-6-2025_165113_www.instagram.com.jpg",
         "card_text_1": "Serviço 1",
         "card_text_2": "Serviço 2",
         "card_text_3": "Serviço 3",
@@ -917,7 +912,7 @@
     }
   },
   "order": [
-    "cards_scroll_RXPKVQ",
+    "cards_scroll_KMfQrh",
     "hero_jVaWmY",
     "marquee_nBmFwG",
     "product_list_qU3bEB",
