@@ -33,7 +33,7 @@
         "card_height": 450,
         "card_radius": 16,
         "cards_gap": 50,
-        "cards_padding": 100,
+        "cards_padding": 55,
         "duplicate_cards": true,
         "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
         "card_text_1": "Serviço 1",
