@@ -12,7 +12,7 @@
     "cards_scroll_4wJ9QF": {
       "type": "cards-scroll",
       "custom_css": [
-        "title-svg-container {max-width: 350px; max-height: 120px;}"
+        ".title-svg-container {max-width: 350px; max-height: 120px;}"
       ],
       "name": "Cards Scroll",
       "settings": {
