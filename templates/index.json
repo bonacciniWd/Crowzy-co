@@ -14,6 +14,7 @@
       "name": "Cards Scroll",
       "settings": {
         "heading": "SERVICES",
+        "title_svg": "shopify://shop_images/crow.svg",
         "section_height": 100,
         "show_top_section": true,
         "show_video_controls": false,
