@@ -129,7 +129,8 @@ window.addEventListener("DOMContentLoaded", () => {
         onLeave: () => console.log("ScrollTrigger: onLeave"),
         onEnterBack: () => console.log("ScrollTrigger: onEnterBack"),
         onLeaveBack: () => console.log("ScrollTrigger: onLeaveBack"),
-        markers: true // Manter para debugging, remover em produção      }
+        markers: true // Manter para debugging, remover em produção
+      }
     });
     
     // Animação de rolagem horizontal
@@ -146,55 +147,14 @@ window.addEventListener("DOMContentLoaded", () => {
       duration: 0.5
     }, "<");
     
-    // Animar cards com imagens para garantir visibilidade
-    gsap.utils.toArray(".card-with-image").forEach(card => {
-      gsap.set(card, { 
-        backgroundColor: "transparent", 
-        autoAlpha: 1 
-      });
-      
-      // Se houver imagens dentro do card, garantir que estejam visíveis
-      const img = card.querySelector(".card-image");
-      if (img) {
-        gsap.set(img, { autoAlpha: 1, zIndex: 10 });
-      }
-      
-      // Remover classes de gradiente
-      ["gradient-0", "gradient-1", "gradient-2", "gradient-3", "gradient-4"].forEach(cls => {
-        card.classList.remove(cls);
-      });
-    });
-    
-    // Ajustar quando a janela muda de tamanho ou após imagens carregarem
+    // Ajustar quando a janela muda de tamanho
     window.addEventListener("resize", () => {
       ScrollTrigger.refresh(true);
     });
-    
-    // Refresh adicional após todas as imagens carregarem
-    window.addEventListener("load", () => {
-      // Pequeno atraso para garantir que tudo esteja renderizado
-      setTimeout(() => {
-        ScrollTrigger.refresh(true);
-        console.log("ScrollTrigger refresh após load completo");
-      }, 500);
-    });
-    
-    // Debug para ajudar a identificar problemas
-    console.group("Configuração da animação horizontal");
-    console.log("Cards encontrados:", cards.length);
-    console.log("Largura total para rolagem:", totalCardsWidth + "px");
-    console.log("Distância de scroll:", scrollDistance + "px");
-    console.log("Timeline criada:", !!tl);
-    console.groupEnd();
     
     console.log("Animação configurada com sucesso");
   }
   
   // Iniciar animação com um pequeno atraso para garantir que todos os recursos estejam carregados
-  // usando uma abordagem mais robusta com verificação de carregamento
-  if (document.readyState === "complete" || document.readyState === "interactive") {
-    setTimeout(initAnimation, 300);
-  } else {
-    document.addEventListener("DOMContentLoaded", () => setTimeout(initAnimation, 300));
-  }
+  setTimeout(initAnimation, 300);
 });
