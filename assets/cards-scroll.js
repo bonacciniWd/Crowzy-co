@@ -21,9 +21,8 @@ window.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
     
     // Elementos principais
-    const scrollWrapper = document.querySelector(".cards-scroll-wrapper");
     const cardsContainer = document.querySelector(".cards-container");
-    const cards = gsap.utils.toArray(".card"); // Usar gsap.utils.toArray para melhor integração com GSAP
+    const cards = document.querySelectorAll(".card"); // Usando querySelectorAll em vez de gsap.utils.toArray
     const title = document.querySelector(".title-container");
     const cardsSection = document.querySelector(".cards-section");
     
@@ -44,75 +43,45 @@ window.addEventListener("DOMContentLoaded", () => {
     const header = document.querySelector("header") || document.getElementById("header-component") || document.querySelector(".header-section");
     const headerHeight = header ? header.offsetHeight : 0;
     
-    // Configuração inicial - garantir visibilidade dos elementos
-    gsap.set(title, { xPercent: 100 }); // Título fora da tela (à direita)
+    // Configuração inicial    gsap.set(title, { xPercent: 100 }); // Título fora da tela (à direita)
     gsap.set(cardsContainer, { 
-      opacity: 1,
-      visibility: "visible",
-      clearProps: "transform" // Limpar transformações anteriores
+      autoAlpha: 1 // Tornar visível
     });
     
-    // Garantir que imagens dos cards sejam visíveis
-    gsap.utils.toArray(".card-image").forEach(img => {
-      gsap.set(img, { 
-        opacity: 1, 
-        visibility: "visible", 
-        zIndex: 10,
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        objectFit: "cover"
-      });
-    });
-    
-    // Calcular a largura total de rolagem com precisão (importante para sites responsivos)
+    // Calcular a largura total de rolagem (importante para sites responsivos)
     let totalCardsWidth = 0;
-    const cardGap = parseFloat(window.getComputedStyle(cardsContainer).columnGap || "0");
-    
-    cards.forEach((card, index) => {
-      const cardWidth = card.offsetWidth;
-      totalCardsWidth += cardWidth;
-      
-      // Adicionar o gap entre os cards (exceto o último card)
-      if (index < cards.length - 1) {
-        totalCardsWidth += cardGap;
-      }
-      
-      // Logging para debug
-      console.log(`Card ${index+1}: Width=${cardWidth}px, Running Total=${totalCardsWidth}px`);
+    cards.forEach(card => {
+      const style = window.getComputedStyle(card);
+      const marginRight = parseInt(style.marginRight);
+      totalCardsWidth += card.offsetWidth + (isNaN(marginRight) ? 0 : marginRight);
     });
     
     // Largura disponível na janela
-    const containerWidth = cardsContainer.offsetWidth;
-    const scrollDistance = Math.max(totalCardsWidth - containerWidth + 100, 0); // +100px para garantir scroll completo
+    const windowWidth = window.innerWidth;
     
-    console.log("Largura total dos cards:", totalCardsWidth, 
-                "Largura do container:", containerWidth, 
-                "Distância de rolagem:", scrollDistance);
+    // Calcular a distância que precisamos rolar horizontalmente
+    const scrollDistance = Math.max(totalCardsWidth - windowWidth, 0);
+    
+    console.log("Largura total dos cards:", totalCardsWidth, "Largura da janela:", windowWidth, "Distância de rolagem:", scrollDistance);
     
     // Se a largura total não for suficiente para rolar, ajustar o espaçamento
-    if (scrollDistance < 200 && cards.length > 1) {
-      const extraGap = Math.ceil((200 - scrollDistance) / (cards.length - 1));
+    if (scrollDistance < 100 && cards.length > 1) {
+      const extraGap = Math.ceil((100 - scrollDistance) / (cards.length - 1));
       cards.forEach((card, index) => {
         if (index < cards.length - 1) {
           card.style.marginRight = extraGap + "px";
         }
       });
       console.log("Ajustando espaçamento entre cards para garantir rolagem suficiente");
-      
-      // Recalcular a largura total depois dos ajustes
-      totalCardsWidth = 0;
-      cards.forEach((card, index) => {
-        totalCardsWidth += card.offsetWidth;
-        if (index < cards.length - 1) {
-          totalCardsWidth += extraGap;
-        }
-      });
-      
-      console.log("Nova largura total após ajustes:", totalCardsWidth);
     }
+    
+    // Verificar novamente a largura total depois dos ajustes
+    totalCardsWidth = 0;
+    cards.forEach(card => {
+      const style = window.getComputedStyle(card);
+      const marginRight = parseInt(style.marginRight);
+      totalCardsWidth += card.offsetWidth + (isNaN(marginRight) ? 0 : marginRight);
+    });
     
     // Criar a animação com ajustes para o layout do site
     const tl = gsap.timeline({
@@ -129,7 +98,7 @@ window.addEventListener("DOMContentLoaded", () => {
         onLeave: () => console.log("ScrollTrigger: onLeave"),
         onEnterBack: () => console.log("ScrollTrigger: onEnterBack"),
         onLeaveBack: () => console.log("ScrollTrigger: onLeaveBack"),
-        markers: true // Manter para debugging, remover em produção
+        markers: true // REMOVER EM PRODUÇÃO
       }
     });
     
