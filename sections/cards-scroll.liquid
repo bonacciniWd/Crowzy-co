@@ -8,14 +8,13 @@
 {% endif %}
 
 <div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}
-    <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">
-      <div class="text-scramble-container">
-        <h2 class="text-scramble" id="scramble-text-top-{{ section.id }}">{{ section.settings.scrambler_text | default: "Underground Streetwear" }}</h2>
+    <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">      <div class="text-scramble-container">
+        <h2 class="text-scramble" id="scramble-text-{{ section.id }}">{{ section.settings.scramble_text_1 | default: "PRIMEIRA FRASE" }}</h2>
       </div>
     </div>
   {% endif %}
-  
-  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">
+    <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    
+    <div class="title-container" id="title-container-{{ section.id }}">
       {% if section.settings.title_svg != blank %}
         <div class="title-svg-container">
           {{ section.settings.title_svg | image_url: width: 800 | image_tag: class: 'title-svg' }}
@@ -215,8 +214,7 @@
     overflow: hidden;
     position: relative;
     padding-bottom: 3rem; /* Adicionar espaço extra na parte inferior */
-  }
-    #cards-scroll-{{ section.id }} .title-container {
+  }    #cards-scroll-{{ section.id }} .title-container {
     width: 100%;
     position: absolute;
     z-index: 20; /* Aumentado para garantir que fique acima dos cards */
@@ -228,6 +226,9 @@
     {% endif %}
     /* Sombra para melhorar visibilidade sobre qualquer fundo */
     filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5));
+    /* Inicialmente invisível */
+    opacity: 0;
+    transform: translateY(50px);
   }
   
   #cards-scroll-{{ section.id }} .title-container h1 {
@@ -458,125 +459,125 @@
 <script src="{{ 'cards-scroll.js' | asset_url }}" defer></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Text Scrambler para "Underground Streetwear"
-    class TextScramble {
-      constructor(el) {
-        this.el = el;
-        this.chars = '!<>-_\\/[]{}—=+*^?#________';
-        this.update = this.update.bind(this);
-      }
-      
-      setText(newText) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length);
-        const promise = new Promise((resolve) => this.resolve = resolve);
-        this.queue = [];
-        
-        for (let i = 0; i < length; i++) {
-          const from = oldText[i] || '';
-          const to = newText[i] || '';
-          const start = Math.floor(Math.random() * 40);
-          const end = start + Math.floor(Math.random() * 40);
-          this.queue.push({ from, to, start, end });
-        }
-        
-        cancelAnimationFrame(this.frameRequest);
-        this.frame = 0;
-        this.update();
-        return promise;
-      }
-      
-      update() {
-        let output = '';
-        let complete = 0;
-        
-        for (let i = 0, n = this.queue.length; i < n; i++) {
-          let { from, to, start, end, char } = this.queue[i];
-          
-          if (this.frame >= end) {
-            complete++;
-            output += to;
-          } else if (this.frame >= start) {
-            if (!char || Math.random() < 0.28) {
-              char = this.randomChar();
-              this.queue[i].char = char;
-            }
-            output += `<span class="dud">${char}</span>`;
-          } else {
-            output += from;
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = "{{ section.id }}";
+  const scrambleElement = document.getElementById(`scramble-text-${sectionId}`);
+  const titleContainer = document.getElementById(`title-container-${sectionId}`);
+  
+  // Textos para o scramble
+  const scrambleTexts = [
+    "{{ section.settings.scramble_text_1 | default: 'PRIMEIRA FRASE' }}",
+    "{{ section.settings.scramble_text_2 | default: 'SEGUNDA FRASE' }}",
+    "{{ section.settings.scramble_text_3 | default: 'TERCEIRA FRASE' }}"
+  ];
+  
+  let currentTextIndex = 0;
+  
+  // Função de scramble text
+  function scrambleText(element, newText, callback) {
+    const chars = "!<>-_\\/[]{}—=+*^?#________";
+    let iterations = 0;
+    const originalText = newText;
+    
+    const interval = setInterval(() => {
+      element.textContent = originalText
+        .split("")
+        .map((letter, index) => {
+          if (index < iterations) {
+            return originalText[index];
           }
-        }
-        
-        this.el.innerHTML = output;
-        
-        if (complete === this.queue.length) {
-          this.resolve();
-        } else {
-          this.frameRequest = requestAnimationFrame(this.update);
-          this.frame++;
-        }
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join("");
+      
+      if (iterations >= originalText.length) {
+        clearInterval(interval);
+        if (callback) callback();
       }
       
-      randomChar() {
-        return this.chars[Math.floor(Math.random() * this.chars.length)];
-      }
-    }
-      // Inicializar text scrambler quando a seção estiver visível
-    const scramblers = document.querySelectorAll('[id^="scramble-text-"]');
-    if (scramblers.length > 0) {
-      scramblers.forEach(el => {
-        const fx = new TextScramble(el);
-        const originalText = el.innerText;
-        
-        // Configurar o ScrollTrigger para o text scrambler
-        ScrollTrigger.create({
-          trigger: el.closest('.section'),
-          start: 'top 80%',
-          onEnter: () => {
-            setTimeout(() => fx.setText(originalText), 500); // Pequeno atraso para coordenar com a animação de entrada
-          },
-          onLeaveBack: () => fx.setText(''),
-          onEnterBack: () => fx.setText(originalText)
+      iterations += 1 / 3;
+    }, 30);
+  }
+  
+  // Função para próximo texto
+  function nextScrambleText() {
+    if (currentTextIndex < scrambleTexts.length - 1) {
+      currentTextIndex++;
+      setTimeout(() => {
+        scrambleText(scrambleElement, scrambleTexts[currentTextIndex], () => {
+          if (currentTextIndex < scrambleTexts.length - 1) {
+            setTimeout(nextScrambleText, 2000); // Espera 2s antes do próximo
+          }
         });
-      });
+      }, 500);
     }
-      // Configurar animação do vídeo na seção inferior
-    const bottomVideo = document.querySelector('.bottom-section-video');
-    if (bottomVideo) {
-      // Configurar ScrollTrigger para o vídeo
-      ScrollTrigger.create({
-        trigger: bottomVideo.closest('.section'),
-        start: 'top 80%',
-        onEnter: () => {
-          gsap.to(bottomVideo, {
-            opacity: 1,
-            duration: 1,
-            ease: 'power2.inOut',
-            onStart: () => {
-              bottomVideo.play().catch(e => console.log('Erro ao iniciar vídeo:', e));
-            }
+  }
+  
+  // Inicializar animações GSAP
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Animação da seção superior
+  const scrambleContainer = document.querySelector(`#cards-scroll-${sectionId} .text-scramble-container`);
+  if (scrambleContainer) {
+    gsap.to(scrambleContainer, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      delay: 0.5,
+      onComplete: () => {
+        if (scrambleElement) {
+          scrambleText(scrambleElement, scrambleTexts[0], () => {
+            setTimeout(nextScrambleText, 2000);
           });
         }
-      });
-    }
-    
-    // Animação para o text scrambler na seção superior (subindo)
-    const scrambleContainer = document.querySelector('.text-scramble-container');
-    if (scrambleContainer) {
-      gsap.to(scrambleContainer, {
-        scrollTrigger: {
-          trigger: scrambleContainer.closest('.section'),
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        },
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: 'power2.out'
-      });
-    }
-  });
+      }
+    });
+  }
+  
+  // Animação do título/SVG - aparece no final da seção dos cards
+  if (titleContainer) {
+    ScrollTrigger.create({
+      trigger: `#cards-scroll-${sectionId} .cards-section`,
+      start: "top top",
+      end: "bottom top",
+      scrub: 1,
+      onUpdate: (self) => {
+        // Só mostra o título quando está chegando ao final da seção (80% do progresso)
+        if (self.progress > 0.8) {
+          const opacity = (self.progress - 0.8) / 0.2; // Mapeia de 0.8-1.0 para 0-1
+          gsap.set(titleContainer, {
+            opacity: opacity,
+            y: 50 * (1 - opacity)
+          });
+        } else {
+          gsap.set(titleContainer, {
+            opacity: 0,
+            y: 50
+          });
+        }
+      }
+    });
+  }
+  
+  // Configurar animação do vídeo na seção inferior
+  const bottomVideo = document.querySelector(`#cards-scroll-${sectionId} .bottom-section-video`);
+  if (bottomVideo) {
+    ScrollTrigger.create({
+      trigger: bottomVideo.closest('.section'),
+      start: 'top 80%',
+      onEnter: () => {
+        gsap.to(bottomVideo, {
+          opacity: 1,
+          duration: 1,
+          ease: 'power2.inOut',
+          onStart: () => {
+            bottomVideo.play().catch(e => console.log('Erro ao iniciar vídeo:', e));
+          }
+        });
+      }
+    });
+  }
+});
 </script>
 
 <script>  // Script otimizado para garantir que as imagens dos cards apareçam corretamente
@@ -783,9 +784,21 @@
     },
     {
       "type": "text",
-      "id": "scrambler_text",
-      "label": "Texto para o Scrambler",
-      "default": "Underground Streetwear"
+      "id": "scramble_text_1",
+      "label": "Primeira Frase do Scrambler",
+      "default": "PRIMEIRA FRASE"
+    },
+    {
+      "type": "text",
+      "id": "scramble_text_2",
+      "label": "Segunda Frase do Scrambler",
+      "default": "SEGUNDA FRASE"
+    },
+    {
+      "type": "text",
+      "id": "scramble_text_3",
+      "label": "Terceira Frase do Scrambler",
+      "default": "TERCEIRA FRASE"
     },
     {
       "type": "range",
