@@ -737,7 +737,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by collection</h3>",
+                "text": "<h3><strong>Todos os Produtos</strong></h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -750,7 +750,7 @@
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
                 "background": false,
-                "background_color": "#00000026",
+                "background_color": "#dd1d1d",
                 "corner_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
@@ -771,7 +771,7 @@
           "settings": {
             "collection": "{{ closest.collection }}",
             "placement": "below_image",
-            "horizontal_alignment": "flex-start",
+            "horizontal_alignment": "center",
             "vertical_alignment": "center",
             "collection_card_gap": 8,
             "inherit_color_scheme": true,
@@ -779,7 +779,7 @@
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_radius": 0
+            "border_radius": 20
           },
           "blocks": {
             "collection_title_iNHhAy": {
@@ -837,7 +837,9 @@
       ],
       "name": "t:names.collections_editorial",
       "settings": {
-        "collection_list": [],
+        "collection_list": [
+          "frontpage"
+        ],
         "layout_type": "editorial",
         "carousel_on_mobile": false,
         "columns": 3,
