@@ -9,7 +9,7 @@
 
 <div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}
     <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">      <div class="text-scramble-container">
-        <h2 class="text-scramble" id="scramble-text-{{ section.id }}">{{ section.settings.scramble_text_1 | default: "PRIMEIRA FRASE" }}</h2>
+        <h2 class="text-scramble" id="scramble-text-{{ section.id }}"></h2>
       </div>
     </div>
   {% endif %}
@@ -515,10 +515,15 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Inicializar animações GSAP
   gsap.registerPlugin(ScrollTrigger);
-  
-  // Animação da seção superior
+    // Animação da seção superior
   const scrambleContainer = document.querySelector(`#cards-scroll-${sectionId} .text-scramble-container`);
   if (scrambleContainer) {
+    // Preencher inicialmente com caracteres aleatórios
+    if (scrambleElement) {
+      const firstText = scrambleTexts[0];
+      scrambleElement.textContent = "!<>-_\\/[]{}—=+*^?#________".repeat(Math.ceil(firstText.length / 26)).substring(0, firstText.length);
+    }
+    
     gsap.to(scrambleContainer, {
       opacity: 1,
       y: 0,
@@ -526,9 +531,11 @@ document.addEventListener('DOMContentLoaded', function() {
       delay: 0.5,
       onComplete: () => {
         if (scrambleElement) {
-          scrambleText(scrambleElement, scrambleTexts[0], () => {
-            setTimeout(nextScrambleText, 2000);
-          });
+          setTimeout(() => {
+            scrambleText(scrambleElement, scrambleTexts[0], () => {
+              setTimeout(nextScrambleText, 2000);
+            });
+          }, 300);
         }
       }
     });
