@@ -82,13 +82,15 @@ window.addEventListener("DOMContentLoaded", () => {
       const marginRight = parseInt(style.marginRight);
       totalCardsWidth += card.offsetWidth + (isNaN(marginRight) ? 0 : marginRight);
     });
+      // Adicionar espaço extra para garantir que todos os cards saiam totalmente da tela
+    const extraMargin = windowWidth * 0.5; // Metade da largura da tela como margem extra
     
     // Criar a animação com ajustes para o layout do site
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: cardsSection,
         start: `top-=${headerHeight}px top`, // Ajustar para compensar a altura do header
-        end: () => `+=${totalCardsWidth}`, // Usar a largura total para determinar o fim
+        end: () => `+=${totalCardsWidth + extraMargin}`, // Usar a largura total + margem extra para determinar o fim
         scrub: 1, // Suavizar a animação com o scroll
         pin: true, // Fixar a seção durante a animação
         pinSpacing: true, // Garantir espaço adequado
@@ -101,20 +103,18 @@ window.addEventListener("DOMContentLoaded", () => {
         markers: true // REMOVER EM PRODUÇÃO
       }
     });
-    
-    // Animação de rolagem horizontal
+      // Animação de rolagem horizontal - vamos adicionar uma distância extra para garantir que todos os cards saiam da tela
     tl.to(cardsContainer, {
-      x: () => -scrollDistance,
+      x: () => -(scrollDistance + extraMargin),
       ease: "none",
-      duration: 1
+      duration: 0.8 // Duração um pouco menor para deixar um "espaço de respiro" no final
     });
-    
-    // Animação do título ao mesmo tempo
+      // Animação do título - completa antes dos cards terminarem
     tl.to(title, {
       xPercent: 0,
       ease: "power2.inOut",
       duration: 0.5
-    }, "<");
+    }, "<0.1"); // Começar um pouco depois para que o título esteja mais visível no final
     
     // Ajustar quando a janela muda de tamanho
     window.addEventListener("resize", () => {
