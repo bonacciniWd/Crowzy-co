@@ -7,150 +7,50 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
 {% endif %}
 
-<div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}
+<div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">
+  {% if section.settings.show_top_section %}
     <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">
       <div class="text-scramble-container">
-        <h2 class="text-scramble" id="scramble-text-top-{{ section.id }}">{{ section.settings.scrambler_text | default: "Underground Streetwear" }}</h2>
+        <div class="text-scramble" id="scramble-text-{{ section.id }}">
+          {{ section.settings.scramble_text_1 | default: "PRIMEIRA FRASE" }}
+        </div>
       </div>
     </div>
   {% endif %}
   
-  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">
+  <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">
+    <div class="title-container" id="title-container-{{ section.id }}">
       {% if section.settings.title_svg != blank %}
         <div class="title-svg-container">
-          {{ section.settings.title_svg | image_url: width: 800 | image_tag: class: 'title-svg' }}
+          <img src="{{ section.settings.title_svg | img_url: 'master' }}" alt="{{ section.settings.heading }}" class="title-svg">
         </div>
       {% else %}
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
       {% endif %}
     </div>
-      <div class="cards-container">
-      {% comment %} Usando referências diretas aos assets para as imagens dos cards {% endcomment %}
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'cross.jpeg' | asset_url }}" 
-            alt="Cross" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
+    
+    <div class="cards-container" id="cards-container-{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="card {% if block.settings.card_image != blank %}card-with-image{% endif %} gradient-{{ forloop.index0 | modulo: 5 }}" 
+             {% unless block.settings.card_image != blank %}style="background: {{ block.settings.card_gradient | default: 'linear-gradient(135deg, #FF8008, #FFC837)' }};"{% endunless %}>
+          {% if block.settings.card_image != blank %}
+            <div class="card-image-container">
+              <img src="{{ block.settings.card_image | img_url: 'master' }}" 
+                   alt="{{ block.settings.card_title | default: 'Card Image' }}" 
+                   class="card-image">
+            </div>
+          {% else %}
+            <div class="card-content">
+              {{ block.settings.card_title | default: "Card " | append: forloop.index }}
+            </div>
+          {% endif %}
         </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'web.jpeg' | asset_url }}" 
-            alt="Web" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'start.jpeg' | asset_url }}" 
-            alt="Start" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'cleric.jpeg' | asset_url }}" 
-            alt="Cleric" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'shadow.jpeg' | asset_url }}" 
-            alt="Shadow" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      
-      {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
-      {% if section.settings.duplicate_cards %}
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'cross.jpeg' | asset_url }}" 
-              alt="Cross" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'web.jpeg' | asset_url }}" 
-              alt="Web" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'start.jpeg' | asset_url }}" 
-              alt="Start" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
-      {% endif %}
+      {% endfor %}
     </div>
   </div>
+  
   {% if section.settings.show_bottom_section %}
     <div class="section gradient-{{ section.settings.bottom_section_color | default: 'purple' }} bottom-section">
-      {% if section.settings.bottom_section_video != blank %}
-        <div class="video-container">
-          <video
-            src="{{ section.settings.bottom_section_video | file_url }}"
-            id="section-video-{{ section.id }}"
-            loop
-            muted
-            playsinline
-            class="bottom-section-video"
-            {% if section.settings.show_video_controls %}controls{% endif %}
-          ></video>
-        </div>
-      {% endif %}
     </div>
   {% endif %}
 </div>
@@ -209,25 +109,29 @@
   #cards-scroll-{{ section.id }} .gradient-3 { background: linear-gradient(135deg, #DA22FF, #9733EE); }
   #cards-scroll-{{ section.id }} .gradient-4 { background: linear-gradient(135deg, #EB3349, #F45C43); }
   
-  /* Configuração da seção de cards */  #cards-scroll-{{ section.id }} .cards-section {
+  /* Configuração da seção de cards */
+  #cards-scroll-{{ section.id }} .cards-section {
     display: flex;
     align-items: center;
     overflow: hidden;
     position: relative;
-    padding-bottom: 3rem; /* Adicionar espaço extra na parte inferior */
+    padding-bottom: 3rem;
   }
-    #cards-scroll-{{ section.id }} .title-container {
+  
+  /* Título inicialmente oculto */
+  #cards-scroll-{{ section.id }} .title-container {
     width: 100%;
     position: absolute;
-    z-index: 20; /* Aumentado para garantir que fique acima dos cards */
+    z-index: 20;
     text-align: {{ section.settings.title_alignment }};
     {% if section.settings.title_alignment == 'left' %}
       padding-left: 5%;
     {% elsif section.settings.title_alignment == 'right' %}
       padding-right: 5%;
     {% endif %}
-    /* Sombra para melhorar visibilidade sobre qualquer fundo */
     filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5));
+    opacity: 0;
+    transform: translateY(50px);
   }
   
   #cards-scroll-{{ section.id }} .title-container h1 {
@@ -254,6 +158,7 @@
     height: auto;
     display: inline-block;
   }
+  
   #cards-scroll-{{ section.id }} .cards-container {
     display: flex;
     gap: {{ section.settings.cards_gap }}px;
@@ -261,27 +166,30 @@
     flex-wrap: nowrap;
     position: relative;
     z-index: 2;
-    opacity: 1; /* Iniciar visível e deixar GSAP controlar */
+    opacity: 1;
     visibility: visible;
-    will-change: transform; /* Melhora a performance da animação */
-    padding-right: 100vw; /* Adicionar espaço extra à direita igual a uma largura de tela */
-  }#cards-scroll-{{ section.id }} .card {
+    will-change: transform;
+    padding-right: 100vw;
+  }
+  
+  #cards-scroll-{{ section.id }} .card {
     width: {{ section.settings.card_width }}px;
     height: {{ section.settings.card_height }}px;
     border-radius: {{ section.settings.card_radius }}px;
     flex-shrink: 0;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     overflow: hidden;
-    position: relative; /* Removido display: block para comportamento correto em flex */
+    position: relative;
     transition: transform 0.3s ease;
-    background-color: #f0f0f0; /* Cor de fundo de fallback */
-    transform-origin: center center; /* Melhora a performance da animação */
+    background-color: #f0f0f0;
+    transform-origin: center center;
   }
   
   #cards-scroll-{{ section.id }} .card:hover {
     transform: translateY(-10px);
   }
-    #cards-scroll-{{ section.id }} .card img,
+  
+  #cards-scroll-{{ section.id }} .card img,
   #cards-scroll-{{ section.id }} .card-image {
     width: 100%;
     height: 100%;
@@ -290,7 +198,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 5; /* Aumentado para garantir que a imagem fique acima de todos os elementos do card */
+    z-index: 5;
   }
   
   #cards-scroll-{{ section.id }} .card-content {
@@ -300,7 +208,8 @@
     font-weight: bold;
     font-size: 24px;
   }
-    /* Estilos para as seções superior e inferior */
+  
+  /* Estilos para as seções superior e inferior */
   #cards-scroll-{{ section.id }} .top-section,
   #cards-scroll-{{ section.id }} .bottom-section {
     position: relative;
@@ -310,28 +219,7 @@
     justify-content: center;
   }
   
-  #cards-scroll-{{ section.id }} .video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  #cards-scroll-{{ section.id }} .bottom-section-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    opacity: 0; /* Inicialmente invisível */
-  }
-    /* Estilos para o text scrambler */
+  /* Estilos para o text scrambler */
   #cards-scroll-{{ section.id }} .text-scramble-container {
     text-align: center;
     padding: 2rem;
@@ -355,58 +243,14 @@
     opacity: 0.7;
   }
   
-  /* Responsividade */  @media (max-width: 768px) {
-    #cards-scroll-{{ section.id }} .title-container h1 {
-      font-size: clamp(32px, 8vw, 80px);
-    }
-    
-    #cards-scroll-{{ section.id }} .card {
-      width: calc({{ section.settings.card_width }}px * 0.7);
-      height: calc({{ section.settings.card_height }}px * 0.7);
-    }
-    
-    #cards-scroll-{{ section.id }} .cards-container {
-      gap: calc({{ section.settings.cards_gap }}px * 0.5);
-      padding: 0 calc({{ section.settings.cards_padding }}px * 0.5);
-    }
-    
-    #cards-scroll-{{ section.id }} .text-scramble {
-      font-size: clamp(24px, 6vw, {{ section.settings.scrambler_text_size | divided_by: 2 }}px);
-      padding: 0 15px;
-    }
-    
-    #cards-scroll-{{ section.id }} .text-scramble-container {
-      padding: 1rem;
-    }
-  }
-  /* Removido código duplicado para .cards-container - não é mais necessário !important */
-  
-  #cards-scroll-{{ section.id }} .card {
-    background-size: cover;
-    background-position: center;
-  }
-    #cards-scroll-{{ section.id }} .card-with-image {
+  /* Cards com imagem */
+  #cards-scroll-{{ section.id }} .card-with-image {
     background: none !important;
     background-color: transparent !important;
     overflow: hidden;
     position: relative !important;
     display: block !important;
     z-index: 5 !important;
-  }
-  
-  #cards-scroll-{{ section.id }} .card-with-image::before {
-    display: none !important; /* Remover gradientes e overlays */
-    content: none !important;
-  }
-  
-  #cards-scroll-{{ section.id }} .card-with-image::after {
-    display: none !important; /* Remover gradientes e overlays */
-    content: none !important;
-  }
-  
-  #cards-scroll-{{ section.id }} .card-with-image * {
-    opacity: 1 !important;
-    visibility: visible !important;
   }
   
   #cards-scroll-{{ section.id }} .card-image-container {
@@ -420,37 +264,29 @@
   
   #cards-scroll-{{ section.id }} .card-image {
     width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
     z-index: 15 !important;
   }
-    /* Garantir que não existam gradientes ou sobreposições nas imagens */
-  #cards-scroll-{{ section.id }} .card-with-image .card-content {
-    display: none !important;
-  }
-
-  /* Estilos adicionais para garantir que as imagens sejam exibidas corretamente */
-  #cards-scroll-{{ section.id }} .gradient-0,
-  #cards-scroll-{{ section.id }} .gradient-1,
-  #cards-scroll-{{ section.id }} .gradient-2,
-  #cards-scroll-{{ section.id }} .gradient-3,
-  #cards-scroll-{{ section.id }} .gradient-4,
-  #cards-scroll-{{ section.id }} .gradient-5 {
-    background: none !important;
-  }
   
-  /* Regra para substituir o background se a imagem não carregar */
-  #cards-scroll-{{ section.id }} .card-with-image[style*="background-image"] .card-image-container {
-    opacity: 0 !important;
+  /* Responsividade */
+  @media (max-width: 768px) {
+    #cards-scroll-{{ section.id }} .title-container h1 {
+      font-size: clamp(30px, 8vw, 60px);
+    }
+    
+    #cards-scroll-{{ section.id }} .card {
+      width: 250px;
+      height: 350px;
+    }
+    
+    #cards-scroll-{{ section.id }} .cards-container {
+      gap: 15px;
+      padding: 0 20px;
+    }
+    
+    #cards-scroll-{{ section.id }} .text-scramble {
+      font-size: clamp(24px, 6vw, 40px);
+    }
   }
-
-  /* Estilos críticos de imagem aplicados direto no elemento via style inline */
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -458,268 +294,99 @@
 <script src="{{ 'cards-scroll.js' | asset_url }}" defer></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Text Scrambler para "Underground Streetwear"
-    class TextScramble {
-      constructor(el) {
-        this.el = el;
-        this.chars = '!<>-_\\/[]{}—=+*^?#________';
-        this.update = this.update.bind(this);
-      }
-      
-      setText(newText) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length);
-        const promise = new Promise((resolve) => this.resolve = resolve);
-        this.queue = [];
-        
-        for (let i = 0; i < length; i++) {
-          const from = oldText[i] || '';
-          const to = newText[i] || '';
-          const start = Math.floor(Math.random() * 40);
-          const end = start + Math.floor(Math.random() * 40);
-          this.queue.push({ from, to, start, end });
-        }
-        
-        cancelAnimationFrame(this.frameRequest);
-        this.frame = 0;
-        this.update();
-        return promise;
-      }
-      
-      update() {
-        let output = '';
-        let complete = 0;
-        
-        for (let i = 0, n = this.queue.length; i < n; i++) {
-          let { from, to, start, end, char } = this.queue[i];
-          
-          if (this.frame >= end) {
-            complete++;
-            output += to;
-          } else if (this.frame >= start) {
-            if (!char || Math.random() < 0.28) {
-              char = this.randomChar();
-              this.queue[i].char = char;
-            }
-            output += `<span class="dud">${char}</span>`;
-          } else {
-            output += from;
-          }
-        }
-        
-        this.el.innerHTML = output;
-        
-        if (complete === this.queue.length) {
-          this.resolve();
-        } else {
-          this.frameRequest = requestAnimationFrame(this.update);
-          this.frame++;
-        }
-      }
-      
-      randomChar() {
-        return this.chars[Math.floor(Math.random() * this.chars.length)];
-      }
-    }
-      // Inicializar text scrambler quando a seção estiver visível
-    const scramblers = document.querySelectorAll('[id^="scramble-text-"]');
-    if (scramblers.length > 0) {
-      scramblers.forEach(el => {
-        const fx = new TextScramble(el);
-        const originalText = el.innerText;
-        
-        // Configurar o ScrollTrigger para o text scrambler
-        ScrollTrigger.create({
-          trigger: el.closest('.section'),
-          start: 'top 80%',
-          onEnter: () => {
-            setTimeout(() => fx.setText(originalText), 500); // Pequeno atraso para coordenar com a animação de entrada
-          },
-          onLeaveBack: () => fx.setText(''),
-          onEnterBack: () => fx.setText(originalText)
-        });
-      });
-    }
-      // Configurar animação do vídeo na seção inferior
-    const bottomVideo = document.querySelector('.bottom-section-video');
-    if (bottomVideo) {
-      // Configurar ScrollTrigger para o vídeo
-      ScrollTrigger.create({
-        trigger: bottomVideo.closest('.section'),
-        start: 'top 80%',
-        onEnter: () => {
-          gsap.to(bottomVideo, {
-            opacity: 1,
-            duration: 1,
-            ease: 'power2.inOut',
-            onStart: () => {
-              bottomVideo.play().catch(e => console.log('Erro ao iniciar vídeo:', e));
-            }
-          });
-        }
-      });
-    }
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = "{{ section.id }}";
+  const scrambleElement = document.getElementById(`scramble-text-${sectionId}`);
+  const titleContainer = document.getElementById(`title-container-${sectionId}`);
+  
+  // Textos para o scramble
+  const scrambleTexts = [
+    "{{ section.settings.scramble_text_1 | default: 'PRIMEIRA FRASE' }}",
+    "{{ section.settings.scramble_text_2 | default: 'SEGUNDA FRASE' }}",
+    "{{ section.settings.scramble_text_3 | default: 'TERCEIRA FRASE' }}"
+  ];
+  
+  let currentTextIndex = 0;
+  
+  // Função de scramble text
+  function scrambleText(element, newText, callback) {
+    const chars = "!<>-_\\/[]{}—=+*^?#________";
+    let iterations = 0;
+    const originalText = newText;
     
-    // Animação para o text scrambler na seção superior (subindo)
-    const scrambleContainer = document.querySelector('.text-scramble-container');
-    if (scrambleContainer) {
-      gsap.to(scrambleContainer, {
-        scrollTrigger: {
-          trigger: scrambleContainer.closest('.section'),
-          start: 'top 80%',
-          toggleActions: 'play none none reverse'
-        },
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: 'power2.out'
-      });
-    }
-  });
-</script>
-
-<script>  // Script otimizado para garantir que as imagens dos cards apareçam corretamente
-  document.addEventListener('DOMContentLoaded', function() {
-    // Forçar visibilidade dos cards
-    const cardsContainer = document.querySelector(".cards-container");
-    if (cardsContainer) {
-      cardsContainer.style.opacity = "1";
-      cardsContainer.style.visibility = "visible";
-      console.log("Cards container visibilidade forçada");
-    }
-    
-    // Verificar se os cards com imagens estão visíveis
-    const imageCards = document.querySelectorAll(".card-with-image");
-    if (imageCards.length > 0) {
-      console.log("Encontrados " + imageCards.length + " cards com imagens diretas dos assets");
-      
-      imageCards.forEach(function(card, index) {
-        // Força o estilo diretamente no elemento card
-        card.setAttribute("style", 
-          "background: none !important;" + 
-          "background-color: transparent !important;" +
-          "display: block !important;" +
-          "opacity: 1 !important;" +
-          "visibility: visible !important;" +
-          "overflow: hidden !important;" +
-          "position: relative !important;" +
-          "z-index: 5 !important;"
-        );
-        
-        // Remover todas as classes de gradiente
-        for (let i = 0; i < 10; i++) {
-          card.classList.remove("gradient-" + i);
-        }
-        
-        // Garantir que a imagem esteja visível
-        const cardImage = card.querySelector(".card-image");
-        if (cardImage) {
-          cardImage.setAttribute("style",
-            "width: 100% !important;" +
-            "height: 100% !important;" +
-            "object-fit: cover !important;" +
-            "display: block !important;" +
-            "position: absolute !important;" +
-            "top: 0 !important;" +
-            "left: 0 !important;" +
-            "opacity: 1 !important;" +
-            "visibility: visible !important;" +
-            "z-index: 10 !important;"
-          );
-          
-          // Pré-carregar a imagem para garantir que esteja disponível
-          const preloadImg = new Image();
-          preloadImg.src = cardImage.src;
-          
-          console.log("Aplicado estilo direto na imagem do card " + index + ": " + cardImage.src);
-        } else {
-          console.warn("Card " + index + " não tem imagem");
-        }
-        
-        // Verificar e corrigir o contêiner da imagem
-        const imageContainer = card.querySelector(".card-image-container");
-        if (imageContainer) {
-          imageContainer.setAttribute("style",
-            "position: absolute !important;" +
-            "top: 0 !important;" +
-            "left: 0 !important;" +
-            "width: 100% !important;" +
-            "height: 100% !important;" +
-            "z-index: 10 !important;" +
-            "opacity: 1 !important;" +
-            "visibility: visible !important;"
-          );
-        }
-        
-        // Remover qualquer conteúdo de texto
-        const cardContent = card.querySelector(".card-content");
-        if (cardContent) {
-          cardContent.style.display = "none";
-        }
-      });
-      
-      console.log("Aplicada correção completa a todos os " + imageCards.length + " cards");
-    }
-  });
-</script>
-
-<script>
-  // Verificação final após carregamento completo
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      console.log("Verificação final de imagens após carregamento completo");
-      
-      // Verificar se todas as imagens carregaram
-      const imageCards = document.querySelectorAll(".card-with-image");
-      let allLoaded = true;
-      
-      imageCards.forEach((card, index) => {
-        const img = card.querySelector(".card-image");
-        if (img) {
-          if (!img.complete) {
-            allLoaded = false;
-            console.warn(`Imagem do card ${index} ainda não carregou completamente`);
+    const interval = setInterval(() => {
+      element.textContent = originalText
+        .split("")
+        .map((letter, index) => {
+          if (index < iterations) {
+            return originalText[index];
           }
-        } else {
-          allLoaded = false;
-        }
-      });
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join("");
       
-      // Aplicar solução de fallback se necessário
-      if (!allLoaded) {
-        console.warn("Algumas imagens não carregaram corretamente, aplicando solução alternativa");
-        
-        // Usar a abordagem de background-image como fallback
-        imageCards.forEach((card, index) => {
-          const img = card.querySelector(".card-image");
-          if (img && img.src) {
-            // Usar a URL da imagem como background-image do card
-            card.style.backgroundImage = `url('${img.src}')`;
-            card.style.backgroundSize = "cover";
-            card.style.backgroundPosition = "center";
-            console.log(`Aplicado background-image fallback no card ${index}: ${img.src}`);
-          } else {
-            // Como último recurso, usar fallback para imagens específicas com base no índice
-            const fallbackImages = [
-              "{{ 'cross.jpg' | asset_url }}",
-              "{{ 'web.jpg' | asset_url }}",
-              "{{ 'start.jpg' | asset_url }}",
-              "{{ 'cleric.jpg' | asset_url }}",
-              "{{ 'shadow.jpg' | asset_url }}"
-            ];
-            
-            if (fallbackImages[index % fallbackImages.length]) {
-              card.style.backgroundImage = `url('${fallbackImages[index % fallbackImages.length]}')`;
-              card.style.backgroundSize = "cover";
-              card.style.backgroundPosition = "center";
-              console.log(`Aplicado background-image fallback direto para o card ${index}`);
-            }
+      if (iterations >= originalText.length) {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+      
+      iterations += 1 / 3;
+    }, 30);
+  }
+  
+  // Função para próximo texto
+  function nextScrambleText() {
+    if (currentTextIndex < scrambleTexts.length - 1) {
+      currentTextIndex++;
+      setTimeout(() => {
+        scrambleText(scrambleElement, scrambleTexts[currentTextIndex], () => {
+          if (currentTextIndex < scrambleTexts.length - 1) {
+            setTimeout(nextScrambleText, 2000); // Espera 2s antes do próximo
           }
         });
-      }
-    }, 1000);
+      }, 500);
+    }
+  }
+  
+  // Inicializar animações GSAP
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Animação da seção superior
+  gsap.to(`#cards-scroll-${sectionId} .text-scramble-container`, {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    delay: 0.5,
+    onComplete: () => {
+      scrambleText(scrambleElement, scrambleTexts[0], () => {
+        setTimeout(nextScrambleText, 2000);
+      });
+    }
   });
+  
+  // Animação do título/SVG - aparece no final da seção dos cards
+  ScrollTrigger.create({
+    trigger: `#cards-scroll-${sectionId} .cards-section`,
+    start: "top top",
+    end: "bottom top",
+    scrub: 1,
+    onUpdate: (self) => {
+      // Só mostra o título quando está chegando ao final da seção (80% do progresso)
+      if (self.progress > 0.8) {
+        const opacity = (self.progress - 0.8) / 0.2; // Mapeia de 0.8-1.0 para 0-1
+        gsap.set(titleContainer, {
+          opacity: opacity,
+          y: 50 * (1 - opacity)
+        });
+      } else {
+        gsap.set(titleContainer, {
+          opacity: 0,
+          y: 50
+        });
+      }
+    }
+  });
+});
 </script>
 
 {% schema %}
@@ -729,329 +396,267 @@
   "class": "cards-scroll-section",
   "settings": [
     {
-      "type": "header",
-      "content": "Configurações Gerais"
-    },    {
-      "type": "text",
-      "id": "heading",
-      "label": "Título (apenas se não usar SVG)",
-      "default": "SERVICES"
+      "type": "checkbox",
+      "id": "include_css",
+      "label": "Include Base CSS",
+      "default": true
     },
     {
-      "type": "image_picker",
-      "id": "title_svg",
-      "label": "SVG do Título",
-      "info": "Carregue uma imagem SVG para substituir o título de texto"
+      "type": "checkbox",
+      "id": "show_top_section",
+      "label": "Show Top Section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bottom_section",
+      "label": "Show Bottom Section",
+      "default": true
     },
     {
       "type": "range",
       "id": "section_height",
-      "label": "Altura da Seção",
-      "min": 60,
+      "min": 50,
       "max": 150,
       "step": 5,
-      "default": 100,
-      "info": "Altura em vh (porcentagem da altura da janela)"
-    },    {
-      "type": "checkbox",
-      "id": "show_top_section",
-      "label": "Mostrar seção superior",
-      "default": true
-    },    {
-      "type": "header",
-      "content": "Vídeo na Seção Inferior"
-    },
-    {
-      "type": "video",
-      "id": "bottom_section_video",
-      "label": "Vídeo para Seção Inferior",
-      "info": "Vídeo em autoplay ao scrollar e mudo"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_video_controls",
-      "label": "Mostrar controles do vídeo",
-      "default": false
-    },    {
-      "type": "checkbox",
-      "id": "show_bottom_section",
-      "label": "Mostrar seção inferior",
-      "default": true
-    },    {
-      "type": "header",
-      "content": "Text Scrambler na Seção Superior"
-    },
-    {
-      "type": "text",
-      "id": "scrambler_text",
-      "label": "Texto para o Scrambler",
-      "default": "Underground Streetwear"
-    },
-    {
-      "type": "range",
-      "id": "scrambler_text_size",
-      "label": "Tamanho do texto",
-      "min": 20,
-      "max": 200,
-      "step": 5,
-      "default": 80
-    },
-    {
-      "type": "color",
-      "id": "scrambler_text_color",
-      "label": "Cor do texto",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "header",
-      "content": "Personalização de Cores"
+      "unit": "vh",
+      "label": "Section Height",
+      "default": 100
     },
     {
       "type": "select",
       "id": "top_section_color",
-      "label": "Cor da Seção Superior",
+      "label": "Top Section Color",
       "options": [
-        { "value": "green", "label": "Verde" },
-        { "value": "blue", "label": "Azul" },
-        { "value": "blue-dark", "label": "Azul Escuro" },
-        { "value": "purple", "label": "Roxo" },
-        { "value": "red", "label": "Vermelho" },
-        { "value": "orange", "label": "Laranja" },
-        { "value": "black", "label": "Preto" },
-        { "value": "white", "label": "Branco" }
+        {"value": "green", "label": "Green"},
+        {"value": "blue", "label": "Blue"},
+        {"value": "purple", "label": "Purple"},
+        {"value": "red", "label": "Red"},
+        {"value": "orange", "label": "Orange"},
+        {"value": "black", "label": "Black"},
+        {"value": "white", "label": "White"}
       ],
       "default": "green"
     },
     {
       "type": "select",
       "id": "main_section_color",
-      "label": "Cor da Seção Principal",
+      "label": "Main Section Color",
       "options": [
-        { "value": "green", "label": "Verde" },
-        { "value": "blue", "label": "Azul" },
-        { "value": "blue-dark", "label": "Azul Escuro" },
-        { "value": "purple", "label": "Roxo" },
-        { "value": "red", "label": "Vermelho" },
-        { "value": "orange", "label": "Laranja" },
-        { "value": "black", "label": "Preto" },
-        { "value": "white", "label": "Branco" }
+        {"value": "green", "label": "Green"},
+        {"value": "blue", "label": "Blue"},
+        {"value": "purple", "label": "Purple"},
+        {"value": "red", "label": "Red"},
+        {"value": "orange", "label": "Orange"},
+        {"value": "black", "label": "Black"},
+        {"value": "white", "label": "White"}
       ],
       "default": "blue"
     },
     {
       "type": "select",
       "id": "bottom_section_color",
-      "label": "Cor da Seção Inferior",
+      "label": "Bottom Section Color",
       "options": [
-        { "value": "green", "label": "Verde" },
-        { "value": "blue", "label": "Azul" },
-        { "value": "blue-dark", "label": "Azul Escuro" },
-        { "value": "purple", "label": "Roxo" },
-        { "value": "red", "label": "Vermelho" },
-        { "value": "orange", "label": "Laranja" },
-        { "value": "black", "label": "Preto" },
-        { "value": "white", "label": "Branco" }
+        {"value": "green", "label": "Green"},
+        {"value": "blue", "label": "Blue"},
+        {"value": "purple", "label": "Purple"},
+        {"value": "red", "label": "Red"},
+        {"value": "orange", "label": "Orange"},
+        {"value": "black", "label": "Black"},
+        {"value": "white", "label": "White"}
       ],
       "default": "purple"
     },
     {
-      "type": "header",
-      "content": "Configuração do Título"
+      "type": "text",
+      "id": "scramble_text_1",
+      "label": "First Scramble Text",
+      "default": "PRIMEIRA FRASE"
+    },
+    {
+      "type": "text",
+      "id": "scramble_text_2",
+      "label": "Second Scramble Text",
+      "default": "SEGUNDA FRASE"
+    },
+    {
+      "type": "text",
+      "id": "scramble_text_3",
+      "label": "Third Scramble Text",
+      "default": "TERCEIRA FRASE"
     },
     {
       "type": "range",
-      "id": "title_size",
-      "label": "Tamanho do Título",
-      "min": 50,
-      "max": 200,
-      "step": 10,
-      "default": 150
+      "id": "scrambler_text_size",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "label": "Scrambler Text Size",
+      "default": 80
     },
     {
       "type": "color",
-      "id": "title_color",
-      "label": "Cor do Título",
+      "id": "scrambler_text_color",
+      "label": "Scrambler Text Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "SERVICES"
+    },
+    {
+      "type": "image_picker",
+      "id": "title_svg",
+      "label": "Title SVG/Image"
     },
     {
       "type": "select",
       "id": "title_alignment",
-      "label": "Alinhamento do Título",
+      "label": "Title Alignment",
       "options": [
-        { "value": "left", "label": "Esquerda" },
-        { "value": "center", "label": "Centro" },
-        { "value": "right", "label": "Direita" }
+        {"value": "left", "label": "Left"},
+        {"value": "center", "label": "Center"},
+        {"value": "right", "label": "Right"}
       ],
       "default": "center"
     },
     {
+      "type": "range",
+      "id": "title_size",
+      "min": 40,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Title Size",
+      "default": 120
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
       "type": "select",
       "id": "title_transform",
-      "label": "Transformação de Texto",
+      "label": "Title Transform",
       "options": [
-        { "value": "none", "label": "Nenhum" },
-        { "value": "uppercase", "label": "MAIÚSCULAS" },
-        { "value": "lowercase", "label": "minúsculas" },
-        { "value": "capitalize", "label": "Primeira Maiúscula" }
+        {"value": "none", "label": "None"},
+        {"value": "uppercase", "label": "Uppercase"},
+        {"value": "lowercase", "label": "Lowercase"},
+        {"value": "capitalize", "label": "Capitalize"}
       ],
       "default": "uppercase"
     },
     {
       "type": "checkbox",
       "id": "title_shadow",
-      "label": "Sombra no Título",
+      "label": "Title Shadow",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "Configuração dos Cards"
     },
     {
       "type": "range",
       "id": "card_width",
-      "label": "Largura do Card",
       "min": 200,
       "max": 500,
       "step": 10,
-      "default": 350
+      "unit": "px",
+      "label": "Card Width",
+      "default": 300
     },
     {
       "type": "range",
       "id": "card_height",
-      "label": "Altura do Card",
-      "min": 250,
+      "min": 200,
       "max": 600,
       "step": 10,
-      "default": 450
+      "unit": "px",
+      "label": "Card Height",
+      "default": 400
     },
     {
       "type": "range",
       "id": "card_radius",
-      "label": "Raio de Borda",
       "min": 0,
       "max": 50,
       "step": 2,
-      "default": 16
+      "unit": "px",
+      "label": "Card Border Radius",
+      "default": 20
     },
     {
       "type": "range",
       "id": "cards_gap",
-      "label": "Espaço entre Cards",
       "min": 10,
-      "max": 100,
+      "max": 50,
       "step": 5,
-      "default": 50
+      "unit": "px",
+      "label": "Cards Gap",
+      "default": 20
     },
     {
       "type": "range",
       "id": "cards_padding",
-      "label": "Padding Lateral",
-      "min": 10,
+      "min": 20,
       "max": 100,
-      "step": 5,
+      "step": 10,
+      "unit": "px",
+      "label": "Cards Padding",
       "default": 50
-    },
+    }
+  ],
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "duplicate_cards",
-      "label": "Duplicar Cards",
-      "default": true,
-      "info": "Duplicar cards para criar mais conteúdo para rolagem"
-    },
-    {
-      "type": "header",
-      "content": "Cards com Imagens"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_1",
-      "label": "Imagem 1"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_2",
-      "label": "Imagem 2"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_3",
-      "label": "Imagem 3"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_4",
-      "label": "Imagem 4"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_5",
-      "label": "Imagem 5"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_6",
-      "label": "Imagem 6"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_7",
-      "label": "Imagem 7"
-    },
-    {
-      "type": "image_picker",
-      "id": "card_image_8",
-      "label": "Imagem 8"
-    },
-    {
-      "type": "header",
-      "content": "Cards com Texto (quando não há imagens)"
-    },
-    {
-      "type": "text",
-      "id": "card_text_1",
-      "label": "Texto Card 1",
-      "default": "Serviço 1"
-    },
-    {
-      "type": "text",
-      "id": "card_text_2",
-      "label": "Texto Card 2",
-      "default": "Serviço 2"
-    },
-    {
-      "type": "text",
-      "id": "card_text_3",
-      "label": "Texto Card 3",
-      "default": "Serviço 3"
-    },
-    {
-      "type": "text",
-      "id": "card_text_4",
-      "label": "Texto Card 4",
-      "default": "Serviço 4"
-    },
-    {
-      "type": "text",
-      "id": "card_text_5",
-      "label": "Texto Card 5",
-      "default": "Serviço 5"
-    },
-    {
-      "type": "header",
-      "content": "Recursos Avançados"
-    },
-    {
-      "type": "checkbox",
-      "id": "include_css",
-      "label": "Incluir CSS base",
-      "default": true,
-      "info": "Desative se o CSS base já estiver incluído em outro lugar"
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Card Image"
+        },        {
+          "type": "text",
+          "id": "card_gradient",
+          "label": "Card Background CSS (if no image)",
+          "default": "linear-gradient(135deg, #FF8008, #FFC837)",
+          "info": "Enter a valid CSS background value (color, gradient, etc.)"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Cards Scroll",
-      "category": "Interactive"
+      "name": "Cards Scroll Animation",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "Card 1"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "Card 2"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "card_title": "Card 3"
+          }
+        }
+      ]
     }
   ]
 }
