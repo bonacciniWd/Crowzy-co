@@ -36,11 +36,11 @@
         "cards_gap": 50,
         "cards_padding": 50,
         "duplicate_cards": true,
-        "card_text_1": "Serviço 1",
-        "card_text_2": "Serviço 2",
-        "card_text_3": "Serviço 3",
-        "card_text_4": "Serviço 4",
-        "card_text_5": "Serviço 5",
+        "card_image_1": "shopify://shop_images/Captura_de_tela_15-6-2025_165133_www.instagram.com.jpg",
+        "card_image_2": "shopify://shop_images/Captura_de_tela_15-6-2025_165152_www.instagram.com.jpg",
+        "card_image_3": "shopify://shop_images/Captura_de_tela_15-6-2025_165059_www.instagram.com.jpg",
+        "card_image_4": "shopify://shop_images/Captura_de_tela_15-6-2025_165033_www.instagram.com.jpg",
+        "card_image_5": "shopify://shop_images/Captura_de_tela_15-6-2025_165113_www.instagram.com.jpg",
         "include_css": true
       }
     },
