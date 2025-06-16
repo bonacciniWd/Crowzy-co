@@ -84,7 +84,6 @@
       "block_order": [
         "text_iXYWz6"
       ],
-      "disabled": true,
       "name": "t:names.hero",
       "settings": {
         "link": "",
@@ -92,16 +91,17 @@
         "media_type_1": "image",
         "image_1": "shopify://shop_images/Whisk_4c047374a8_875edc42-9564-4008-a7b2-3d4f9439b774.jpg",
         "media_type_2": "image",
-        "content_direction": "row",
+        "image_2": "shopify://shop_images/Whisk_4c047374a8.jpg",
+        "content_direction": "column",
         "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
         "align_baseline": true,
         "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "space-between",
-        "gap": 20,
-        "section_width": "page-width",
-        "section_height": "small",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 66,
+        "section_width": "full-width",
+        "section_height": "large",
         "section_height_custom": 50,
         "color_scheme": "scheme-6",
         "toggle_overlay": true,
@@ -111,7 +111,7 @@
         "blurred_reflection": true,
         "reflection_opacity": 75,
         "padding-block-start": 100,
-        "padding-block-end": 48
+        "padding-block-end": 100
       }
     },
     "marquee_nBmFwG": {
