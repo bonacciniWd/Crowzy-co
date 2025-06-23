@@ -121,6 +121,7 @@
         "text_ey93Ab",
         "text_A8QL3X"
       ],
+      "disabled": true,
       "name": "t:names.marquee_section",
       "settings": {
         "movement_direction": "normal",
