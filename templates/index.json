@@ -607,9 +607,9 @@
           "name": "t:names.text",
           "settings": {
             "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
-            "width": "fit-content",
+            "width": "100%",
             "max_width": "narrow",
-            "alignment": "left",
+            "alignment": "right",
             "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -618,26 +618,53 @@
             "case": "none",
             "wrap": "pretty",
             "color": "var(--color-foreground-heading)",
-            "background": true,
+            "background": false,
             "background_color": "#00000026",
             "corner_radius": 9,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 29
+          },
+          "blocks": {}
+        },
+        "text_idJ9wW": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "right",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 9,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 29
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "text_iXYWz6"
+        "text_iXYWz6",
+        "text_idJ9wW"
       ],
       "name": "t:names.hero",
       "settings": {
         "link": "",
         "open_in_new_tab": false,
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/Sem_nome1_1200_x_1920_px_15acf6d0-0435-4cf0-a62d-89cd1c9c8412.png",
+        "image_1": "shopify://shop_images/Sem_nome_2400_x_1080_px.png",
         "media_type_2": "image",
         "content_direction": "column",
         "vertical_on_mobile": true,
