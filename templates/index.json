@@ -64,6 +64,31 @@
           },
           "blocks": {}
         },
+        "text_A8QL3X": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The Voice From The Streets</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#1a1a1abf",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 21,
+            "padding-inline-end": 21
+          },
+          "blocks": {}
+        },
         "text_ey93Ab": {
           "type": "text",
           "name": "t:names.text",
@@ -89,37 +114,12 @@
             "padding-inline-end": 26
           },
           "blocks": {}
-        },
-        "text_A8QL3X": {
-          "type": "text",
-          "settings": {
-            "text": "<p>The Voice From The Streets</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "custom",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
-            "case": "none",
-            "wrap": "nowrap",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#1a1a1ac0",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 21,
-            "padding-inline-end": 21
-          },
-          "blocks": {}
         }
       },
       "block_order": [
         "icon_PfqbUh",
-        "text_ey93Ab",
-        "text_A8QL3X"
+        "text_A8QL3X",
+        "text_ey93Ab"
       ],
       "name": "t:names.marquee_section",
       "settings": {
