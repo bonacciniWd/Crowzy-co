@@ -28,116 +28,101 @@
       {% else %}
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
       {% endif %}
-    </div>
-      <div class="cards-container">
-      {% comment %} Usando referências diretas aos assets para as imagens dos cards {% endcomment %}
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'cross.jpeg' | asset_url }}" 
-            alt="Cross" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'web.jpeg' | asset_url }}" 
-            alt="Web" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'start.jpeg' | asset_url }}" 
-            alt="Start" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'cleric.jpeg' | asset_url }}" 
-            alt="Cleric" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
-      <div class="card card-with-image" style="background-color: transparent !important;">
-        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-          <img 
-            src="{{ 'shadow.jpeg' | asset_url }}" 
-            alt="Shadow" 
-            class="card-image"
-            width="350"
-            height="450"
-            loading="lazy"
-            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-          />
-        </div>
-      </div>
+    </div>      <div class="cards-container">
+      {% comment %} Criando cards dinamicamente baseados nas configurações do schema {% endcomment %}
+      {% assign card_images = 'card_image_1,card_image_2,card_image_3,card_image_4,card_image_5,card_image_6,card_image_7,card_image_8' | split: ',' %}
+      {% assign card_texts = 'card_text_1,card_text_2,card_text_3,card_text_4,card_text_5' | split: ',' %}
+      {% assign fallback_images = 'cross.jpeg,web.jpeg,start.jpeg,cleric.jpeg,shadow.jpeg' | split: ',' %}
       
+      {% for i in (1..8) %}
+        {% assign card_image_key = card_images[forloop.index0] %}
+        {% assign card_image = section.settings[card_image_key] %}
+        {% assign card_text_key = card_texts[forloop.index0] %}
+        {% assign card_text = section.settings[card_text_key] %}
+        {% assign fallback_image = fallback_images[forloop.index0] %}
+        
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          {% if card_image != blank %}
+            {% comment %} Usar imagem carregada pelo usuário no schema {% endcomment %}
+            <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+              <img 
+                src="{{ card_image | image_url: width: 700 }}" 
+                alt="{{ card_image.alt | default: 'Card Image ' | append: forloop.index }}" 
+                class="card-image"
+                width="{{ section.settings.card_width | default: 350 }}"
+                height="{{ section.settings.card_height | default: 450 }}"
+                loading="lazy"
+                style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+              />
+            </div>
+          {% elsif fallback_image and forloop.index <= 5 %}
+            {% comment %} Usar imagem de fallback dos assets apenas para os primeiros 5 cards {% endcomment %}
+            <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+              <img 
+                src="{{ fallback_image | asset_url }}" 
+                alt="{{ fallback_image | remove: '.jpeg' | capitalize }}" 
+                class="card-image"
+                width="{{ section.settings.card_width | default: 350 }}"
+                height="{{ section.settings.card_height | default: 450 }}"
+                loading="lazy"
+                style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+              />
+            </div>
+          {% elsif card_text != blank %}
+            {% comment %} Usar texto se não houver imagem {% endcomment %}
+            <div class="card-content gradient-{{ forloop.index0 | modulo: 5 }}">
+              {{ card_text }}
+            </div>
+          {% else %}
+            {% comment %} Card vazio com gradiente {% endcomment %}
+            <div class="card-content gradient-{{ forloop.index0 | modulo: 5 }}">
+              Card {{ forloop.index }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}      
       {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
       {% if section.settings.duplicate_cards %}
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'cross.jpeg' | asset_url }}" 
-              alt="Cross" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
+        {% for i in (1..3) %}
+          {% assign card_image_key = card_images[forloop.index0] %}
+          {% assign card_image = section.settings[card_image_key] %}
+          {% assign fallback_image = fallback_images[forloop.index0] %}
+          
+          <div class="card card-with-image" style="background-color: transparent !important;">
+            {% if card_image != blank %}
+              {% comment %} Usar imagem carregada pelo usuário no schema {% endcomment %}
+              <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+                <img 
+                  src="{{ card_image | image_url: width: 700 }}" 
+                  alt="{{ card_image.alt | default: 'Card Image ' | append: forloop.index }}" 
+                  class="card-image"
+                  width="{{ section.settings.card_width | default: 350 }}"
+                  height="{{ section.settings.card_height | default: 450 }}"
+                  loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+                />
+              </div>
+            {% elsif fallback_image %}
+              {% comment %} Usar imagem de fallback dos assets {% endcomment %}
+              <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+                <img 
+                  src="{{ fallback_image | asset_url }}" 
+                  alt="{{ fallback_image | remove: '.jpeg' | capitalize }}" 
+                  class="card-image"
+                  width="{{ section.settings.card_width | default: 350 }}"
+                  height="{{ section.settings.card_height | default: 450 }}"
+                  loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+                />
+              </div>
+            {% else %}
+              {% comment %} Card com gradiente se não houver imagem {% endcomment %}
+              <div class="card-content gradient-{{ forloop.index0 | modulo: 5 }}">
+                Card {{ forloop.index }}
+              </div>
+            {% endif %}
           </div>
-        </div>
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'web.jpeg' | asset_url }}" 
-              alt="Web" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-            <img 
-              src="{{ 'start.jpeg' | asset_url }}" 
-              alt="Start" 
-              class="card-image"
-              width="350"
-              height="450"
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-            />
-          </div>
-        </div>
+        {% endfor %}
       {% endif %}
     </div>
   </div>  {% if section.settings.show_bottom_section %}
@@ -781,27 +766,10 @@
         imageCards.forEach((card, index) => {
           const img = card.querySelector(".card-image");
           if (img && img.src) {
-            // Usar a URL da imagem como background-image do card
-            card.style.backgroundImage = `url('${img.src}')`;
+            // Usar a URL da imagem como background-image do card            card.style.backgroundImage = `url('${img.src}')`;
             card.style.backgroundSize = "cover";
             card.style.backgroundPosition = "center";
             console.log(`Aplicado background-image fallback no card ${index}: ${img.src}`);
-          } else {
-            // Como último recurso, usar fallback para imagens específicas com base no índice
-            const fallbackImages = [
-              "{{ 'cross.jpg' | asset_url }}",
-              "{{ 'web.jpg' | asset_url }}",
-              "{{ 'start.jpg' | asset_url }}",
-              "{{ 'cleric.jpg' | asset_url }}",
-              "{{ 'shadow.jpg' | asset_url }}"
-            ];
-            
-            if (fallbackImages[index % fallbackImages.length]) {
-              card.style.backgroundImage = `url('${fallbackImages[index % fallbackImages.length]}')`;
-              card.style.backgroundSize = "cover";
-              card.style.backgroundPosition = "center";
-              console.log(`Aplicado background-image fallback direto para o card ${index}`);
-            }
           }
         });
       }
