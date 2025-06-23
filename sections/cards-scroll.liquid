@@ -23,7 +23,7 @@
   <div class="section gradient-{{ section.settings.main_section_color | default: 'blue' }} cards-section">    <div class="title-container">
       {% if section.settings.title_svg != blank %}
         <div class="title-svg-container">
-          {{ section.settings.title_svg | image_url: width: 400 | image_tag: class: 'title-svg' }}
+          {{ section.settings.title_svg | image_url: width: 800 | image_tag: class: 'title-svg' }}
         </div>
       {% else %}
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
@@ -256,7 +256,7 @@
   }
   
   #cards-scroll-{{ section.id }} .title-svg-container {
-    max-width: 50%;
+    max-width: 90%;
     margin: 0 auto;
     text-align: {{ section.settings.title_alignment }};
   }
