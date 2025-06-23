@@ -9,29 +9,24 @@
  */
 {
   "sections": {
-    "cards_scroll_4wJ9QF": {
+    "cards_scroll_kfK6TA": {
       "type": "cards-scroll",
-      "custom_css": [
-        ".title-svg-container {max-width: 350px; max-height: 120px;}"
-      ],
       "name": "Cards Scroll",
       "settings": {
         "heading": "SERVICES",
-        "title_svg": "shopify://shop_images/svg.svg",
-        "section_height": 95,
+        "title_svg": "shopify://shop_images/svg_156553be-d4ed-438d-92ca-5abb11a972ef.svg",
+        "section_height": 100,
         "show_top_section": true,
-        "bottom_section_video": "shopify://files/videos/fundo.MOV",
         "show_video_controls": false,
         "show_bottom_section": true,
-        "scramble_text_1": "Underground Streetwear",
-        "scramble_text_2": "Survival of the fittest",
-        "scramble_text_3": "it's Crowzy Company",
+        "top_section_background_opacity": 80,
+        "scrambler_text": "Underground Streetwear",
         "scrambler_text_size": 80,
-        "scrambler_text_color": "#000000cf",
+        "scrambler_text_color": "#FFFFFF",
         "top_section_color": "white",
         "main_section_color": "white",
-        "bottom_section_color": "white",
-        "title_size": 110,
+        "bottom_section_color": "black",
+        "title_size": 150,
         "title_color": "#ffffff",
         "title_alignment": "center",
         "title_transform": "uppercase",
@@ -40,7 +35,7 @@
         "card_height": 450,
         "card_radius": 16,
         "cards_gap": 50,
-        "cards_padding": 55,
+        "cards_padding": 50,
         "duplicate_cards": true,
         "card_text_1": "Serviço 1",
         "card_text_2": "Serviço 2",
@@ -1005,7 +1000,7 @@
     }
   },
   "order": [
-    "cards_scroll_4wJ9QF",
+    "cards_scroll_kfK6TA",
     "product_list_pkGJeB",
     "marquee_nBmFwG",
     "product_list_qU3bEB",
