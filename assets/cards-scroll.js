@@ -42,8 +42,11 @@ window.addEventListener("DOMContentLoaded", () => {
     // Calcular altura do header para ajustar o ponto de início da animação
     const header = document.querySelector("header") || document.getElementById("header-component") || document.querySelector(".header-section");
     const headerHeight = header ? header.offsetHeight : 0;
-    
-    // Configuração inicial    gsap.set(title, { xPercent: 100 }); // Título fora da tela (à direita)
+      // Configuração inicial    
+    gsap.set(title, { 
+      xPercent: 100,  // Título fora da tela (à direita)
+      opacity: 0      // Invisível inicialmente
+    }); 
     gsap.set(cardsContainer, { 
       autoAlpha: 1 // Tornar visível
     });
@@ -95,12 +98,10 @@ window.addEventListener("DOMContentLoaded", () => {
         pin: true, // Fixar a seção durante a animação
         pinSpacing: true, // Garantir espaço adequado
         anticipatePin: 1, // Melhorar desempenho
-        invalidateOnRefresh: true, // Recalcular em caso de mudança de tamanho
-        onEnter: () => console.log("ScrollTrigger: onEnter"),
+        invalidateOnRefresh: true, // Recalcular em caso de mudança de tamanho        onEnter: () => console.log("ScrollTrigger: onEnter"),
         onLeave: () => console.log("ScrollTrigger: onLeave"),
         onEnterBack: () => console.log("ScrollTrigger: onEnterBack"),
-        onLeaveBack: () => console.log("ScrollTrigger: onLeaveBack"),
-        markers: true // REMOVER EM PRODUÇÃO
+        onLeaveBack: () => console.log("ScrollTrigger: onLeaveBack")
       }
     });
       // Animação de rolagem horizontal - vamos adicionar uma distância extra para garantir que todos os cards saiam da tela
@@ -108,10 +109,10 @@ window.addEventListener("DOMContentLoaded", () => {
       x: () => -(scrollDistance + extraMargin),
       ease: "none",
       duration: 0.8 // Duração um pouco menor para deixar um "espaço de respiro" no final
-    });
-      // Animação do título - completa antes dos cards terminarem
+    });      // Animação do título - completa antes dos cards terminarem
     tl.to(title, {
       xPercent: 0,
+      opacity: 1,     // Fazer aparecer junto com o movimento
       ease: "power2.inOut",
       duration: 0.5
     }, "<0.1"); // Começar um pouco depois para que o título esteja mais visível no final
