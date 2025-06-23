@@ -98,12 +98,10 @@ window.addEventListener("DOMContentLoaded", () => {
         pin: true, // Fixar a seção durante a animação
         pinSpacing: true, // Garantir espaço adequado
         anticipatePin: 1, // Melhorar desempenho
-        invalidateOnRefresh: true, // Recalcular em caso de mudança de tamanho
-        onEnter: () => console.log("ScrollTrigger: onEnter"),
+        invalidateOnRefresh: true, // Recalcular em caso de mudança de tamanho        onEnter: () => console.log("ScrollTrigger: onEnter"),
         onLeave: () => console.log("ScrollTrigger: onLeave"),
         onEnterBack: () => console.log("ScrollTrigger: onEnterBack"),
-        onLeaveBack: () => console.log("ScrollTrigger: onLeaveBack"),
-        markers: true // REMOVER EM PRODUÇÃO
+        onLeaveBack: () => console.log("ScrollTrigger: onLeaveBack")
       }
     });
       // Animação de rolagem horizontal - vamos adicionar uma distância extra para garantir que todos os cards saiam da tela
