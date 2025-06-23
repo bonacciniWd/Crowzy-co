@@ -19,7 +19,7 @@
         "show_top_section": true,
         "bottom_section_image": "shopify://shop_images/fundo2.png",
         "show_video_controls": false,
-        "show_bottom_section": true,
+        "show_bottom_section": false,
         "top_section_background_image": "shopify://shop_images/fundo.png",
         "top_section_background_opacity": 85,
         "scrambler_text": "Underground Streetwear",
@@ -90,7 +90,7 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "text": "<h2>Todos os produtos</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
