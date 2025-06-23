@@ -602,32 +602,6 @@
     "hero_jVaWmY": {
       "type": "hero",
       "blocks": {
-        "text_iXYWz6": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>With a focus on quality and design, we curate products that enhance your everyday.</p>",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "right",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 9,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 29
-          },
-          "blocks": {}
-        },
         "text_idJ9wW": {
           "type": "text",
           "name": "t:names.text",
@@ -656,7 +630,6 @@
         }
       },
       "block_order": [
-        "text_iXYWz6",
         "text_idJ9wW"
       ],
       "name": "t:names.hero",
