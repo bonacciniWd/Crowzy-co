@@ -49,6 +49,100 @@
         "include_css": true
       }
     },
+    "marquee_nBmFwG": {
+      "type": "marquee",
+      "blocks": {
+        "icon_PfqbUh": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "none",
+            "image_upload": "shopify://shop_images/svg_6adb0868-46bf-4583-8228-66e1662f3987.svg",
+            "width": 34,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "text_ey93Ab": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Subvert the Ordinary</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": true,
+            "background_color": "#0000000f",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 26,
+            "padding-inline-end": 26
+          },
+          "blocks": {}
+        },
+        "icon_MTdHER": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/svg_6adb0868-46bf-4583-8228-66e1662f3987.svg",
+            "width": 36,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
+        "text_A8QL3X": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The Voice From The Streets</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#1a1a1ac0",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 21,
+            "padding-inline-end": 21
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "icon_PfqbUh",
+        "text_ey93Ab",
+        "icon_MTdHER",
+        "text_A8QL3X"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "product_list_pkGJeB": {
       "type": "product-list",
       "blocks": {
@@ -305,47 +399,6 @@
         "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48
-      }
-    },
-    "marquee_nBmFwG": {
-      "type": "marquee",
-      "blocks": {
-        "text_A8QL3X": {
-          "type": "text",
-          "settings": {
-            "text": "<p>We make things that work better and last longer.</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "custom",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
-            "case": "none",
-            "wrap": "nowrap",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_A8QL3X"
-      ],
-      "name": "t:names.marquee_section",
-      "settings": {
-        "movement_direction": "normal",
-        "color_scheme": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 24
       }
     },
     "product_list_qU3bEB": {
@@ -1005,8 +1058,8 @@
   },
   "order": [
     "cards_scroll_kfK6TA",
-    "product_list_pkGJeB",
     "marquee_nBmFwG",
+    "product_list_pkGJeB",
     "product_list_qU3bEB",
     "section_rhpn4z",
     "hero_tmrLqC",
