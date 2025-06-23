@@ -499,8 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (titleContainer) {
     ScrollTrigger.create({
       trigger: `#cards-scroll-${sectionId} .cards-section`,
-      start: "top top",
-      end: "bottom top",
+     
       scrub: 1,
       onUpdate: (self) => {
         // Só mostra o título quando está chegando ao final da seção (80% do progresso)
