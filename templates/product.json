@@ -491,9 +491,9 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3>You may also like </h3>",
+            "text": "<h3>Relacionados</h3>",
             "width": "fit-content",
-            "max_width": "normal",
+            "max_width": "narrow",
             "alignment": "left",
             "type_preset": "rte",
             "font": "var(--font-primary--family)",
