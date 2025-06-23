@@ -40,7 +40,7 @@
         "card_radius": 16,
         "cards_gap": 50,
         "cards_padding": 50,
-        "duplicate_cards": false,
+        "duplicate_cards": true,
         "card_image_1": "shopify://shop_images/1.png",
         "card_image_2": "shopify://shop_images/2.png",
         "card_image_3": "shopify://shop_images/4.png",
