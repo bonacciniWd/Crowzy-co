@@ -40,7 +40,7 @@
         "card_radius": 16,
         "cards_gap": 50,
         "cards_padding": 50,
-        "duplicate_cards": true,
+        "duplicate_cards": false,
         "card_text_1": "Serviço 1",
         "card_text_2": "Serviço 2",
         "card_text_3": "Serviço 3",
