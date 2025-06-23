@@ -68,7 +68,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>Subvert the Ordinary</p>",
+            "text": "<p>Subvert the Ordinary </p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -87,18 +87,6 @@
             "padding-block-end": 0,
             "padding-inline-start": 26,
             "padding-inline-end": 26
-          },
-          "blocks": {}
-        },
-        "icon_MTdHER": {
-          "type": "icon",
-          "name": "t:names.icon",
-          "settings": {
-            "icon": "price_tag",
-            "image_upload": "shopify://shop_images/svg_6adb0868-46bf-4583-8228-66e1662f3987.svg",
-            "width": 34,
-            "link": "",
-            "open_in_new_tab": false
           },
           "blocks": {}
         },
@@ -131,7 +119,6 @@
       "block_order": [
         "icon_PfqbUh",
         "text_ey93Ab",
-        "icon_MTdHER",
         "text_A8QL3X"
       ],
       "name": "t:names.marquee_section",
