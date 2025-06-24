@@ -256,6 +256,26 @@
             "horizontal_alignment": "center",
             "gap": 10,
             "padding-block-start": 28,
+            "padding-block-end": 28,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "logo_zeejWN": {
+          "type": "logo",
+          "name": "t:names.logo",
+          "settings": {
+            "inverse": false,
+            "font": "heading",
+            "unit": "pixel",
+            "percent_width": 100,
+            "pixel_height": 32,
+            "custom_mobile_size": false,
+            "unit_mobile": "percent",
+            "percent_width_mobile": 100,
+            "pixel_height_mobile": 120,
+            "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
@@ -351,6 +371,7 @@
         "divider_hFm3am",
         "group_GYhYwU",
         "payment_icons_LJEcYc",
+        "logo_zeejWN",
         "footer_utilities_KRaGcH"
       ],
       "name": "Footer",
@@ -360,7 +381,7 @@
         "horizontal_alignment": "center",
         "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 10,
         "section_width": "page-width",
