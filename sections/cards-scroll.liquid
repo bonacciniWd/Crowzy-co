@@ -673,26 +673,8 @@
       }
     }, 1000);
   });
-</script>    // Debug das imagens de fundo
-    const topBg = document.querySelector('.top-section-background');
-    if (topBg) {
-      console.log('Imagem de fundo da seção superior encontrada');
-    }
-    
-    // Debug adicional para o text scrambler
-    const scrambleText = document.querySelector('#scramble-text-top-{{ section.id }}');
-    if (scrambleText) {
-      console.log('=== DEBUG TEXT SCRAMBLER ===');
-      console.log('Elemento encontrado:', scrambleText);
-      console.log('Texto atual:', scrambleText.textContent);
-      console.log('Estilos computados:', window.getComputedStyle(scrambleText));
-      console.log('Container pai:', scrambleText.parentElement);
-      console.log('Posição:', scrambleText.getBoundingClientRect());
-    } else {
-      console.warn('Elemento de text scrambler não encontrado!');
-    }
-  });
-</script>
+</script>  
+
 
 {% schema %}
 {
