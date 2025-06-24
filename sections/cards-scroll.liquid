@@ -9,9 +9,14 @@
 
 <div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}
     <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">
-      {% comment %} Imagem de fundo para a seção scramble {% endcomment %}
-      {% if section.settings.top_section_background_image != blank %}
-        <div class="top-section-background" style="background-image: url('{{ section.settings.top_section_background_image | image_url: width: 1920 }}');"></div>
+      {% comment %} Imagem de fundo para desktop {% endcomment %}
+      {% if section.settings.top_section_background_image_desktop != blank %}
+        <div class="top-section-background desktop-bg" style="background-image: url('{{ section.settings.top_section_background_image_desktop | image_url: width: 1920 }}');"></div>
+      {% endif %}
+      
+      {% comment %} Imagem de fundo para mobile {% endcomment %}
+      {% if section.settings.top_section_background_image_mobile != blank %}
+        <div class="top-section-background mobile-bg" style="background-image: url('{{ section.settings.top_section_background_image_mobile | image_url: width: 768 }}');"></div>
       {% endif %}
       
       <div class="text-scramble-container">
@@ -28,101 +33,116 @@
       {% else %}
         <h1>{{ section.settings.heading | default: "SERVICES" }}</h1>
       {% endif %}
-    </div>      <div class="cards-container">
-      {% comment %} Criando cards dinamicamente baseados nas configurações do schema {% endcomment %}
-      {% assign card_images = 'card_image_1,card_image_2,card_image_3,card_image_4,card_image_5,card_image_6,card_image_7,card_image_8' | split: ',' %}
-      {% assign card_texts = 'card_text_1,card_text_2,card_text_3,card_text_4,card_text_5' | split: ',' %}
-      {% assign fallback_images = 'cross.jpeg,web.jpeg,start.jpeg,cleric.jpeg,shadow.jpeg' | split: ',' %}
-      
-      {% for i in (1..8) %}
-        {% assign card_image_key = card_images[forloop.index0] %}
-        {% assign card_image = section.settings[card_image_key] %}
-        {% assign card_text_key = card_texts[forloop.index0] %}
-        {% assign card_text = section.settings[card_text_key] %}
-        {% assign fallback_image = fallback_images[forloop.index0] %}
-        
-        <div class="card card-with-image" style="background-color: transparent !important;">
-          {% if card_image != blank %}
-            {% comment %} Usar imagem carregada pelo usuário no schema {% endcomment %}
-            <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-              <img 
-                src="{{ card_image | image_url: width: 700 }}" 
-                alt="{{ card_image.alt | default: 'Card Image ' | append: forloop.index }}" 
-                class="card-image"
-                width="{{ section.settings.card_width | default: 350 }}"
-                height="{{ section.settings.card_height | default: 450 }}"
-                loading="lazy"
-                style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-              />
-            </div>
-          {% elsif fallback_image and forloop.index <= 5 %}
-            {% comment %} Usar imagem de fallback dos assets apenas para os primeiros 5 cards {% endcomment %}
-            <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-              <img 
-                src="{{ fallback_image | asset_url }}" 
-                alt="{{ fallback_image | remove: '.jpeg' | capitalize }}" 
-                class="card-image"
-                width="{{ section.settings.card_width | default: 350 }}"
-                height="{{ section.settings.card_height | default: 450 }}"
-                loading="lazy"
-                style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-              />
-            </div>
-          {% elsif card_text != blank %}
-            {% comment %} Usar texto se não houver imagem {% endcomment %}
-            <div class="card-content gradient-{{ forloop.index0 | modulo: 5 }}">
-              {{ card_text }}
-            </div>
-          {% else %}
-            {% comment %} Card vazio com gradiente {% endcomment %}
-            <div class="card-content gradient-{{ forloop.index0 | modulo: 5 }}">
-              Card {{ forloop.index }}
-            </div>
-          {% endif %}
+    </div>
+      <div class="cards-container">
+      {% comment %} Usando referências diretas aos assets para as imagens dos cards {% endcomment %}
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'cross.jpeg' | asset_url }}" 
+            alt="Cross" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
         </div>
-      {% endfor %}      
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'web.jpeg' | asset_url }}" 
+            alt="Web" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'start.jpeg' | asset_url }}" 
+            alt="Start" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'cleric.jpeg' | asset_url }}" 
+            alt="Cleric" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      <div class="card card-with-image" style="background-color: transparent !important;">
+        <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+          <img 
+            src="{{ 'shadow.jpeg' | asset_url }}" 
+            alt="Shadow" 
+            class="card-image"
+            width="350"
+            height="450"
+            loading="lazy"
+            style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+          />
+        </div>
+      </div>
+      
       {% comment %} Duplicar cards se necessário para conteúdo de rolagem suficiente {% endcomment %}
       {% if section.settings.duplicate_cards %}
-        {% for i in (1..3) %}
-          {% assign card_image_key = card_images[forloop.index0] %}
-          {% assign card_image = section.settings[card_image_key] %}
-          {% assign fallback_image = fallback_images[forloop.index0] %}
-          
-          <div class="card card-with-image" style="background-color: transparent !important;">
-            {% if card_image != blank %}
-              {% comment %} Usar imagem carregada pelo usuário no schema {% endcomment %}
-              <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-                <img 
-                  src="{{ card_image | image_url: width: 700 }}" 
-                  alt="{{ card_image.alt | default: 'Card Image ' | append: forloop.index }}" 
-                  class="card-image"
-                  width="{{ section.settings.card_width | default: 350 }}"
-                  height="{{ section.settings.card_height | default: 450 }}"
-                  loading="lazy"
-                  style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-                />
-              </div>
-            {% elsif fallback_image %}
-              {% comment %} Usar imagem de fallback dos assets {% endcomment %}
-              <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-                <img 
-                  src="{{ fallback_image | asset_url }}" 
-                  alt="{{ fallback_image | remove: '.jpeg' | capitalize }}" 
-                  class="card-image"
-                  width="{{ section.settings.card_width | default: 350 }}"
-                  height="{{ section.settings.card_height | default: 450 }}"
-                  loading="lazy"
-                  style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
-                />
-              </div>
-            {% else %}
-              {% comment %} Card com gradiente se não houver imagem {% endcomment %}
-              <div class="card-content gradient-{{ forloop.index0 | modulo: 5 }}">
-                Card {{ forloop.index }}
-              </div>
-            {% endif %}
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+            <img 
+              src="{{ 'cross.jpeg' | asset_url }}" 
+              alt="Cross" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+            />
           </div>
-        {% endfor %}
+        </div>
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+            <img 
+              src="{{ 'web.jpeg' | asset_url }}" 
+              alt="Web" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+            />
+          </div>
+        </div>
+        <div class="card card-with-image" style="background-color: transparent !important;">
+          <div class="card-image-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+            <img 
+              src="{{ 'start.jpeg' | asset_url }}" 
+              alt="Start" 
+              class="card-image"
+              width="350"
+              height="450"
+              loading="lazy"
+              style="width: 100%; height: 100%; object-fit: cover; display: block; position: absolute;"
+            />
+          </div>
+        </div>
       {% endif %}
     </div>
   </div>  {% if section.settings.show_bottom_section %}
@@ -210,7 +230,7 @@
   /* Configuração da seção de cards */  #cards-scroll-{{ section.id }} .cards-section {
     display: flex;
     align-items: center;
-    overflow-x: hidden;
+    overflow: hidden;
     position: relative;
     padding-bottom: 3rem; /* Adicionar espaço extra na parte inferior */
   }
@@ -307,8 +327,7 @@
     align-items: center;
     justify-content: center;
   }
-  
-  /* Imagem de fundo da seção superior */
+    /* Imagem de fundo da seção superior */
   #cards-scroll-{{ section.id }} .top-section-background {
     position: absolute;
     top: 0;
@@ -320,6 +339,15 @@
     background-repeat: no-repeat;
     z-index: 1;
     opacity: {{ section.settings.top_section_background_opacity | default: 0.8 | divided_by: 100.0 }};
+  }
+  
+  /* Mostrar apenas o fundo desktop por padrão */
+  #cards-scroll-{{ section.id }} .top-section-background.desktop-bg {
+    display: block;
+  }
+  
+  #cards-scroll-{{ section.id }} .top-section-background.mobile-bg {
+    display: none;
   }
   
   /* Imagem de fundo da seção inferior */
@@ -380,8 +408,17 @@
   .dud {
     opacity: 0.7;
   }
-  
-  /* Responsividade */  @media (max-width: 768px) {
+    /* Responsividade */  
+  @media (max-width: 768px) {
+    /* Trocar fundos em mobile */
+    #cards-scroll-{{ section.id }} .top-section-background.desktop-bg {
+      display: none;
+    }
+    
+    #cards-scroll-{{ section.id }} .top-section-background.mobile-bg {
+      display: block;
+    }
+    
     #cards-scroll-{{ section.id }} .title-container h1 {
       font-size: clamp(32px, 8vw, 80px);
     }
@@ -485,11 +522,11 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Text Scrambler 
+    // Text Scrambler para "Underground Streetwear"
     class TextScramble {
       constructor(el) {
         this.el = el;
-        this.chars = 'FUCK-THE-SYSTEM-ILL-DIE-ANYWAY';
+        this.chars = '01010010101001001000101010101';
         this.update = this.update.bind(this);
       }
       
@@ -766,10 +803,27 @@
         imageCards.forEach((card, index) => {
           const img = card.querySelector(".card-image");
           if (img && img.src) {
-            // Usar a URL da imagem como background-image do card            card.style.backgroundImage = `url('${img.src}')`;
+            // Usar a URL da imagem como background-image do card
+            card.style.backgroundImage = `url('${img.src}')`;
             card.style.backgroundSize = "cover";
             card.style.backgroundPosition = "center";
             console.log(`Aplicado background-image fallback no card ${index}: ${img.src}`);
+          } else {
+            // Como último recurso, usar fallback para imagens específicas com base no índice
+            const fallbackImages = [
+              "{{ 'cross.jpg' | asset_url }}",
+              "{{ 'web.jpg' | asset_url }}",
+              "{{ 'start.jpg' | asset_url }}",
+              "{{ 'cleric.jpg' | asset_url }}",
+              "{{ 'shadow.jpg' | asset_url }}"
+            ];
+            
+            if (fallbackImages[index % fallbackImages.length]) {
+              card.style.backgroundImage = `url('${fallbackImages[index % fallbackImages.length]}')`;
+              card.style.backgroundSize = "cover";
+              card.style.backgroundPosition = "center";
+              console.log(`Aplicado background-image fallback direto para o card ${index}`);
+            }
           }
         });
       }
@@ -827,11 +881,16 @@
       observer.observe(video);
     } else {
       console.log('Nenhum vídeo encontrado com ID: section-video-{{ section.id }}');
+    }      // Debug das imagens de fundo
+    const topBgDesktop = document.querySelector('.top-section-background.desktop-bg');
+    const topBgMobile = document.querySelector('.top-section-background.mobile-bg');
+    
+    if (topBgDesktop) {
+      console.log('Imagem de fundo desktop da seção superior encontrada');
     }
-      // Debug das imagens de fundo
-    const topBg = document.querySelector('.top-section-background');
-    if (topBg) {
-      console.log('Imagem de fundo da seção superior encontrada');
+    
+    if (topBgMobile) {
+      console.log('Imagem de fundo mobile da seção superior encontrada');
     }
     
     const bottomBg = document.querySelector('.bottom-section-image');
@@ -921,9 +980,15 @@
     },
     {
       "type": "image_picker",
-      "id": "top_section_background_image",
-      "label": "Imagem de Fundo da Seção Superior",
-      "info": "Imagem de fundo para a seção do text scrambler"
+      "id": "top_section_background_image_desktop",
+      "label": "Imagem de Fundo para Desktop",
+      "info": "Imagem de fundo para desktop na seção do text scrambler"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_section_background_image_mobile",
+      "label": "Imagem de Fundo para Mobile",
+      "info": "Imagem de fundo para mobile na seção do text scrambler"
     },
     {
       "type": "range",
@@ -934,7 +999,7 @@
       "step": 5,
       "default": 80,
       "info": "Controla a transparência da imagem de fundo"
-    },    {
+    },{
       "type": "text",
       "id": "scrambler_text",
       "label": "Texto para o Scrambler 1",
