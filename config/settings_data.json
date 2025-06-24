@@ -649,7 +649,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".button-chat-toggle {border: 1px solid transparent; border-radius: 30px; cursor: pointer; display: flex; height: 40px !important; margin: 0 6px; width: 40px !important;}"
+      ".chat-toggle {border: 1px solid transparent; border-radius: 30px; cursor: pointer; display: flex; height: 40px !important; margin: 0 6px; width: 40px !important;}"
     ]
   }
 }
