@@ -56,6 +56,7 @@
         motion-reduce
         color-{{ settings.drawer_color_scheme }}
       "
+      style="display: flex; flex-direction: column; height: 100%;"
     >
       <button
         class="button menu-drawer__close-button"
@@ -595,6 +596,16 @@
           </ul>
         </div>
       {% endif %}
+      
+      <!-- Logo da empresa na base do menu -->
+      <div class="menu-drawer__logo">
+        <img 
+          src="{{ 'logo.png' | asset_url }}" 
+          alt="{{ shop.name }}"
+          class="menu-drawer__logo-image"
+          loading="lazy"
+        >
+      </div>
     </div>
     <div
       class="menu-drawer__backdrop"
@@ -644,6 +655,8 @@
 
   .menu-drawer__navigation {
     padding: 0;
+    flex: 1;
+    overflow-y: auto;
 
     @media screen and (width >= 750px) {
       margin-top: var(--drawer-header-desktop-top);
@@ -951,16 +964,19 @@
 
   .menu-drawer__close-button {
     background-color: transparent;
-    color: var(--color-foreground);
+    color: #dc2626; /* Vermelho */
     padding: var(--padding-xl);
     box-shadow: none;
     will-change: transform;
+    border: none;
   }
 
   .menu-drawer__close-button .svg-wrapper,
   .menu-drawer__close-button svg {
     width: var(--icon-size-xs);
     height: var(--icon-size-xs);
+    background: transparent !important;
+    fill: #dc2626 !important; /* Vermelho para o SVG */
   }
 
   .menu-drawer__back-button {
@@ -1035,9 +1051,10 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    margin-block: auto var(--padding-sm);
+    margin-block: var(--padding-sm);
     margin-inline-start: var(--padding-xl);
     background-color: rgb(var(--color-foreground) 0.03);
+    flex-shrink: 0;
   }
 
   .menu-drawer__account {
@@ -1067,6 +1084,66 @@
   .menu-drawer__featured-collection-image,
   .menu-drawer__featured-collection-link::before {
     border-radius: var(--menu-image-border-radius);
+  }
+
+  /* Estilos da logo no menu drawer */
+  .menu-drawer__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding-lg) var(--padding-xl);
+    margin-top: auto;
+    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+    background-color: rgba(var(--color-foreground), 0.02);
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__logo-image {
+    max-width: 140px;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+  }
+
+  .menu-drawer__logo:hover .menu-drawer__logo-image {
+    opacity: 1;
+  }
+
+  /* Diminuir tamanho das fontes no mobile */
+  @media screen and (max-width: 749px) {
+    .menu-drawer__menu-item--mainlist {
+      font-size: calc(var(--menu-top-level-font-size) * 0.85);
+      padding: var(--padding-md) var(--padding-xl);
+    }
+
+    .menu-drawer__menu-item--parent {
+      font-size: calc(var(--menu-parent-font-size) * 0.85);
+    }
+
+    .menu-drawer__menu-item--child {
+      font-size: calc(var(--menu-child-font-size) * 0.8);
+      padding: var(--padding-sm) var(--padding-xl);
+    }
+
+    .menu-drawer__menu-item-text {
+      font-size: inherit;
+    }
+
+    .menu-drawer__logo {
+      padding: var(--padding-md) var(--padding-xl);
+    }
+
+    .menu-drawer__logo-image {
+      max-width: 120px;
+      max-height: 40px;
+    }
+
+    .menu-drawer__close-button {
+      padding: var(--padding-lg);
+    }
   }
 
   @keyframes menu-drawer-nav-open {
