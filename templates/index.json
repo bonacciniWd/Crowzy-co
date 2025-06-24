@@ -686,37 +686,6 @@
     },
     "hero_jVaWmY": {
       "type": "hero",
-      "blocks": {
-        "text_idJ9wW": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "",
-            "width": "100%",
-            "max_width": "none",
-            "alignment": "right",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 9,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 29
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_idJ9wW"
-      ],
       "name": "t:names.hero",
       "settings": {
         "link": "",
@@ -734,7 +703,7 @@
         "gap": 0,
         "section_width": "full-width",
         "section_height": "custom",
-        "section_height_custom": 28,
+        "section_height_custom": 20,
         "color_scheme": "scheme-6",
         "toggle_overlay": true,
         "overlay_color": "#00000014",
