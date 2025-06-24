@@ -680,8 +680,8 @@
         "movement_direction": "normal",
         "color_scheme": "",
         "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 24
+        "padding-block-end": 0,
+        "gap_between_elements": 44
       }
     },
     "hero_jVaWmY": {
