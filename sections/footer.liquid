@@ -1,4 +1,81 @@
-
+<style>
+  /* Estilos específicos para mobile - Footer otimizado */
+  {% if section.settings.mobile_compact %}
+  @media screen and (max-width: 768px) {
+    .section-wrapper footer.section {
+      min-height: auto !important;
+      padding-block: {{ section.settings.mobile_padding | default: 15 }}px !important;
+    }
+    
+    .section-wrapper footer .section-content-wrapper {
+      gap: {{ section.settings.mobile_gap | default: 8 }}px !important;
+      padding: 0 !important;
+    }
+    
+    .section-wrapper footer .layout-panel-flex {
+      gap: {{ section.settings.mobile_gap | default: 8 }}px !important;
+      min-height: auto !important;
+    }
+    
+    .section-wrapper footer .layout-panel-flex--column {
+      gap: {{ section.settings.mobile_gap | default: 8 }}px !important;
+    }
+    
+    .section-wrapper footer .mobile-column {
+      gap: {{ section.settings.mobile_gap | default: 8 }}px !important;
+      flex-direction: column !important;
+    }
+    
+    /* Reduzir espaçamento específico dos blocos do footer */
+    .section-wrapper footer [class*="block-"] {
+      margin-block: {{ section.settings.mobile_gap | default: 8 | divided_by: 2 }}px !important;
+      padding-block: {{ section.settings.mobile_gap | default: 8 | divided_by: 2 }}px !important;
+    }
+    
+    /* Otimizar altura das seções no mobile */
+    .section-wrapper footer .section--height-small,
+    .section-wrapper footer .section--height-medium,
+    .section-wrapper footer .section--height-large {
+      min-height: auto !important;
+      height: auto !important;
+    }
+    
+    /* Compactar textos e elementos no footer mobile */
+    .section-wrapper footer .text-block,
+    .section-wrapper footer .menu-block,
+    .section-wrapper footer .button-block {
+      margin-block: {{ section.settings.mobile_gap | default: 8 | divided_by: 4 }}px !important;
+      line-height: 1.2 !important;
+    }
+    
+    /* Reduzir padding dos elementos internos */
+    .section-wrapper footer .spacing-style {
+      padding-block-start: {{ section.settings.mobile_padding | default: 15 | divided_by: 1.5 }}px !important;
+      padding-block-end: {{ section.settings.mobile_padding | default: 15 | divided_by: 1.5 }}px !important;
+    }
+  }
+  
+  /* Estilos específicos para mobile pequeno (até 480px) */
+  @media screen and (max-width: 480px) {
+    .section-wrapper footer.section {
+      padding-block: {{ section.settings.mobile_padding | default: 15 | times: 0.8 }}px !important;
+    }
+    
+    .section-wrapper footer .section-content-wrapper {
+      gap: {{ section.settings.mobile_gap | default: 8 | times: 0.75 }}px !important;
+    }
+    
+    .section-wrapper footer .layout-panel-flex {
+      gap: {{ section.settings.mobile_gap | default: 8 | times: 0.75 }}px !important;
+    }
+    
+    .section-wrapper footer .spacing-style {
+      padding-block-start: {{ section.settings.mobile_padding | default: 15 | divided_by: 2 }}px !important;
+      padding-block-end: {{ section.settings.mobile_padding | default: 15 | divided_by: 2 }}px !important;
+    }
+  }
+  {% endif %}
+</style>
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
@@ -368,6 +445,39 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Configurações Mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_compact",
+      "label": "Layout compacto no mobile",
+      "default": true,
+      "info": "Reduz automaticamente espaçamentos e altura no mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Espaçamento entre itens (Mobile)",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "info": "Controla o espaçamento vertical entre elementos no mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding",
+      "label": "Padding interno (Mobile)",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 15,
+      "info": "Controla o padding interno da seção no mobile"
     }
   ]
 }
