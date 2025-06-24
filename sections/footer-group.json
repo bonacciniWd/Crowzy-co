@@ -108,7 +108,7 @@
                   "type": "text",
                   "name": "Heading",
                   "settings": {
-                    "text": "<h2>Join the club</h2>",
+                    "text": "<h2>Join the Squad!</h2>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -134,7 +134,7 @@
                   "type": "text",
                   "name": "Text",
                   "settings": {
-                    "text": "<p>Get exclusive deals and early access to new products. </p>",
+                    "text": "<p>Assine nossa newsletter e garanta acesso antecipado à promoções e lançamentos.</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
