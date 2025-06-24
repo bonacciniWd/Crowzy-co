@@ -572,21 +572,29 @@ p:empty {
 
 .skip-to-content-link {
   position: absolute;
-  overflow: hidden;
+  left: -10000px;
+  top: auto;
+  width: 1px;
   height: 1px;
+  overflow: hidden;
   clip-path: rect(0 0 0 0);
   word-wrap: normal !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .skip-to-content-link:focus {
   z-index: var(--layer-temporary);
-  overflow: auto;
-  width: auto;
-  height: auto;
-  clip-path: unset;
-  padding: var(--padding-lg) var(--padding-4xl);
+  position: absolute;
   left: var(--margin-lg);
   top: var(--margin-lg);
+  width: auto;
+  height: auto;
+  overflow: auto;
+  clip-path: unset;
+  opacity: 1;
+  pointer-events: auto;
+  padding: var(--padding-lg) var(--padding-4xl);
   box-shadow: 0 0 0 var(--focus-outline-offset) var(--color-background);
 }
 
