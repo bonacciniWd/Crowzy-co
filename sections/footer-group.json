@@ -373,8 +373,8 @@
         "padding-block-start": 0,
         "padding-block-end": 48,
         "mobile_compact": true,
-        "mobile_gap": 2,
-        "mobile_padding": 5
+        "mobile_gap": 10,
+        "mobile_padding": 18
       }
     }
   },
