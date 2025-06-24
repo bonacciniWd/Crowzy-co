@@ -781,6 +781,7 @@
     padding-inline: var(--drawer-padding);
     margin-inline: 0;
     margin-block-start: 0;
+    padding-top: var(--padding-sm);
   }
 
   .menu-drawer__menu--grid {
@@ -789,6 +790,13 @@
     gap: var(--padding-sm);
     padding-inline-end: var(--menu-drawer-inline-padding);
     padding-block-start: var(--padding-xs);
+  }
+
+  .menu-drawer__menu--childlist {
+    background-color: rgba(var(--color-foreground), 0.02);
+    border-radius: var(--padding-2xs);
+    padding: var(--padding-2xs) 0;
+    margin-top: var(--padding-2xs);
   }
 
   .menu-drawer__menu--childlist:not(.menu-drawer__menu--grid) {
@@ -823,6 +831,13 @@
   .menu-drawer__menu > .menu-drawer__list-item {
     display: flex;
     min-height: calc(2 * var(--padding-lg) + var(--icon-size-xs));
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    margin-bottom: var(--padding-2xs);
+  }
+
+  .menu-drawer__menu > .menu-drawer__list-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
   }
 
   .menu-drawer__list-item--deep .menu-drawer__list-item,
@@ -944,6 +959,26 @@
     text-decoration: none;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.05);
+    margin-bottom: var(--padding-3xs);
+  }
+
+  .menu-drawer__menu-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  /* Separações específicas para diferentes níveis */
+  .menu-drawer__menu-item--mainlist {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.12);
+    padding-bottom: var(--padding-xs);
+    margin-bottom: var(--padding-2xs);
+  }
+
+  .menu-drawer__menu-item--child {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.06);
+    padding-bottom: var(--padding-3xs);
+    margin-bottom: var(--padding-3xs);
   }
 
   .menu-drawer__menu-item:has(> .menu-drawer__link-image) {
@@ -1102,12 +1137,12 @@
   }
 
   .menu-drawer__logo-image {
-    max-width: 140px;
-    max-height: 50px;
+    max-width: 180px;
+    max-height: 70px;
     width: auto;
     height: auto;
     object-fit: contain;
-    opacity: 0.8;
+    opacity: 0.95;
     transition: opacity 0.2s ease;
   }
 
@@ -1140,8 +1175,8 @@
     }
 
     .menu-drawer__logo-image {
-      max-width: 120px;
-      max-height: 40px;
+      max-width: 150px;
+      max-height: 55px;
     }
 
     .menu-drawer__close-button {
