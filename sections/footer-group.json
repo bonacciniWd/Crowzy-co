@@ -108,7 +108,7 @@
                   "type": "text",
                   "name": "Heading",
                   "settings": {
-                    "text": "<h2>Join the Squad!</h2>",
+                    "text": "<h2>Join to the Squad!</h2>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
