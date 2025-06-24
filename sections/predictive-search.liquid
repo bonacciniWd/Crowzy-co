@@ -613,12 +613,12 @@
   }
 
   .predictive-search__close-modal-button:hover {
-    --button-color: var(--color-foreground);
+    --button-color: #ff0000;
     --button-background-color: transparent;
   }
 
   .predictive-search__close-modal-button {
-    --button-color: var(--color-foreground);
+    --button-color: #ff0000;
     --button-background-color: transparent;
 
     display: flex;
@@ -629,6 +629,8 @@
     margin-inline-start: var(--margin-sm);
     padding: 0;
     box-shadow: none;
+    border: none;
+    background: transparent !important;
 
     &:active {
       transform: scale(0.8);
@@ -639,6 +641,8 @@
     svg {
       width: var(--icon-size-xs);
       height: var(--icon-size-xs);
+      color: #ff0000 !important;
+      fill: #ff0000 !important;
     }
 
     @media screen and (width >= 750px) {
