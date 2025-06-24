@@ -59,6 +59,7 @@
     "auto_open_cart_drawer": true,
     "show_cart_note": false,
     "show_add_discount_code": true,
+    "drawer_color_scheme": "scheme-58084d4c-a86e-4d0a-855e-a0966e5043f7",
     "drawer_border": "solid",
     "drawer_drop_shadow": true,
     "icon_stroke": "thin",
