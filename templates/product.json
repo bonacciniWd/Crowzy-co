@@ -480,7 +480,7 @@
         "limit_details_width": true,
         "gap": 48,
         "color_scheme": "",
-        "padding-block-start": 74,
+        "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
