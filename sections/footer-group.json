@@ -370,8 +370,8 @@
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
-        "padding-block-start": 0,
-        "padding-block-end": 0,
+        "padding-block-start": 14,
+        "padding-block-end": 14,
         "mobile_compact": true,
         "mobile_gap": 10,
         "mobile_padding": 18
