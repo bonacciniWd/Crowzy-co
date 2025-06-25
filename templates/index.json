@@ -32,7 +32,7 @@
         "title_transform": "uppercase",
         "title_shadow": true,
         "card_width": 360,
-        "card_height": 390,
+        "card_height": 540,
         "card_radius": 16,
         "cards_gap": 50,
         "cards_padding": 60,
