@@ -11,7 +11,6 @@
   "sections": {
     "cards_scroll_kfK6TA": {
       "type": "cards-scroll",
-      "disabled": true,
       "name": "Cards Scroll",
       "settings": {
         "heading": "SERVICES",
