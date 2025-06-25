@@ -123,8 +123,34 @@
             {% endif %}
           </div>
         {% endfor %}
-      {% endif %}    </div>
-  </div>
+      {% endif %}
+    </div>
+  </div>  {% if section.settings.show_bottom_section %}
+    <div class="section gradient-{{ section.settings.bottom_section_color | default: 'purple' }} bottom-section">
+      {% if section.settings.bottom_section_video != blank %}
+        <div class="video-container">
+          <video
+            src="{{ section.settings.bottom_section_video }}"
+            id="section-video-{{ section.id }}"
+            autoplay
+            loop
+            muted
+            playsinline
+            class="bottom-section-video"
+            {% if section.settings.show_video_controls %}controls{% endif %}
+          >
+            <source src="{{ section.settings.bottom_section_video }}" type="video/mp4">
+            Seu navegador não suporta vídeos HTML5.
+          </video>
+        </div>
+      {% endif %}
+      
+      {% comment %} Fallback para imagem de fundo se não houver vídeo {% endcomment %}
+      {% if section.settings.bottom_section_video == blank and section.settings.bottom_section_image != blank %}
+        <div class="bottom-section-image" style="background-image: url('{{ section.settings.bottom_section_image | image_url: width: 1920 }}');"></div>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>
 
 <style>
@@ -271,15 +297,18 @@
     padding: 20px;
     font-weight: bold;
     font-size: 24px;
-  }  /* Estilos para as seções superior e inferior */
-  #cards-scroll-{{ section.id }} .top-section {
+  }
+  /* Estilos para as seções superior e inferior */
+  #cards-scroll-{{ section.id }} .top-section,
+  #cards-scroll-{{ section.id }} .bottom-section {
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-    /* Imagem de fundo da seção superior */
+  
+  /* Imagem de fundo da seção superior */
   #cards-scroll-{{ section.id }} .top-section-background {
     position: absolute;
     top: 0;
@@ -291,7 +320,43 @@
     background-repeat: no-repeat;
     z-index: 1;
     opacity: {{ section.settings.top_section_background_opacity | default: 0.8 | divided_by: 100.0 }};
-  }/* Estilos para o text scrambler */
+  }
+  
+  /* Imagem de fundo da seção inferior */
+  #cards-scroll-{{ section.id }} .bottom-section-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+  }
+  
+  #cards-scroll-{{ section.id }} .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+  }
+  
+  #cards-scroll-{{ section.id }} .bottom-section-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 1; /* Mudar para 1 para o vídeo aparecer imediatamente */
+  }  /* Estilos para o text scrambler */
   #cards-scroll-{{ section.id }} .text-scramble-container {
     text-align: center;
     padding: 2rem;
@@ -519,11 +584,48 @@
         },
         onLeaveBack: () => fx.setText(''),
         onEnterBack: () => next()
-      });    } else {
+      });
+    } else {
       console.log('Text scrambler não encontrado com ID: scramble-text-top-{{ section.id }}');
+    }// Configurar animação do vídeo na seção inferior
+    const bottomVideo = document.querySelector('#section-video-{{ section.id }}');
+    if (bottomVideo) {
+      console.log('Vídeo encontrado:', bottomVideo.src);
+      
+      // Tentar carregar o vídeo imediatamente
+      bottomVideo.load();
+      
+      // Configurar ScrollTrigger para o vídeo
+      ScrollTrigger.create({
+        trigger: bottomVideo.closest('.section'),
+        start: 'top 90%',
+        onEnter: () => {
+          console.log('Iniciando reprodução do vídeo');
+          bottomVideo.play().catch(e => {
+            console.warn('Erro ao iniciar vídeo automaticamente:', e);
+            // Fallback: mostrar vídeo mesmo se não conseguir dar play
+            bottomVideo.style.opacity = '1';
+          });
+        },
+        onLeave: () => {
+          bottomVideo.pause();
+        },
+        onEnterBack: () => {
+          bottomVideo.play().catch(e => console.log('Erro ao retomar vídeo:', e));
+        },
+        onLeaveBack: () => {
+          bottomVideo.pause();
+        }
+      });
+      
+      // Event listeners para debug
+      bottomVideo.addEventListener('loadstart', () => console.log('Vídeo começou a carregar'));
+      bottomVideo.addEventListener('canplay', () => console.log('Vídeo pode ser reproduzido'));
+      bottomVideo.addEventListener('error', (e) => console.error('Erro no vídeo:', e));
+    } else {
+      console.log('Nenhum vídeo encontrado na seção inferior');
     }
-
-    // Animação para o text scrambler na seção superior (subindo)
+      // Animação para o text scrambler na seção superior (subindo)
     const scrambleContainer = document.querySelector('#cards-scroll-{{ section.id }} .text-scramble-container');
     if (scrambleContainer) {
       console.log('Container do scrambler encontrado:', scrambleContainer);
@@ -673,10 +775,68 @@
       }
     }, 1000);
   });
-</script>    // Debug das imagens de fundo
+</script>
+
+<script>
+  // Script adicional para debug e correção do vídeo
+  document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se o vídeo está presente e configurado corretamente
+    const video = document.querySelector('#section-video-{{ section.id }}');
+    if (video) {
+      console.log('=== DEBUG VÍDEO ===');
+      console.log('Elemento vídeo encontrado:', video);
+      console.log('Src do vídeo:', video.src);
+      console.log('Autoplay:', video.autoplay);
+      console.log('Muted:', video.muted);
+      console.log('Loop:', video.loop);
+      
+      // Forçar configurações do vídeo
+      video.muted = true;
+      video.autoplay = true;
+      video.loop = true;
+      video.playsInline = true;
+      
+      // Tentar carregar o vídeo
+      video.addEventListener('loadeddata', function() {
+        console.log('Vídeo carregado com sucesso');
+        video.style.opacity = '1';
+      });
+      
+      video.addEventListener('error', function(e) {
+        console.error('Erro ao carregar vídeo:', e);
+        console.log('Erro details:', video.error);
+      });
+      
+      // Forçar carregamento
+      video.load();
+      
+      // Tentar reproduzir quando visível (fallback)
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            console.log('Vídeo entrou na tela, tentando reproduzir');
+            video.play().then(() => {
+              console.log('Vídeo reproduzindo com sucesso');
+            }).catch(e => {
+              console.warn('Falha ao reproduzir vídeo:', e);
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      observer.observe(video);
+    } else {
+      console.log('Nenhum vídeo encontrado com ID: section-video-{{ section.id }}');
+    }
+      // Debug das imagens de fundo
     const topBg = document.querySelector('.top-section-background');
     if (topBg) {
       console.log('Imagem de fundo da seção superior encontrada');
+    }
+    
+    const bottomBg = document.querySelector('.bottom-section-image');
+    if (bottomBg) {
+      console.log('Imagem de fundo da seção inferior encontrada');
     }
     
     // Debug adicional para o text scrambler
@@ -723,14 +883,39 @@
       "max": 150,
       "step": 5,
       "default": 100,
-      "info": "Altura em vh (porcentagem da altura da janela)"    },
-    {
+      "info": "Altura em vh (porcentagem da altura da janela)"
+    },    {
       "type": "checkbox",
       "id": "show_top_section",
       "label": "Mostrar seção superior",
       "default": true
+    },    {
+      "type": "header",
+      "content": "Vídeo na Seção Inferior"
     },
     {
+      "type": "video",
+      "id": "bottom_section_video",
+      "label": "Vídeo para Seção Inferior",
+      "info": "Vídeo em autoplay ao scrollar e mudo"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_section_image",
+      "label": "Imagem de Fundo da Seção Inferior",
+      "info": "Imagem de fallback caso não tenha vídeo ou para dispositivos que não suportam autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "Mostrar controles do vídeo",
+      "default": false
+    },    {
+      "type": "checkbox",
+      "id": "show_bottom_section",
+      "label": "Mostrar seção inferior",
+      "default": true
+    },    {
       "type": "header",
       "content": "Text Scrambler na Seção Superior"
     },
@@ -815,7 +1000,24 @@
         { "value": "orange", "label": "Laranja" },
         { "value": "black", "label": "Preto" },
         { "value": "white", "label": "Branco" }
-      ],      "default": "blue"
+      ],
+      "default": "blue"
+    },
+    {
+      "type": "select",
+      "id": "bottom_section_color",
+      "label": "Cor da Seção Inferior",
+      "options": [
+        { "value": "green", "label": "Verde" },
+        { "value": "blue", "label": "Azul" },
+        { "value": "blue-dark", "label": "Azul Escuro" },
+        { "value": "purple", "label": "Roxo" },
+        { "value": "red", "label": "Vermelho" },
+        { "value": "orange", "label": "Laranja" },
+        { "value": "black", "label": "Preto" },
+        { "value": "white", "label": "Branco" }
+      ],
+      "default": "purple"
     },
     {
       "type": "header",
