@@ -1,6 +1,667 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
+{% comment %}
+  Seção About - ScrollSmoother Effect with GSAP
+  Componente com imagens em grid e texto flutuante com efeito de skew baseado na velocidade do scroll
+{% endcomment %}
+
+<div class="about-wrapper" id="about-{{ section.id }}">
+  {% comment %} Texto flutuante {% endcomment %}
+  <h1 class="text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+  <h1 aria-hidden="true" class="text outline-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+  <h1 aria-hidden="true" class="text filter-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+
+  <div id="wrapper-{{ section.id }}">
+    <section id="content-{{ section.id }}">
+      <section class="images">
+        {% comment %} Renderizar imagens dinamicamente baseadas no schema {% endcomment %}
+        {% for i in (1..8) %}
+          {% assign image_key = 'image_' | append: i %}
+          {% assign image = section.settings[image_key] %}
+          {% assign speed_key = 'speed_' | append: i %}
+          {% assign speed = section.settings[speed_key] | default: 1.0 %}
+          
+          {% if image != blank %}
+            <img 
+              data-speed="{{ speed }}" 
+              src="{{ image | image_url: width: 600 }}" 
+              alt="{{ image.alt | escape }}"
+              loading="lazy"
+            >
+          {% else %}
+            {% comment %} Usar imagens de fallback dos assets se disponíveis {% endcomment %}
+            {% assign fallback_images = 'cross.jpeg,web.jpeg,start.jpeg,cleric.jpeg,shadow.jpeg,logo.png,cross.jpeg,web.jpeg' | split: ',' %}
+            {% assign fallback_index = forloop.index0 %}
+            {% assign fallback_image = fallback_images[fallback_index] %}
+            
+            <img 
+              data-speed="{{ speed }}" 
+              src="{{ fallback_image | asset_url }}" 
+              alt="Imagem {{ i }}"
+              loading="lazy"
+            >
+          {% endif %}
+        {% endfor %}
+      </section>
+    </section>
+  </div>
+</div>
+
+<style>
+  #about-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: {{ section.settings.background_color | default: '#000000' }};
+    overflow-x: hidden;
   }
+
+  #about-{{ section.id }} #content-{{ section.id }} {
+    overflow: visible;
+    width: 100%;
+  }
+
+  #about-{{ section.id }} .text {
+    position: fixed;
+    top: 50vh;
+    font-family: {{ section.settings.font_family | default: 'Arial, sans-serif' }};
+    font-weight: 900;
+    font-style: normal;
+    font-size: clamp(4rem, {{ section.settings.text_size | default: 8 }}vw, 12rem);
+    text-align: center;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: {{ section.settings.text_color | default: 'white' }};
+    -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
+    -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
+    pointer-events: none;
+  }
+
+  #about-{{ section.id }} .outline-text {
+    color: transparent;
+    -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
+    -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
+    z-index: 2;
+  }
+
+  #about-{{ section.id }} .filter-text {
+    mix-blend-mode: {{ section.settings.blend_mode | default: 'screen' }};
+    color: {{ section.settings.filter_text_color | default: '#804691' }};
+    z-index: 2;
+  }
+
+  #about-{{ section.id }} .images {
+    padding-top: {{ section.settings.images_padding_top | default: 60 }}vh;
+    position: relative;
+    width: 100%;
+    max-width: {{ section.settings.max_width | default: 1200 }}px;
+    margin: 0 auto;
+    min-height: {{ section.settings.min_height | default: 150 }}vh;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(20, 5%);
+    grid-template-rows: repeat(30, 3%);
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    z-index: 1;
+    object-fit: cover;
+  }
+
+  #about-{{ section.id }} .content__slide-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  #about-{{ section.id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: {{ section.settings.image_border_radius | default: 0 }}px;
+    transition: transform 0.3s ease;
+  }
+
+  #about-{{ section.id }} img:hover {
+    transform: scale({{ section.settings.hover_scale | default: 1.05 }});
+  }
+
+  {% comment %} Posicionamento das imagens no grid {% endcomment %}
+  #about-{{ section.id }} img:nth-child(1) {
+    grid-area: 1/1/6/8;
+  }
+
+  #about-{{ section.id }} img:nth-child(2) {
+    grid-area: 3/12/8/20;
+  }
+
+  #about-{{ section.id }} img:nth-child(3) {
+    grid-area: 9/5/13/15;
+  }
+
+  #about-{{ section.id }} img:nth-child(4) {
+    grid-area: 14/1/18/8;
+  }
+
+  #about-{{ section.id }} img:nth-child(5) {
+    grid-area: 16/12/20/19;
+  }
+
+  #about-{{ section.id }} img:nth-child(6) {
+    grid-area: 20/2/25/9;
+  }
+
+  #about-{{ section.id }} img:nth-child(7) {
+    grid-area: 22/11/24/20;
+  }
+
+  #about-{{ section.id }} img:nth-child(8) {
+    grid-area: 26/5/30/15;
+  }
+
+  {% comment %} Responsividade {% endcomment %}
+  @media (max-width: 768px) {
+    #about-{{ section.id }} .text {
+      font-size: clamp(2rem, 6vw, 4rem);
+      -webkit-text-stroke-width: 1px;
+    }
+
+    #about-{{ section.id }} .images {
+      grid-template-columns: repeat(10, 10%);
+      grid-template-rows: repeat(40, 2.5%);
+      padding-top: 40vh;
+      min-height: 200vh;
+    }
+
+    #about-{{ section.id }} img:nth-child(1) {
+      grid-area: 1/1/8/6;
+    }
+
+    #about-{{ section.id }} img:nth-child(2) {
+      grid-area: 5/6/12/10;
+    }
+
+    #about-{{ section.id }} img:nth-child(3) {
+      grid-area: 10/2/16/8;
+    }
+
+    #about-{{ section.id }} img:nth-child(4) {
+      grid-area: 14/1/20/5;
+    }
+
+    #about-{{ section.id }} img:nth-child(5) {
+      grid-area: 18/6/24/10;
+    }
+
+    #about-{{ section.id }} img:nth-child(6) {
+      grid-area: 22/2/28/7;
+    }
+
+    #about-{{ section.id }} img:nth-child(7) {
+      grid-area: 26/6/30/10;
+    }
+
+    #about-{{ section.id }} img:nth-child(8) {
+      grid-area: 30/2/36/8;
+    }
+  }
+</style>
+
+{% comment %} Carregar GSAP apenas se não estiver já carregado {% endcomment %}
+<script>
+  // Verificar se GSAP já está carregado
+  if (typeof gsap === 'undefined') {
+    // Carregar GSAP
+    const gsapScript = document.createElement('script');
+    gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
+    gsapScript.onload = function() {
+      loadScrollTriggerAndSmoother();
+    };
+    document.head.appendChild(gsapScript);
+  } else {
+    loadScrollTriggerAndSmoother();
+  }
+
+  function loadScrollTriggerAndSmoother() {
+    // Verificar se ScrollTrigger já está carregado
+    if (typeof ScrollTrigger === 'undefined') {
+      const scrollTriggerScript = document.createElement('script');
+      scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
+      scrollTriggerScript.onload = function() {
+        gsap.registerPlugin(ScrollTrigger);
+        loadScrollSmoother();
+      };
+      document.head.appendChild(scrollTriggerScript);
+    } else {
+      loadScrollSmoother();
+    }
+  }
+
+  function loadScrollSmoother() {
+    // Verificar se ScrollSmoother já está carregado
+    if (typeof ScrollSmoother === 'undefined') {
+      const scrollSmootherScript = document.createElement('script');
+      scrollSmootherScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollSmoother.min.js';
+      scrollSmootherScript.onload = function() {
+        initAboutSection();
+      };
+      document.head.appendChild(scrollSmootherScript);
+    } else {
+      initAboutSection();
+    }
+  }
+
+  function initAboutSection() {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Aguardar um frame para garantir que o DOM esteja completamente renderizado
+      requestAnimationFrame(() => {
+        console.log('Inicializando About Section com ScrollSmoother');
+        
+        const wrapper = document.getElementById('wrapper-{{ section.id }}');
+        const content = document.getElementById('content-{{ section.id }}');
+        
+        if (!wrapper || !content) {
+          console.error('Elementos wrapper ou content não encontrados');
+          return;
+        }
+
+        try {
+          // Configuração do skew baseado na velocidade
+          let skewSetter = gsap.quickTo("#about-{{ section.id }} img", "skewY");
+          let clamp = gsap.utils.clamp(-{{ section.settings.max_skew | default: 20 }}, {{ section.settings.max_skew | default: 20 }});
+
+          // Criar ScrollSmoother
+          const smoother = ScrollSmoother.create({
+            wrapper: "#wrapper-{{ section.id }}",
+            content: "#content-{{ section.id }}",
+            smooth: {{ section.settings.smooth_strength | default: 2 }},
+            speed: {{ section.settings.scroll_speed | default: 3 }},
+            effects: true,
+            onUpdate: function(self) {
+              const velocity = self.getVelocity();
+              const skewValue = clamp(velocity / -{{ section.settings.skew_factor | default: 50 }});
+              skewSetter(skewValue);
+            },
+            onStop: function() {
+              skewSetter(0);
+            }
+          });
+
+          console.log('ScrollSmoother criado com sucesso', smoother);
+
+          // Animações adicionais para as imagens
+          const images = document.querySelectorAll('#about-{{ section.id }} img');
+          images.forEach((img, index) => {
+            // Animação de entrada
+            gsap.fromTo(img, 
+              {
+                opacity: 0,
+                scale: 0.8,
+                y: 50
+              },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 1,
+                delay: index * 0.1,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: img,
+                  start: "top 80%",
+                  toggleActions: "play none none reverse"
+                }
+              }
+            );
+
+            // Efeito parallax baseado no data-speed
+            const speed = parseFloat(img.getAttribute('data-speed')) || 1;
+            gsap.to(img, {
+              y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+              ease: "none",
+              scrollTrigger: {
+                trigger: img,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+                invalidateOnRefresh: true
+              }
+            });
+          });
+
+          // Animação do texto principal
+          const textElements = document.querySelectorAll('#about-{{ section.id }} .text');
+          textElements.forEach(text => {
+            gsap.fromTo(text,
+              {
+                opacity: 0,
+                y: 20
+              },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: "#about-{{ section.id }}",
+                  start: "top 90%",
+                  toggleActions: "play none none reverse"
+                }
+              }
+            );
+          });
+
+        } catch (error) {
+          console.error('Erro ao inicializar ScrollSmoother:', error);
+          // Fallback para funcionalidade básica sem ScrollSmoother
+          console.log('Aplicando fallback sem ScrollSmoother');
+        }
+      });
+    });
+  }
+
+  // Se o DOM já estiver carregado, executar imediatamente
+  if (document.readyState === 'loading') {
+    // DOM ainda está carregando
+  } else {
+    // DOM já carregou
+    initAboutSection();
+  }
+</script>
+
+{% schema %}
+{
+  "name": "About - ScrollSmoother",
+  "tag": "section",
+  "class": "about-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Configurações Gerais"
+    },
+    {
+      "type": "text",
+      "id": "main_text",
+      "label": "Texto Principal",
+      "default": "Scrolly Images",
+      "info": "Texto que aparece flutuando sobre as imagens"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de Fundo",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Configurações do Texto"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamanho do Texto (vw)",
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do Texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_stroke_color",
+      "label": "Cor do Contorno",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "text_stroke_width",
+      "label": "Largura do Contorno",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "color",
+      "id": "filter_text_color",
+      "label": "Cor do Filtro de Texto",
+      "default": "#804691"
+    },
+    {
+      "type": "select",
+      "id": "blend_mode",
+      "label": "Modo de Mistura",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "screen", "label": "Screen" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "difference", "label": "Difference" }
+      ],
+      "default": "screen"
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Família da Fonte",
+      "default": "Arial, sans-serif",
+      "info": "Ex: 'Helvetica, sans-serif' ou nome de fonte do Google Fonts"
+    },
+    {
+      "type": "header",
+      "content": "Configurações das Imagens"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Largura Máxima do Container (px)",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "images_padding_top",
+      "label": "Espaçamento Superior (vh)",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Altura Mínima (vh)",
+      "min": 100,
+      "max": 300,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Raio da Borda das Imagens",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },    {
+      "type": "range",
+      "id": "hover_scale",
+      "label": "Escala no Hover",
+      "min": 1,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "header",
+      "content": "Configurações do ScrollSmoother"
+    },
+    {
+      "type": "range",
+      "id": "smooth_strength",
+      "label": "Força da Suavização",
+      "min": 0.5,
+      "max": 5,
+      "step": 0.1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Velocidade do Scroll",
+      "min": 0.5,
+      "max": 5,
+      "step": 0.1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "max_skew",
+      "label": "Inclinação Máxima (graus)",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "skew_factor",
+      "label": "Fator de Inclinação",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "info": "Quanto maior, menos inclinação"
+    },
+    {
+      "type": "header",
+      "content": "Imagens do Grid"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Imagem 1"
+    },
+    {
+      "type": "range",
+      "id": "speed_1",
+      "label": "Velocidade Parallax 1",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.8
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Imagem 2"
+    },
+    {
+      "type": "range",
+      "id": "speed_2",
+      "label": "Velocidade Parallax 2",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.9
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Imagem 3"
+    },
+    {
+      "type": "range",
+      "id": "speed_3",
+      "label": "Velocidade Parallax 3",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.0
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Imagem 4"
+    },
+    {
+      "type": "range",
+      "id": "speed_4",
+      "label": "Velocidade Parallax 4",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Imagem 5"
+    },
+    {
+      "type": "range",
+      "id": "speed_5",
+      "label": "Velocidade Parallax 5",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.9
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Imagem 6"
+    },
+    {
+      "type": "range",
+      "id": "speed_6",
+      "label": "Velocidade Parallax 6",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "image_picker",
+      "id": "image_7",
+      "label": "Imagem 7"
+    },
+    {
+      "type": "range",
+      "id": "speed_7",
+      "label": "Velocidade Parallax 7",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.8
+    },
+    {
+      "type": "image_picker",
+      "id": "image_8",
+      "label": "Imagem 8"
+    },
+    {
+      "type": "range",
+      "id": "speed_8",
+      "label": "Velocidade Parallax 8",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.0
+    }
+  ],
+  "presets": [
+    {
+      "name": "About ScrollSmoother",
+      "category": "Interactive"
+    }
+  ]
+}
 {% endschema %}
