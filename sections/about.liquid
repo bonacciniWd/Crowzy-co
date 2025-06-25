@@ -66,14 +66,13 @@
   #about-{{ section.id }} #content-{{ section.id }} {
     overflow: visible;
     width: 100%;
-  }
-  #about-{{ section.id }} .fixed-text-container {
+  }  #about-{{ section.id }} .fixed-text-container {
     position: fixed;
     top: 50vh;
     left: 0;
     right: 0;
     transform: translateY(-50%);
-    z-index: 100;
+    z-index: 10;
     pointer-events: none;
     text-align: center;
   }
@@ -93,24 +92,24 @@
     line-height: 1;
     pointer-events: none;
   }
-
   #about-{{ section.id }} .main-text {
     color: {{ section.settings.text_color | default: 'white' }};
     -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
     -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
-    z-index: 102;
+    z-index: -2;
   }
+
   #about-{{ section.id }} .outline-text {
     color: transparent;
     -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
     -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
-    z-index: 101;
+    z-index: 2;
   }
 
   #about-{{ section.id }} .filter-text {
     mix-blend-mode: {{ section.settings.blend_mode | default: 'screen' }};
     color: {{ section.settings.filter_text_color | default: '#804691' }};
-    z-index: 103;
+    z-index: 2;
   }
   #about-{{ section.id }} .images {
     padding-top: {{ section.settings.images_padding_top | default: 60 }}vh;
@@ -134,17 +133,19 @@
     height: 100%;
     position: relative;
   }
-
   #about-{{ section.id }} img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: {{ section.settings.image_border_radius | default: 0 }}px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    will-change: transform;
   }
 
   #about-{{ section.id }} img:hover {
-    transform: scale({{ section.settings.hover_scale | default: 1.05 }});
+    transform: scale({{ section.settings.hover_scale | default: 1.1 }}) !important;
+    filter: brightness(1.1);
   }
 
   {% comment %} Posicionamento das imagens no grid {% endcomment %}
@@ -233,166 +234,16 @@
   }
 </style>
 
-{% comment %} Carregar GSAP apenas se não estiver já carregado {% endcomment %}
+{% comment %} Carregar o arquivo JavaScript dedicado {% endcomment %}
+<script src="{{ 'about.js' | asset_url }}" defer></script>
+
 <script>
-  // Verificar se GSAP já está carregado
-  if (typeof gsap === 'undefined') {
-    // Carregar GSAP
-    const gsapScript = document.createElement('script');
-    gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
-    gsapScript.onload = function() {
-      loadScrollTriggerAndSmoother();
-    };
-    document.head.appendChild(gsapScript);
-  } else {
-    loadScrollTriggerAndSmoother();
-  }
-
-  function loadScrollTriggerAndSmoother() {
-    // Verificar se ScrollTrigger já está carregado
-    if (typeof ScrollTrigger === 'undefined') {
-      const scrollTriggerScript = document.createElement('script');
-      scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
-      scrollTriggerScript.onload = function() {
-        gsap.registerPlugin(ScrollTrigger);
-        loadScrollSmoother();
-      };
-      document.head.appendChild(scrollTriggerScript);
-    } else {
-      loadScrollSmoother();
+  // Inicializar a seção quando o script carregar
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.initAboutSection) {
+      window.initAboutSection('{{ section.id }}');
     }
-  }
-
-  function loadScrollSmoother() {
-    // Verificar se ScrollSmoother já está carregado
-    if (typeof ScrollSmoother === 'undefined') {
-      const scrollSmootherScript = document.createElement('script');
-      scrollSmootherScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollSmoother.min.js';
-      scrollSmootherScript.onload = function() {
-        initAboutSection();
-      };
-      document.head.appendChild(scrollSmootherScript);
-    } else {
-      initAboutSection();
-    }
-  }
-
-  function initAboutSection() {
-    document.addEventListener('DOMContentLoaded', function() {
-      // Aguardar um frame para garantir que o DOM esteja completamente renderizado
-      requestAnimationFrame(() => {
-        console.log('Inicializando About Section com ScrollSmoother');
-        
-        const wrapper = document.getElementById('wrapper-{{ section.id }}');
-        const content = document.getElementById('content-{{ section.id }}');
-        
-        if (!wrapper || !content) {
-          console.error('Elementos wrapper ou content não encontrados');
-          return;
-        }
-
-        try {
-          // Configuração do skew baseado na velocidade
-          let skewSetter = gsap.quickTo("#about-{{ section.id }} img", "skewY");
-          let clamp = gsap.utils.clamp(-{{ section.settings.max_skew | default: 20 }}, {{ section.settings.max_skew | default: 20 }});
-
-          // Criar ScrollSmoother
-          const smoother = ScrollSmoother.create({
-            wrapper: "#wrapper-{{ section.id }}",
-            content: "#content-{{ section.id }}",
-            smooth: {{ section.settings.smooth_strength | default: 2 }},
-            speed: {{ section.settings.scroll_speed | default: 3 }},
-            effects: true,
-            onUpdate: function(self) {
-              const velocity = self.getVelocity();
-              const skewValue = clamp(velocity / -{{ section.settings.skew_factor | default: 50 }});
-              skewSetter(skewValue);
-            },
-            onStop: function() {
-              skewSetter(0);
-            }
-          });
-
-          console.log('ScrollSmoother criado com sucesso', smoother);
-
-          // Animações adicionais para as imagens
-          const images = document.querySelectorAll('#about-{{ section.id }} img');
-          images.forEach((img, index) => {
-            // Animação de entrada
-            gsap.fromTo(img, 
-              {
-                opacity: 0,
-                scale: 0.8,
-                y: 50
-              },
-              {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 1,
-                delay: index * 0.1,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: img,
-                  start: "top 80%",
-                  toggleActions: "play none none reverse"
-                }
-              }
-            );
-
-            // Efeito parallax baseado no data-speed
-            const speed = parseFloat(img.getAttribute('data-speed')) || 1;
-            gsap.to(img, {
-              y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
-              ease: "none",
-              scrollTrigger: {
-                trigger: img,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-                invalidateOnRefresh: true
-              }
-            });
-          });
-
-          // Animação do texto principal
-          const textElements = document.querySelectorAll('#about-{{ section.id }} .text');
-          textElements.forEach(text => {
-            gsap.fromTo(text,
-              {
-                opacity: 0,
-                y: 20
-              },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 1.5,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: "#about-{{ section.id }}",
-                  start: "top 90%",
-                  toggleActions: "play none none reverse"
-                }
-              }
-            );
-          });
-
-        } catch (error) {
-          console.error('Erro ao inicializar ScrollSmoother:', error);
-          // Fallback para funcionalidade básica sem ScrollSmoother
-          console.log('Aplicando fallback sem ScrollSmoother');
-        }
-      });
-    });
-  }
-
-  // Se o DOM já estiver carregado, executar imediatamente
-  if (document.readyState === 'loading') {
-    // DOM ainda está carregando
-  } else {
-    // DOM já carregou
-    initAboutSection();
-  }
+  });
 </script>
 
 {% schema %}

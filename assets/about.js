@@ -143,7 +143,6 @@ class AboutScrollSmoother {
       this.fallback();
     }
   }
-
   setupImageAnimations() {
     const images = document.querySelectorAll(`#about-${this.sectionId} img`);
     
@@ -186,6 +185,27 @@ class AboutScrollSmoother {
           scrub: true,
           invalidateOnRefresh: true
         }
+      });
+
+      // Hover effect que funciona com GSAP
+      img.addEventListener('mouseenter', () => {
+        gsap.to(img, {
+          scale: 1.1,
+          filter: 'brightness(1.1)',
+          duration: 0.3,
+          ease: "power2.out",
+          overwrite: 'auto'
+        });
+      });
+
+      img.addEventListener('mouseleave', () => {
+        gsap.to(img, {
+          scale: 1,
+          filter: 'brightness(1)',
+          duration: 0.3,
+          ease: "power2.out",
+          overwrite: 'auto'
+        });
       });
     });
   }
