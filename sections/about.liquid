@@ -103,8 +103,7 @@
     mix-blend-mode: {{ section.settings.blend_mode | default: 'screen' }};
     color: {{ section.settings.filter_text_color | default: '#804691' }};
     z-index: 2;
-  }
-  .images {
+  }  .images {
     padding: 80vh 0;
     position: relative;
     width: 100%;
@@ -113,12 +112,12 @@
     min-height: 150vh;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(20, 1fr);
-    grid-template-rows: repeat(40, 1fr);
+    grid-template-columns: repeat(20, 5%);
+    grid-template-rows: repeat(40, 40px);
     gap: 0;
     justify-content: center;
-    justify-items: stretch;
-    align-items: stretch;
+    justify-items: center;
+    align-items: center;
   }
 
   .images img {
@@ -168,8 +167,8 @@
       font-size: clamp(2rem, 6vw, 4rem);
       -webkit-text-stroke-width: 1px;
     }    .images {
-      grid-template-columns: repeat(10, 1fr);
-      grid-template-rows: repeat(50, 1fr);
+      grid-template-columns: repeat(10, 10%);
+      grid-template-rows: repeat(50, 25px);
       padding: 60vh 0;
       min-height: 200vh;
     }
@@ -228,13 +227,11 @@
       try {
         // Exatamente como no CodePen original
         let skewSetter = gsap.quickTo("img", "skewY"); // fast
-        let clamp = gsap.utils.clamp(-20, 20); // don't let the skew go beyond 20 degrees.
-
-        ScrollSmoother.create({
+        let clamp = gsap.utils.clamp(-20, 20); // don't let the skew go beyond 20 degrees.        ScrollSmoother.create({
           wrapper: `#wrapper-${sectionId}`,
           content: `#content-${sectionId}`,
-          smooth: {{ section.settings.smooth_strength | default: 2 }},
-          speed: {{ section.settings.scroll_speed | default: 3 }},
+          smooth: {{ section.settings.smooth_strength | default: 1 }},
+          speed: {{ section.settings.scroll_speed | default: 1 }},
           effects: true,
           onUpdate: self => skewSetter(clamp(self.getVelocity() / -50)),
           onStop: () => skewSetter(0)
@@ -356,15 +353,14 @@
     {
       "type": "header",
       "content": "Configurações do ScrollSmoother"
-    },
-    {
+    },    {
       "type": "range",
       "id": "smooth_strength",
       "label": "Força da Suavização",
       "min": 0.5,
       "max": 5,
       "step": 0.1,
-      "default": 2
+      "default": 1
     },
     {
       "type": "range",
@@ -373,7 +369,7 @@
       "min": 0.5,
       "max": 5,
       "step": 0.1,
-      "default": 3
+      "default": 1
     },
     {
       "type": "header",
