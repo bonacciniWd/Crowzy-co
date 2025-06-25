@@ -104,7 +104,6 @@
     color: {{ section.settings.filter_text_color | default: '#804691' }};
     z-index: 2;
   }
-
   .images {
     padding: 80vh 0;
     position: relative;
@@ -114,17 +113,20 @@
     min-height: 150vh;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(20, 5%);
-    grid-template-rows: repeat(40, 20px);
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(40, 1fr);
+    gap: 0;
     justify-content: center;
-    justify-items: center;
-    align-items: center;
+    justify-items: stretch;
+    align-items: stretch;
   }
+
   .images img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: {{ section.settings.image_border_radius | default: 0 }}px;
+    display: block;
   }
 
   /* Posicionamento das imagens no grid - exatamente como no CodePen */
@@ -165,11 +167,9 @@
     .text {
       font-size: clamp(2rem, 6vw, 4rem);
       -webkit-text-stroke-width: 1px;
-    }
-
-    .images {
-      grid-template-columns: repeat(10, 10%);
-      grid-template-rows: repeat(50, 15px);
+    }    .images {
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(50, 1fr);
       padding: 60vh 0;
       min-height: 200vh;
     }
