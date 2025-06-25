@@ -7,11 +7,13 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
 {% endif %}
 
-<div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}
-    <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">
-      {% comment %} Imagem de fundo para a seção scramble {% endcomment %}
-      {% if section.settings.top_section_background_image != blank %}
-        <div class="top-section-background" style="background-image: url('{{ section.settings.top_section_background_image | image_url: width: 1920 }}');"></div>
+<div class="cards-scroll-wrapper" id="cards-scroll-{{ section.id }}">  {% if section.settings.show_top_section %}    <div class="section gradient-{{ section.settings.top_section_color | default: 'green' }} top-section">
+      {% comment %} Imagens de fundo para desktop e mobile {% endcomment %}
+      {% if section.settings.top_section_background_image_desktop != blank %}
+        <div class="top-section-background desktop-bg" style="background-image: url('{{ section.settings.top_section_background_image_desktop | image_url: width: 1920 }}');"></div>
+      {% endif %}
+      {% if section.settings.top_section_background_image_mobile != blank %}
+        <div class="top-section-background mobile-bg" style="background-image: url('{{ section.settings.top_section_background_image_mobile | image_url: width: 768 }}');"></div>
       {% endif %}
       
       <div class="text-scramble-container">
@@ -279,7 +281,7 @@
     align-items: center;
     justify-content: center;
   }
-    /* Imagem de fundo da seção superior */
+  /* Imagens de fundo da seção superior */
   #cards-scroll-{{ section.id }} .top-section-background {
     position: absolute;
     top: 0;
@@ -291,6 +293,22 @@
     background-repeat: no-repeat;
     z-index: 1;
     opacity: {{ section.settings.top_section_background_opacity | default: 0.8 | divided_by: 100.0 }};
+  }
+  
+  /* Mostrar apenas imagem desktop por padrão */
+  #cards-scroll-{{ section.id }} .top-section-background.mobile-bg {
+    display: none;
+  }
+  
+  /* Media query para mobile - mostrar imagem mobile e esconder desktop */
+  @media (max-width: 768px) {
+    #cards-scroll-{{ section.id }} .top-section-background.desktop-bg {
+      display: none;
+    }
+    
+    #cards-scroll-{{ section.id }} .top-section-background.mobile-bg {
+      display: block;
+    }
   }/* Estilos para o text scrambler */
   #cards-scroll-{{ section.id }} .text-scramble-container {
     text-align: center;
@@ -683,9 +701,9 @@
   "class": "cards-scroll-section",
   "settings": [
     {
-      "type": "header",
-      "content": "Configurações Gerais"
-    },    {
+      "type": "header",      "content": "Configurações Gerais"
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Título (apenas se não usar SVG)",
@@ -704,23 +722,28 @@
       "min": 60,
       "max": 150,
       "step": 5,
-      "default": 100,
-      "info": "Altura em vh (porcentagem da altura da janela)"    },
+      "default": 100,      "info": "Altura em vh (porcentagem da altura da janela)"
+    },
     {
       "type": "checkbox",
       "id": "show_top_section",
       "label": "Mostrar seção superior",
-      "default": true
-    },
+      "default": true    },
     {
       "type": "header",
       "content": "Text Scrambler na Seção Superior"
     },
     {
       "type": "image_picker",
-      "id": "top_section_background_image",
-      "label": "Imagem de Fundo da Seção Superior",
-      "info": "Imagem de fundo para a seção do text scrambler"
+      "id": "top_section_background_image_desktop",
+      "label": "Imagem de Fundo para Desktop",
+      "info": "Imagem de fundo para telas grandes (desktop/tablet)"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_section_background_image_mobile",
+      "label": "Imagem de Fundo para Mobile",
+      "info": "Imagem de fundo para dispositivos móveis"
     },
     {
       "type": "range",
@@ -730,8 +753,8 @@
       "max": 100,
       "step": 5,
       "default": 80,
-      "info": "Controla a transparência da imagem de fundo"
-    },    {
+      "info": "Controla a transparência da imagem de fundo"    },
+    {
       "type": "text",
       "id": "scrambler_text",
       "label": "Texto para o Scrambler 1",
@@ -796,8 +819,8 @@
         { "value": "red", "label": "Vermelho" },
         { "value": "orange", "label": "Laranja" },
         { "value": "black", "label": "Preto" },
-        { "value": "white", "label": "Branco" }
-      ],      "default": "blue"
+        { "value": "white", "label": "Branco" }      ],
+      "default": "blue"
     },
     {
       "type": "header",
