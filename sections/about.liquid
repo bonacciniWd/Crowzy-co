@@ -1,144 +1,227 @@
 {% comment %}
   Seção About - ScrollSmoother Effect with GSAP
-  Código baseado exatamente no CodePen original
+  Adaptado para funcionar com outros componentes no Shopify
 {% endcomment %}
 
-<h1 class="text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
-<h1 aria-hidden="true" class="text outline-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
-<h1 aria-hidden="true" class="text filter-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+<div class="about-section-wrapper" id="about-{{ section.id }}">
+  <h1 class="text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+  <h1 aria-hidden="true" class="text outline-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+  <h1 aria-hidden="true" class="text filter-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
 
-<div id="wrapper">
-  <section id="content">
-    <section class="images">
-      <img data-speed="0.8" src="https://images.unsplash.com/photo-1556856425-366d6618905d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fG5lb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" alt="">
-      <img data-speed="0.9" src="https://images.unsplash.com/photo-1520271348391-049dd132bb7c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="">
-      <img data-speed="1" src="https://images.unsplash.com/photo-1609166214994-502d326bafee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="">
-      <img data-speed="1.1" src="https://images.unsplash.com/photo-1589882265634-84f7eb9a3414?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=434&q=80" alt="">
-      <img data-speed="0.9" src="https://images.unsplash.com/photo-1514689832698-319d3bcac5d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=434&q=80" alt="">
-      <img data-speed="1.2" src="https://images.unsplash.com/photo-1535207010348-71e47296838a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="">
-      <img data-speed="0.8" src="https://images.unsplash.com/photo-1588007375246-3ee823ef4851?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fG5lb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" alt="">
-      <img data-speed="1" src="https://images.unsplash.com/photo-1571450669798-fcb4c543f6a4?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fG5lb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60" alt="">
+  <div id="wrapper-{{ section.id }}">
+    <section id="content-{{ section.id }}">
+      <section class="images">
+        {% comment %} Renderizar imagens dinamicamente baseadas no schema {% endcomment %}
+        {% for i in (1..8) %}
+          {% assign image_key = 'image_' | append: i %}
+          {% assign image = section.settings[image_key] %}
+          {% assign speed_key = 'speed_' | append: i %}
+          {% assign speed = section.settings[speed_key] | default: 1.0 %}
+          
+          {% if image != blank %}
+            <img 
+              data-speed="{{ speed }}" 
+              src="{{ image | image_url: width: 600 }}" 
+              alt="{{ image.alt | escape }}"
+              loading="lazy"
+            >
+          {% else %}
+            {% comment %} Usar imagens de fallback do Unsplash {% endcomment %}
+            {% assign fallback_urls = 'https://images.unsplash.com/photo-1556856425-366d6618905d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fG5lb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60,https://images.unsplash.com/photo-1520271348391-049dd132bb7c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80,https://images.unsplash.com/photo-1609166214994-502d326bafee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80,https://images.unsplash.com/photo-1589882265634-84f7eb9a3414?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=434&q=80,https://images.unsplash.com/photo-1514689832698-319d3bcac5d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=434&q=80,https://images.unsplash.com/photo-1535207010348-71e47296838a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80,https://images.unsplash.com/photo-1588007375246-3ee823ef4851?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fG5lb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60,https://images.unsplash.com/photo-1571450669798-fcb4c543f6a4?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fG5lb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60' | split: ',' %}
+            {% assign fallback_index = forloop.index0 %}
+            {% assign fallback_url = fallback_urls[fallback_index] %}
+            
+            <img 
+              data-speed="{{ speed }}" 
+              src="{{ fallback_url }}" 
+              alt="Imagem {{ i }}"
+              loading="lazy"
+            >
+          {% endif %}
+        {% endfor %}
+      </section>
     </section>
-  </section>
+  </div>
 </div>
 
 <style>
-  body {
-    margin: 0;
-    background-color: #1a1721;
-    color: white;
-    overscroll-behavior: none;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-
-  #wrapper {
-    overflow: hidden;
+  #about-{{ section.id }} {
     position: relative;
-    height: 100%;
     width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    min-height: 100vh;
+    background-color: {{ section.settings.background_color | default: '#1a1721' }};
+    overflow: hidden;
   }
 
-  #content {
+  #about-{{ section.id }} .about-section-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  #wrapper-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  #content-{{ section.id }} {
     overflow: visible;
     width: 100%;
+    position: relative;
   }
 
-  .text {
-    position: fixed;
-    top: 30vh;
-    font-family: termina, sans-serif;
+  #about-{{ section.id }} .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: {{ section.settings.font_family | default: 'termina, sans-serif' }};
     font-weight: 900;
     font-style: normal;
-    font-size: 8vw;
+    font-size: clamp(4rem, {{ section.settings.text_size | default: 8 }}vw, 12rem);
     text-align: center;
     width: 100%;
-    transform: translateY(-100%);
+    margin: 0;
+    line-height: 1;
     z-index: 2;
-    color: white;
-    -webkit-text-stroke-width: 1.5px;
-    -webkit-text-stroke-color: white;
+    color: {{ section.settings.text_color | default: 'white' }};
+    -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
+    -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
+    pointer-events: none;
+  }
+
+  #about-{{ section.id }} .text:first-child {
     z-index: -2;
   }
 
-  .outline-text {
+  #about-{{ section.id }} .outline-text {
     color: transparent;
-    -webkit-text-stroke-width: 1.5px;
-    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
+    -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
     z-index: 2;
   }
 
-  .filter-text {
-    mix-blend-mode: screen;
-    color: #804691;
+  #about-{{ section.id }} .filter-text {
+    mix-blend-mode: {{ section.settings.blend_mode | default: 'screen' }};
+    color: {{ section.settings.filter_text_color | default: '#804691' }};
     z-index: 2;
   }
 
-  .images {
-    padding-top: 60vh;
+  #about-{{ section.id }} .images {
+    padding-top: {{ section.settings.images_padding_top | default: 60 }}vh;
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-width: {{ section.settings.max_width | default: 1200 }}px;
     margin: 0 auto;
-    min-height: 150vh;
+    min-height: {{ section.settings.min_height | default: 150 }}vh;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(20, 2%);
+    grid-template-columns: repeat(20, 5%);
     grid-template-rows: repeat(30, 3%);
     justify-content: center;
     justify-items: center;
     align-items: center;
     z-index: 1;
-    object-fit: cover;
   }
 
-  .content__slide-item {
+  #about-{{ section.id }} .content__slide-item {
     width: 100%;
     height: 100%;
     position: relative;
   }
 
-  img {
+  #about-{{ section.id }} img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: {{ section.settings.image_border_radius | default: 0 }}px;
+    transition: transform 0.3s ease;
   }
 
-  img:nth-child(1) {
+  #about-{{ section.id }} img:hover {
+    transform: scale({{ section.settings.hover_scale | default: 1.05 }});
+  }
+
+  /* Posicionamento das imagens no grid */
+  #about-{{ section.id }} img:nth-child(1) {
     grid-area: 1/1/6/8;
   }
 
-  img:nth-child(2) {
+  #about-{{ section.id }} img:nth-child(2) {
     grid-area: 3/12/8/20;
   }
 
-  img:nth-child(3) {
+  #about-{{ section.id }} img:nth-child(3) {
     grid-area: 9/5/13/15;
   }
 
-  img:nth-child(4) {
+  #about-{{ section.id }} img:nth-child(4) {
     grid-area: 14/1/18/8;
   }
 
-  img:nth-child(5) {
+  #about-{{ section.id }} img:nth-child(5) {
     grid-area: 16/12/20/19;
   }
 
-  img:nth-child(6) {
+  #about-{{ section.id }} img:nth-child(6) {
     grid-area: 20/2/25/9;
   }
 
-  img:nth-child(7) {
+  #about-{{ section.id }} img:nth-child(7) {
     grid-area: 22/11/24/20;
   }
 
-  img:nth-child(8) {
+  #about-{{ section.id }} img:nth-child(8) {
     grid-area: 26/5/30/15;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    #about-{{ section.id }} .text {
+      font-size: clamp(2rem, 6vw, 4rem);
+      -webkit-text-stroke-width: 1px;
+    }
+
+    #about-{{ section.id }} .images {
+      grid-template-columns: repeat(10, 10%);
+      grid-template-rows: repeat(40, 2.5%);
+      padding-top: 40vh;
+      min-height: 200vh;
+    }
+
+    #about-{{ section.id }} img:nth-child(1) {
+      grid-area: 1/1/8/6;
+    }
+
+    #about-{{ section.id }} img:nth-child(2) {
+      grid-area: 5/6/12/10;
+    }
+
+    #about-{{ section.id }} img:nth-child(3) {
+      grid-area: 10/2/16/8;
+    }
+
+    #about-{{ section.id }} img:nth-child(4) {
+      grid-area: 14/1/20/5;
+    }
+
+    #about-{{ section.id }} img:nth-child(5) {
+      grid-area: 18/6/24/10;
+    }
+
+    #about-{{ section.id }} img:nth-child(6) {
+      grid-area: 22/2/28/7;
+    }
+
+    #about-{{ section.id }} img:nth-child(7) {
+      grid-area: 26/6/30/10;
+    }
+
+    #about-{{ section.id }} img:nth-child(8) {
+      grid-area: 30/2/36/8;
+    }
   }
 </style>
 
@@ -147,19 +230,53 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollSmoother.min.js"></script>
 
 <script>
-  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+  // Aguardar o DOM estar pronto
+  document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se GSAP está disponível
+    if (typeof gsap === 'undefined') {
+      console.error('GSAP não está carregado');
+      return;
+    }
 
-  let skewSetter = gsap.quickTo("img", "skewY"); // fast
-  let clamp = gsap.utils.clamp(-20, 20); // don't let the skew go beyond 20 degrees.
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-  ScrollSmoother.create({
-    wrapper: "#wrapper",
-    content: "#content",
-    smooth: 2,
-    speed: 3,
-    effects: true,
-    onUpdate: self => skewSetter(clamp(self.getVelocity() / -50)),
-    onStop: () => skewSetter(0)
+    // Aguardar um frame para garantir que os elementos estejam renderizados
+    requestAnimationFrame(() => {
+      const sectionId = '{{ section.id }}';
+      const wrapper = document.getElementById(`wrapper-${sectionId}`);
+      const content = document.getElementById(`content-${sectionId}`);
+      
+      if (!wrapper || !content) {
+        console.error('Elementos wrapper ou content não encontrados');
+        return;
+      }
+
+      try {
+        // Configuração do skew baseado na velocidade
+        let skewSetter = gsap.quickTo(`#about-${sectionId} img`, "skewY");
+        let clamp = gsap.utils.clamp(-20, 20);
+
+        // Criar ScrollSmoother adaptado para Shopify
+        const smoother = ScrollSmoother.create({
+          wrapper: `#wrapper-${sectionId}`,
+          content: `#content-${sectionId}`,
+          smooth: {{ section.settings.smooth_strength | default: 2 }},
+          speed: {{ section.settings.scroll_speed | default: 3 }},
+          effects: true,
+          onUpdate: self => {
+            const velocity = self.getVelocity();
+            const skewValue = clamp(velocity / -50);
+            skewSetter(skewValue);
+          },
+          onStop: () => skewSetter(0)
+        });
+
+        console.log('ScrollSmoother inicializado com sucesso para seção:', sectionId);
+
+      } catch (error) {
+        console.error('Erro ao inicializar ScrollSmoother:', error);
+      }
+    });
   });
 </script>
 
@@ -170,11 +287,268 @@
   "class": "about-section",
   "settings": [
     {
+      "type": "header",
+      "content": "Configurações Gerais"
+    },
+    {
       "type": "text",
       "id": "main_text",
       "label": "Texto Principal",
       "default": "Scrolly Images",
       "info": "Texto que aparece flutuando sobre as imagens"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de Fundo",
+      "default": "#1a1721"
+    },
+    {
+      "type": "header",
+      "content": "Configurações do Texto"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamanho do Texto (vw)",
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do Texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_stroke_color",
+      "label": "Cor do Contorno",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "text_stroke_width",
+      "label": "Largura do Contorno",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "default": 1.5
+    },
+    {
+      "type": "color",
+      "id": "filter_text_color",
+      "label": "Cor do Filtro de Texto",
+      "default": "#804691"
+    },
+    {
+      "type": "select",
+      "id": "blend_mode",
+      "label": "Modo de Mistura",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "screen", "label": "Screen" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "difference", "label": "Difference" }
+      ],
+      "default": "screen"
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Família da Fonte",
+      "default": "termina, sans-serif",
+      "info": "Ex: 'Helvetica, sans-serif' ou nome de fonte do Google Fonts"
+    },
+    {
+      "type": "header",
+      "content": "Configurações das Imagens"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Largura Máxima do Container (px)",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "images_padding_top",
+      "label": "Espaçamento Superior (vh)",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Altura Mínima (vh)",
+      "min": 100,
+      "max": 300,
+      "step": 10,
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Raio da Borda das Imagens",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "hover_scale",
+      "label": "Escala no Hover",
+      "min": 1,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "header",
+      "content": "Configurações do ScrollSmoother"
+    },
+    {
+      "type": "range",
+      "id": "smooth_strength",
+      "label": "Força da Suavização",
+      "min": 0.5,
+      "max": 5,
+      "step": 0.1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Velocidade do Scroll",
+      "min": 0.5,
+      "max": 5,
+      "step": 0.1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Imagens do Grid"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Imagem 1"
+    },
+    {
+      "type": "range",
+      "id": "speed_1",
+      "label": "Velocidade Parallax 1",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.8
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Imagem 2"
+    },
+    {
+      "type": "range",
+      "id": "speed_2",
+      "label": "Velocidade Parallax 2",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.9
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Imagem 3"
+    },
+    {
+      "type": "range",
+      "id": "speed_3",
+      "label": "Velocidade Parallax 3",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.0
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Imagem 4"
+    },
+    {
+      "type": "range",
+      "id": "speed_4",
+      "label": "Velocidade Parallax 4",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Imagem 5"
+    },
+    {
+      "type": "range",
+      "id": "speed_5",
+      "label": "Velocidade Parallax 5",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.9
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Imagem 6"
+    },
+    {
+      "type": "range",
+      "id": "speed_6",
+      "label": "Velocidade Parallax 6",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "image_picker",
+      "id": "image_7",
+      "label": "Imagem 7"
+    },
+    {
+      "type": "range",
+      "id": "speed_7",
+      "label": "Velocidade Parallax 7",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 0.8
+    },
+    {
+      "type": "image_picker",
+      "id": "image_8",
+      "label": "Imagem 8"
+    },
+    {
+      "type": "range",
+      "id": "speed_8",
+      "label": "Velocidade Parallax 8",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.0
     }
   ],
   "presets": [
