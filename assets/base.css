@@ -4156,10 +4156,11 @@ text-component {
   box-shadow: none;
 }
 
-.button-chat-toggle {
+.chat-toggle {
   border: 1px solid transparent;
   border-radius: 30px;
   cursor: pointer;
+ background-color: rgba(0, 0, 0, 0.2) !important;
   display: flex;
   height: 40px !important;
   margin: 0 6px;
