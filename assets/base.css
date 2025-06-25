@@ -4156,13 +4156,3 @@ text-component {
   box-shadow: none;
 }
 
-.chat-toggle chat-toggle--#000000 chat-toggle--icon-button chat-toggle--bottom-right icon-only mobile-only {
-  border: 1px solid transparent;
-  border-radius: 30px;
-  cursor: pointer;
- background-color: rgba(0, 0, 0, 0.2) !important;
-  display: flex;
-  height: 40px !important;
-  margin: 0 6px;
-  width: 40px !important;
-}
