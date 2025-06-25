@@ -17,6 +17,8 @@
         "title_svg": "shopify://shop_images/svg_156553be-d4ed-438d-92ca-5abb11a972ef.svg",
         "section_height": 100,
         "show_top_section": true,
+        "show_video_controls": false,
+        "show_bottom_section": true,
         "top_section_background_image": "shopify://shop_images/Sem_nome_1200_x_1920_px_a85e1bb5-3a78-4359-8f1d-27916382a345.png",
         "top_section_background_opacity": 90,
         "scrambler_text": "Underground Streetwear",
@@ -26,6 +28,7 @@
         "scrambler_text_color": "#ffffff",
         "top_section_color": "black",
         "main_section_color": "black",
+        "bottom_section_color": "purple",
         "title_size": 110,
         "title_color": "#ffffff",
         "title_alignment": "center",
@@ -50,7 +53,7 @@
         "card_text_3": "Serviço 3",
         "card_text_4": "Serviço 4",
         "card_text_5": "Serviço 5",
-        "include_css": true
+        "include_css": false
       }
     },
     "product_list_pkGJeB": {
