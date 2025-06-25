@@ -3,11 +3,20 @@
   Componente com imagens em grid e texto flutuante com efeito de skew baseado na velocidade do scroll
 {% endcomment %}
 
-<div class="about-wrapper" id="about-{{ section.id }}">
-  {% comment %} Texto flutuante {% endcomment %}
-  <h1 class="text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
-  <h1 aria-hidden="true" class="text outline-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
-  <h1 aria-hidden="true" class="text filter-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+<div 
+  class="about-wrapper" 
+  id="about-{{ section.id }}"
+  data-max-skew="{{ section.settings.max_skew | default: 20 }}"
+  data-smooth-strength="{{ section.settings.smooth_strength | default: 2 }}"
+  data-scroll-speed="{{ section.settings.scroll_speed | default: 3 }}"
+  data-skew-factor="{{ section.settings.skew_factor | default: 50 }}"
+>
+  {% comment %} Texto flutuante - corrigido para não duplicar {% endcomment %}
+  <div class="fixed-text-container">
+    <h1 class="text main-text">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+    <h1 class="text outline-text" aria-hidden="true">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+    <h1 class="text filter-text" aria-hidden="true">{{ section.settings.main_text | default: "Scrolly Images" }}</h1>
+  </div>
 
   <div id="wrapper-{{ section.id }}">
     <section id="content-{{ section.id }}">
@@ -58,37 +67,51 @@
     overflow: visible;
     width: 100%;
   }
-
-  #about-{{ section.id }} .text {
+  #about-{{ section.id }} .fixed-text-container {
     position: fixed;
     top: 50vh;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  #about-{{ section.id }} .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     font-family: {{ section.settings.font_family | default: 'Arial, sans-serif' }};
     font-weight: 900;
     font-style: normal;
     font-size: clamp(4rem, {{ section.settings.text_size | default: 8 }}vw, 12rem);
     text-align: center;
     width: 100%;
-    transform: translateY(-50%);
-    z-index: 2;
-    color: {{ section.settings.text_color | default: 'white' }};
-    -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
-    -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
+    margin: 0;
+    line-height: 1;
     pointer-events: none;
   }
 
+  #about-{{ section.id }} .main-text {
+    color: {{ section.settings.text_color | default: 'white' }};
+    -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
+    -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
+    z-index: 102;
+  }
   #about-{{ section.id }} .outline-text {
     color: transparent;
     -webkit-text-stroke-width: {{ section.settings.text_stroke_width | default: 1.5 }}px;
     -webkit-text-stroke-color: {{ section.settings.text_stroke_color | default: 'white' }};
-    z-index: 2;
+    z-index: 101;
   }
 
   #about-{{ section.id }} .filter-text {
     mix-blend-mode: {{ section.settings.blend_mode | default: 'screen' }};
     color: {{ section.settings.filter_text_color | default: '#804691' }};
-    z-index: 2;
+    z-index: 103;
   }
-
   #about-{{ section.id }} .images {
     padding-top: {{ section.settings.images_padding_top | default: 60 }}vh;
     position: relative;
@@ -104,7 +127,6 @@
     justify-items: center;
     align-items: center;
     z-index: 1;
-    object-fit: cover;
   }
 
   #about-{{ section.id }} .content__slide-item {
@@ -159,7 +181,12 @@
   }
 
   {% comment %} Responsividade {% endcomment %}
-  @media (max-width: 768px) {
+  @media (max-width: 768px) {    #about-{{ section.id }} .fixed-text-container {
+      position: fixed;
+      top: 50vh;
+      transform: translateY(-50%);
+    }
+
     #about-{{ section.id }} .text {
       font-size: clamp(2rem, 6vw, 4rem);
       -webkit-text-stroke-width: 1px;
