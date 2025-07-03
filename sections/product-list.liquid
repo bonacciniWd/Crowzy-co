@@ -4,35 +4,7 @@
   assign max_items = section.settings.max_products
 
   if section.settings.collection != blank and shop.products_count != 0
-    assign collection_products = section.settings.collection.products
-    
-    # Ordenar produtos por metafield de ordem de exibição
-    assign products_with_order = '' | split: ','
-    assign products_without_order = '' | split: ','
-    assign final_products = '' | split: ','
-    
-    # Separar produtos com e sem metafield de ordem
-    for product in collection_products
-      assign product_order = product.metafields.custom.product_order.identifier
-      if product_order != blank
-        assign products_with_order = products_with_order | concat: product
-      else
-        assign products_without_order = products_without_order | concat: product
-      endif
-    endfor
-    
-    # Adicionar produtos em ordem: 1, 2, 3, 4, 5, 6...
-    for order_number in (1..10)
-      for product in products_with_order
-        assign product_order = product.metafields.custom.product_order.identifier | plus: 0
-        if product_order == order_number
-          assign final_products = final_products | concat: product
-        endif
-      endfor
-    endfor
-    
-    # Adicionar produtos sem metafield no final
-    assign section_products = final_products | concat: products_without_order
+    assign section_products = section.settings.collection.products
     assign max_items = section_products.size | at_most: section.settings.max_products
   endif
 
