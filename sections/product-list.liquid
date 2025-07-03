@@ -20,65 +20,29 @@
       endif
     endfor
     
-    # Ordenar produtos que têm metafield por ordem crescente (bubble sort simples)
-    assign sorted_products = products_with_order
-    assign array_size = sorted_products.size
+    # DEBUG: Mostrar quantos produtos foram encontrados com metafield
+    comment
+      Debug info:
+      - Total products: {{ collection_products.size }}
+      - Products with metafield: {{ products_with_order.size }}
+      - Products without metafield: {{ products_without_order.size }}
+    endcomment
     
-    if array_size > 1
-      for i in (1..array_size)
-        assign swapped = false
-        assign limit = array_size | minus: i
-        
-        for j in (0..limit)
-          assign current_index = j
-          assign next_index = j | plus: 1
-          
-          if next_index < array_size
-            assign current_product = sorted_products[current_index]
-            assign next_product = sorted_products[next_index]
-            
-            assign current_order = current_product.metafields.custom.product_order.identifier | default: 999
-            assign next_order = next_product.metafields.custom.product_order.identifier | default: 999
-            
-            if current_order > next_order
-              # Trocar posições (simulação de swap em Liquid)
-              assign temp_array = '' | split: ','
-              
-              # Adicionar elementos antes da posição atual
-              for k in (0..current_index)
-                unless k == current_index
-                  assign temp_array = temp_array | concat: sorted_products[k]
-                endunless
-              endfor
-              
-              # Adicionar next_product na posição atual
-              assign temp_array = temp_array | concat: next_product
-              
-              # Adicionar current_product na próxima posição
-              assign temp_array = temp_array | concat: current_product
-              
-              # Adicionar elementos após a próxima posição
-              assign start_index = next_index | plus: 1
-              for k in (start_index..array_size)
-                if k < array_size
-                  assign temp_array = temp_array | concat: sorted_products[k]
-                endif
-              endfor
-              
-              assign sorted_products = temp_array
-              assign swapped = true
-            endif
-          endif
-        endfor
-        
-        unless swapped
-          break
-        endunless
+    # Usar abordagem mais simples: criar arrays ordenados manualmente
+    assign final_products = '' | split: ','
+    
+    # Adicionar produtos em ordem: 1, 2, 3, 4, 5, 6...
+    for order_number in (1..10)
+      for product in products_with_order
+        assign product_order = product.metafields.custom.product_order.identifier | plus: 0
+        if product_order == order_number
+          assign final_products = final_products | concat: product
+        endif
       endfor
-    endif
+    endfor
     
-    # Combinar produtos ordenados + produtos sem ordem
-    assign section_products = sorted_products | concat: products_without_order
+    # Adicionar produtos sem metafield no final
+    assign section_products = final_products | concat: products_without_order
     assign max_items = section_products.size | at_most: section.settings.max_products
   endif
 
