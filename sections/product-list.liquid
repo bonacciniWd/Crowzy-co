@@ -4,9 +4,16 @@
   assign max_items = section.settings.max_products
 
   if section.settings.collection != blank and shop.products_count != 0
-    assign section_products = section.settings.collection.products
+    assign collection_products = section.settings.collection.products
     assign max_items = section_products.size | at_most: section.settings.max_products
   endif
+%}
+
+# Usar componente de ordenação por metafield
+{% render 'product-sorter', collection_products: collection_products, max_order: 10 %}
+
+{% liquid
+  assign section_products = sorted_products
 
   case section.settings.layout_type
     when 'grid'
