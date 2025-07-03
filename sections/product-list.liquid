@@ -19,7 +19,7 @@
     assign other_products = '' | split: ''
     
     # Classificar produtos por tags
-    for product in collection_products
+    for product in section_products
       assign product_added = false
       
       for tag in product.tags
