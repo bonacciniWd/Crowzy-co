@@ -4,7 +4,204 @@
   assign max_items = section.settings.max_products
 
   if section.settings.collection != blank and shop.products_count != 0
-    assign section_products = section.settings.collection.products
+    assign collection_products = section.settings.collection.products
+    
+    # Criar arrays para ordenação por tags
+    assign calca_products = ''
+    assign cropped_products = ''
+    assign oversized_products = ''
+    assign manga_longa_products = ''
+    assign moletom_products = ''
+    assign calca_moletom_products = ''
+    assign other_products = ''
+    
+    # Separar produtos por tags
+    for product in collection_products
+      assign product_categorized = false
+      
+      # Verificar calça-moletom primeiro (prioridade)
+      unless product_categorized
+        for tag in product.tags
+          assign tag_clean = tag | downcase | strip
+          if tag_clean contains 'calça-moletom'
+            if calca_moletom_products == ''
+              assign calca_moletom_products = product.id
+            else
+              assign calca_moletom_products = calca_moletom_products | append: ',' | append: product.id
+            endif
+            assign product_categorized = true
+            break
+          endif
+        endfor
+      endunless
+      
+      # Verificar calça (excluindo calça-moletom)
+      unless product_categorized
+        for tag in product.tags
+          assign tag_clean = tag | downcase | strip
+          if tag_clean contains 'calça'
+            unless tag_clean contains 'moletom'
+              if calca_products == ''
+                assign calca_products = product.id
+              else
+                assign calca_products = calca_products | append: ',' | append: product.id
+              endif
+              assign product_categorized = true
+              break
+            endunless
+          endif
+        endfor
+      endunless
+      
+      # Verificar cropped
+      unless product_categorized
+        for tag in product.tags
+          assign tag_clean = tag | downcase | strip
+          if tag_clean contains 'cropped'
+            if cropped_products == ''
+              assign cropped_products = product.id
+            else
+              assign cropped_products = cropped_products | append: ',' | append: product.id
+            endif
+            assign product_categorized = true
+            break
+          endif
+        endfor
+      endunless
+      
+      # Verificar oversized
+      unless product_categorized
+        for tag in product.tags
+          assign tag_clean = tag | downcase | strip
+          if tag_clean contains 'oversized'
+            if oversized_products == ''
+              assign oversized_products = product.id
+            else
+              assign oversized_products = oversized_products | append: ',' | append: product.id
+            endif
+            assign product_categorized = true
+            break
+          endif
+        endfor
+      endunless
+      
+      # Verificar manga-longa
+      unless product_categorized
+        for tag in product.tags
+          assign tag_clean = tag | downcase | strip
+          if tag_clean contains 'manga-longa'
+            if manga_longa_products == ''
+              assign manga_longa_products = product.id
+            else
+              assign manga_longa_products = manga_longa_products | append: ',' | append: product.id
+            endif
+            assign product_categorized = true
+            break
+          endif
+        endfor
+      endunless
+      
+      # Verificar moletom (excluindo calça-moletom)
+      unless product_categorized
+        for tag in product.tags
+          assign tag_clean = tag | downcase | strip
+          if tag_clean contains 'moletom'
+            unless tag_clean contains 'calça'
+              if moletom_products == ''
+                assign moletom_products = product.id
+              else
+                assign moletom_products = moletom_products | append: ',' | append: product.id
+              endif
+              assign product_categorized = true
+              break
+            endunless
+          endif
+        endfor
+      endunless
+      
+      # Produtos sem tags específicas
+      unless product_categorized
+        if other_products == ''
+          assign other_products = product.id
+        else
+          assign other_products = other_products | append: ',' | append: product.id
+        endif
+      endunless
+    endfor
+    
+    # Montar string final com ordem: calça, cropped, oversized, manga-longa, moletom, calça-moletom, outros
+    assign ordered_ids = ''
+    
+    if calca_products != ''
+      assign ordered_ids = calca_products
+    endif
+    
+    if cropped_products != ''
+      if ordered_ids == ''
+        assign ordered_ids = cropped_products
+      else
+        assign ordered_ids = ordered_ids | append: ',' | append: cropped_products
+      endif
+    endif
+    
+    if oversized_products != ''
+      if ordered_ids == ''
+        assign ordered_ids = oversized_products
+      else
+        assign ordered_ids = ordered_ids | append: ',' | append: oversized_products
+      endif
+    endif
+    
+    if manga_longa_products != ''
+      if ordered_ids == ''
+        assign ordered_ids = manga_longa_products
+      else
+        assign ordered_ids = ordered_ids | append: ',' | append: manga_longa_products
+      endif
+    endif
+    
+    if moletom_products != ''
+      if ordered_ids == ''
+        assign ordered_ids = moletom_products
+      else
+        assign ordered_ids = ordered_ids | append: ',' | append: moletom_products
+      endif
+    endif
+    
+    if calca_moletom_products != ''
+      if ordered_ids == ''
+        assign ordered_ids = calca_moletom_products
+      else
+        assign ordered_ids = ordered_ids | append: ',' | append: calca_moletom_products
+      endif
+    endif
+    
+    if other_products != ''
+      if ordered_ids == ''
+        assign ordered_ids = other_products
+      else
+        assign ordered_ids = ordered_ids | append: ',' | append: other_products
+      endif
+    endif
+    
+    # Criar array final de produtos ordenados
+    assign section_products = '' | split: ','
+    
+    if ordered_ids != ''
+      assign id_array = ordered_ids | split: ','
+      for product_id in id_array
+        for product in collection_products
+          assign product_id_str = product.id | append: ''
+          if product_id_str == product_id
+            assign section_products = section_products | concat: product
+            break
+          endif
+        endfor
+      endfor
+    else
+      assign section_products = collection_products
+    endif
+    
     assign max_items = section_products.size | at_most: section.settings.max_products
   endif
 
