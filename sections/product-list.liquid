@@ -4,70 +4,7 @@
   assign max_items = section.settings.max_products
 
   if section.settings.collection != blank and shop.products_count != 0
-    assign collection_products = section.settings.collection.products
-    
-    # Define a ordem de prioridade das tags
-    assign tag_priorities = 'calça,cropped,oversized,manga-longa,moletom,calça-moletom' | split: ','
-    
-    # Criar arrays para cada categoria de tag
-    assign cropped_products = '' | split: ''
-    assign oversized_products = '' | split: ''
-    assign manga_longa_products = '' | split: ''
-    assign moletom_products = '' | split: ''
-    assign calca_moletom_products = '' | split: ''
-    assign calca_products = '' | split: ''
-    assign other_products = '' | split: ''
-    
-    # Classificar produtos por tags
-    for product in collection_products
-      assign product_added = false
-      
-      for tag in product.tags
-        assign tag_lower = tag | downcase
-        
-        unless product_added
-          if tag_lower contains 'cropped'
-            assign cropped_products = cropped_products | concat: product
-            assign product_added = true
-          elsif tag_lower contains 'oversized'
-            assign oversized_products = oversized_products | concat: product
-            assign product_added = true
-          elsif tag_lower contains 'manga-longa'
-            assign manga_longa_products = manga_longa_products | concat: product
-            assign product_added = true
-          elsif tag_lower contains 'calça-moletom'
-            assign calca_moletom_products = calca_moletom_products | concat: product
-            assign product_added = true
-          elsif tag_lower contains 'moletom'
-            unless tag_lower contains 'calça'
-              assign moletom_products = moletom_products | concat: product
-              assign product_added = true
-            endunless
-          elsif tag_lower contains 'calça'
-            unless tag_lower contains 'moletom'
-              assign calca_products = calca_products | concat: product
-              assign product_added = true
-            endunless
-          endif
-        endunless
-      endfor
-      
-      # Se o produto não foi adicionado a nenhuma categoria específica
-      unless product_added
-        assign other_products = other_products | concat: product
-      endunless
-    endfor
-    
-    # Combinar todos os produtos na ordem de prioridade
-    assign section_products = '' | split: ''
-    assign section_products = section_products | concat: cropped_products
-    assign section_products = section_products | concat: oversized_products
-    assign section_products = section_products | concat: manga_longa_products
-    assign section_products = section_products | concat: moletom_products
-    assign section_products = section_products | concat: calca_moletom_products
-    assign section_products = section_products | concat: calca_products
-    assign section_products = section_products | concat: other_products
-    
+    assign section_products = section.settings.collection.products
     assign max_items = section_products.size | at_most: section.settings.max_products
   endif
 
