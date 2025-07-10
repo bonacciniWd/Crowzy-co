@@ -99,14 +99,14 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "center",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "gap": 0,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "toggle_overlay": false,
             "overlay_color": "#00000026",
             "overlay_style": "solid",
             "gradient_direction": "to top",
-            "padding-block-start": 0,
+            "padding-block-start": 100,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
@@ -347,7 +347,7 @@
         "text_XkeYpi": {
           "type": "text",
           "settings": {
-            "text": "<p>At the heart of every product lies a unique story, driven by our passion for quality and innovation. Each item enhances your everyday life and sparks joy.</p>",
+            "text": "",
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
@@ -755,6 +755,7 @@
           "name": "t:names.video",
           "settings": {
             "source": "uploaded",
+            "video_url": "",
             "video_autoplay": false,
             "video_loop": true,
             "alt": "",
