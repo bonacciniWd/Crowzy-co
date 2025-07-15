@@ -262,6 +262,18 @@
           },
           "blocks": {}
         },
+        "icon_rXaGtF": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "settings": {
+            "icon": "price_tag",
+            "image_upload": "shopify://shop_images/CROWZY_COMPANY_-_LOGO_PADRAO_-_PRETA.png",
+            "width": 86,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
         "group_AbDTXX": {
           "type": "group",
           "name": "t:names.group",
@@ -391,6 +403,7 @@
         "divider_hFm3am",
         "group_GYhYwU",
         "payment_icons_LJEcYc",
+        "icon_rXaGtF",
         "group_AbDTXX",
         "footer_utilities_KRaGcH"
       ],
