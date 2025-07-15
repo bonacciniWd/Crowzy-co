@@ -299,7 +299,7 @@
         "carousel_on_mobile": false,
         "max_products": 50,
         "columns": 5,
-        "mobile_columns": "1",
+        "mobile_columns": "2",
         "columns_gap": 18,
         "rows_gap": 15,
         "icons_style": "arrow",
