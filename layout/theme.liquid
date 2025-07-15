@@ -63,5 +63,20 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('[data-lottie]').forEach(function(el) {
+      lottie.loadAnimation({
+        container: el,
+        renderer: 'svg',
+        loop: el.dataset.loop === 'true',
+        autoplay: el.dataset.autoplay === 'true',
+        path: el.dataset.src
+      });
+    });
+  });
+</script>
+
   </body>
 </html>
