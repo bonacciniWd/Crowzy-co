@@ -274,6 +274,16 @@
           },
           "blocks": {}
         },
+        "lottie_mpxg8Y": {
+          "type": "lottie",
+          "name": "Bloco com animação Lottie",
+          "settings": {
+            "width": 200,
+            "link": "",
+            "open_in_new_tab": false
+          },
+          "blocks": {}
+        },
         "group_AbDTXX": {
           "type": "group",
           "name": "t:names.group",
@@ -404,6 +414,7 @@
         "group_GYhYwU",
         "payment_icons_LJEcYc",
         "icon_rXaGtF",
+        "lottie_mpxg8Y",
         "group_AbDTXX",
         "footer_utilities_KRaGcH"
       ],
